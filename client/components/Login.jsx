@@ -9,11 +9,13 @@ class Login extends React.Component {
       username: '',
       password: ''
     };
+    this.onChange = this.onChange.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   onChange(e) {
     this.setState({
-      username: e.target.value
+      [e.target.name]: e.target.value // Able to pull name straight from element
     });
   }
 
@@ -27,9 +29,9 @@ class Login extends React.Component {
       <div>
         <h1>Please enter your login</h1>
         <form>
-          <input type="text">Username</input>
-          <input type="password" name="password">Password</input>
-          <button>Submit</button>
+          <input type="text" name="username" onChange={this.onChange} />
+          <input type="password" name="password" onChange={this.onChange} />
+          <button onClick={this.handleLogin}>Submit</button>
         </form>
       </div>
     );
@@ -38,4 +40,6 @@ class Login extends React.Component {
 
 Login.propTypes = {
   handleLogin: PropTypes.func
-} 
+}
+
+export default Login;
