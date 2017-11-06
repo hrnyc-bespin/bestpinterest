@@ -1,11 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+const axios = require("axios");
 
 class App extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  ComponentDidMount() {
+    this.getData();
+  }
+
+  getData() {
+    axios.get(url);
+  }
   render() {
     return (
       <div>
@@ -16,4 +24,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById("app"));
