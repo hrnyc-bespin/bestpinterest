@@ -1,17 +1,16 @@
 var db = require('./db.js');
 
-exports.profiles = {
+exports.posts = {
 	get: function(req, res) {
-		db.CHANGE_THIS.find({}).then(data => res.send(data));
+		db.posts.find({}).then(data => res.send(data));
 	},
 
 	post: function(req, res) {
-		console.log(req.body);
-		db.CHANGE_THIS.create(
+		db.posts.create(
 			{
-				name: req.body.name,
-				description: req.body.description,
-				photourl: req.body.photourl
+				id: req.body.id,
+				photourl: req.body.photourl,
+				info: req.body.info
 			},
 			function(err, result) {
 				if (err) {
@@ -19,6 +18,52 @@ exports.profiles = {
 					return;
 				}
 				res.send(`Photo added!`);
+			}
+		);
+	}
+};
+
+exports.users = {
+	get: function(req, res) {
+		db.users.find({}).then(data => res.send(data));
+	},
+
+	post: function(req, res) {
+		db.users.create(
+			{
+				id: req.body.id,
+				name: req.body.name,
+				password: req.body.password,
+				boads: req.body.boards
+			},
+			function(err, result) {
+				if (err) {
+					console.error(err);
+					return;
+				}
+				res.send(`User created!`);
+			}
+		);
+	}
+};
+
+exports.boards = {
+	get: function(req, res) {
+		db.boards.find({}).then(data => res.send(data));
+	},
+
+	post: function(req, res) {
+		db.boards.create(
+			{
+				id: req.body.id,
+				posts: req.body.posts
+			},
+			function(err, result) {
+				if (err) {
+					console.error(err);
+					return;
+				}
+				res.send(`Board created!`);
 			}
 		);
 	}
