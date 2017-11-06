@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var post = mongoose.model('Post', postSchema);
+var board = mongoose.model('Board', boardSchema);
+
+
 var postSchema = new Schema({
   id: Number,
   photo: String,
@@ -11,10 +15,11 @@ var userSchema = new Schema({
   id: Number,
   username: String,
   password: String,
-  boards: [boardSchema]
+  boards: [{type: boardSchema, ref: 'Board'}]
 });
 
 var boardSchema = new Schema({
   id: Number,
-  posts: [postSchema]
+  posts: [{type: postSchema, ref: 'Post'}]
 })
+
