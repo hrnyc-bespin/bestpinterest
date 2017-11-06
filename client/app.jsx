@@ -11,6 +11,7 @@ class App extends React.Component {
       <div>
         <h1>Let us begin</h1>
         <h3>Bespinterest is BestPinterest</h3>
+        <Login handleLogin={() => console.log('test')}/>
       </div>
     );
   }
