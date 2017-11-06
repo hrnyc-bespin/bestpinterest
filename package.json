@@ -1,0 +1,39 @@
+{
+  "name": "bespinterest",
+  "version": "1.0.0",
+  "description": "greenfield project for hack reactor",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "react-dev": "webpack -d --watch",
+    "compile": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrnyc-bespin/bespinterest.git"
+  },
+  "author": "j. sanders-cannon, s. kwak, s. lim, y. kasahara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hrnyc-bespin/bespinterest/issues"
+  },
+  "homepage": "https://github.com/hrnyc-bespin/bespinterest#readme",
+  "dependencies": {
+    "axios": "^0.17.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.0",
+    "node": "^9.0.0",
+    "path": "^0.12.7",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^3.8.1"
+  }
+}
