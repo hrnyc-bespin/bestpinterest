@@ -6,20 +6,20 @@ var board = mongoose.model('Board', boardSchema);
 
 
 var postSchema = new Schema({
-  id: Number,
+  _id: Number,
   photo: String,
   info: String
 });
 
 var userSchema = new Schema({
-  id: Number,
+  _id: Number,
   username: String,
   password: String,
-  boards: [{type: boardSchema, ref: 'Board'}]
+  boards: [{type: Schema,ObjectId, ref: 'Board'}]
 });
 
 var boardSchema = new Schema({
-  id: Number,
-  posts: [{type: postSchema, ref: 'Post'}]
+  _id: Number,
+  posts: [{type: Schema,ObjectId, ref: 'Post'}]
 })
 
