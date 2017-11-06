@@ -1,3 +1,4 @@
 # Node Modules
 **/node_modules
+**/dist/bundle.js
 www/bundle.js
