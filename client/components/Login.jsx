@@ -19,6 +19,7 @@ class Login extends React.Component {
     });
   }
 
+  // Dishes out username and password as entered by user
   handleLogin(e) {
     e.preventDefault();
     this.props.handleLogin(this.state.username, this.state.password);
