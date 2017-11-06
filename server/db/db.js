@@ -15,11 +15,11 @@ var userSchema = new Schema({
   _id: Number,
   username: String,
   password: String,
-  boards: [{type: Schema,ObjectId, ref: 'Board'}]
+  boards: [{type: Schema.ObjectId, ref: 'Board'}]
 });
 
 var boardSchema = new Schema({
   _id: Number,
-  posts: [{type: Schema,ObjectId, ref: 'Post'}]
+  posts: [{type: Schema.ObjectId, ref: 'Post'}]
 })
 
