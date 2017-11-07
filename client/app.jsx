@@ -12,6 +12,7 @@ require('./stylesheets/main.css');
 const axios = require('axios');
 
 class App extends React.Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -22,16 +23,16 @@ class App extends React.Component {
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
-	ComponentDidMount() {
-		this.getData();
-	}
+  ComponentDidMount() {
+    this.getData();
+  }
 
-	getData() {
-		// axios.get('/posts')
-		// .then((data) => {
-		//   console.log(data)
-		// this.setState({data: data.data})
-	}
+  getData() {
+    // axios.get('/posts')
+    // .then((data) => {
+    //   console.log(data)
+    // this.setState({data: data.data})
+  }
 
 	handleLogin(username, password) {
 		console.log('username: ', username);
