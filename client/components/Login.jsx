@@ -28,7 +28,7 @@ class Login extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="login_main">
 				<h1 className="login_header">Please enter your login</h1>
 				<form className="login_form">
 					<input type="text" name="username" onChange={this.onChange} />
