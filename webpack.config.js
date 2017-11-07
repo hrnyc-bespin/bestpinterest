@@ -13,10 +13,12 @@ module.exports = {
       {
         test: /\.jsx?/,
         include: SRC,
-        use: [
-          'babel-loader',
-        ],
+        use: ['babel-loader']
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      }
     ],
   },
   resolve: {

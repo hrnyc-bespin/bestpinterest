@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 var Post = (props) => {
+  let test;
   return (
     <div>
       <h1>Post</h1>
