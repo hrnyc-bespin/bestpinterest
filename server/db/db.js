@@ -23,3 +23,9 @@ var boardSchema = new Schema({
   posts: [{type: Schema.ObjectId, ref: 'Post'}]
 })
 
+
+module.exports = {
+  userSchema: userSchema,
+  postSchema: postSchema,
+  boardSchema: boardSchema
+}
