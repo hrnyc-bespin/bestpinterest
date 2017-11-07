@@ -1,4 +1,4 @@
-var db = require('./db.js');
+var db = require('./db/db.js');
 
 exports.posts = {
 	get: function(req, res) {
@@ -8,7 +8,7 @@ exports.posts = {
 	post: function(req, res) {
 		db.posts.create(
 			{
-				id: req.body.id,
+				_id: req.body.id,
 				photourl: req.body.photourl,
 				info: req.body.info
 			},
@@ -31,7 +31,7 @@ exports.users = {
 	post: function(req, res) {
 		db.users.create(
 			{
-				id: req.body.id,
+				_id: req.body.id,
 				name: req.body.name,
 				password: req.body.password,
 				boads: req.body.boards
@@ -55,7 +55,7 @@ exports.boards = {
 	post: function(req, res) {
 		db.boards.create(
 			{
-				id: req.body.id,
+				_id: req.body.id,
 				posts: req.body.posts
 			},
 			function(err, result) {
