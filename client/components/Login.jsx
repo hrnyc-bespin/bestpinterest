@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+require('../stylesheets/main.css');
 
 // Handles form submissions
 class Login extends React.Component {
@@ -28,7 +29,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h1>Please enter your login</h1>
+        <h1 id="tester">Please enter your login</h1>
         <form>
           <input type="text" name="username" onChange={this.onChange} />
           <input type="password" name="password" onChange={this.onChange} />
