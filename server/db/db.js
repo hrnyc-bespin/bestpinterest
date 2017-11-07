@@ -1,10 +1,13 @@
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://admin:pass@ds249545.mlab.com:49545/bespinterest");
+
+var options = {
+  useMongoClient: true,
+  reconnectInterval: 2000,
+}
+
+mongoose.connect("mongodb://admin:pass@ds249545.mlab.com:49545/bespinterest", options);
+
 var Schema = mongoose.Schema;
-
-var post = mongoose.model('Post', postSchema);
-var board = mongoose.model('Board', boardSchema);
-
 
 var postSchema = new Schema({
   _id: Number,
@@ -24,9 +27,11 @@ var boardSchema = new Schema({
   posts: [{type: Schema.ObjectId, ref: 'Post'}]
 })
 
-
 module.exports = {
   userSchema: userSchema,
   postSchema: postSchema,
   boardSchema: boardSchema
 }
+
+var post = mongoose.model('Post', postSchema); 
+var board = mongoose.model('Board', boardSchema);
