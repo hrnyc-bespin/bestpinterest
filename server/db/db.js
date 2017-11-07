@@ -7,7 +7,7 @@ var board = mongoose.model('Board', boardSchema);
 
 var postSchema = new Schema({
   _id: Number,
-  photo: String,
+  photourl: String,
   info: String
 });
 
