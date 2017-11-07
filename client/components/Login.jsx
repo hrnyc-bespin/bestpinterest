@@ -28,13 +28,16 @@ class Login extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<h1 className="login_header">Please enter your login</h1>
-				<form className="login_form">
-					<input type="text" name="username" onChange={this.onChange} />
-					<input type="password" name="password" onChange={this.onChange} />
-					<button onClick={this.handleLogin}>Submit</button>
-				</form>
+			<div className="login_main">
+        <div className="login_popup">
+          <h3 className="login_header">Bespinterest</h3>
+          <form className="login_form">
+            <input type="text" name="username" onChange={this.onChange} />
+            <input type="password" name="password" onChange={this.onChange} />
+            <button className="login_button" onClick={this.handleLogin}>Submit</button>
+            <button className="login_signup" onClick={this.handleLogin}>Sign up</button>
+          </form>
+        </div>
 			</div>
 		);
 	}
