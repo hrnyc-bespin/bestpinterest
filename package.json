@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "react-dev": "webpack -d --watch",
-    "compile": "webpack"
+    "compile": "webpack",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
