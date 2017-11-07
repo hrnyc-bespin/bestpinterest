@@ -29,8 +29,8 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h1 id="tester">Please enter your login</h1>
-        <form>
+        <h1 className="login_header">Please enter your login</h1>
+        <form className="login_form">
           <input type="text" name="username" onChange={this.onChange} />
           <input type="password" name="password" onChange={this.onChange} />
           <button onClick={this.handleLogin}>Submit</button>

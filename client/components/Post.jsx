@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+require('../stylesheets/post.css');
 
 var Post = (props) => {
   let test;
