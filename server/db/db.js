@@ -1,40 +1,32 @@
-var mongoose = require('mongoose');
-
-var options = {
-  useMongoClient: true,
-  reconnectInterval: 2000,
-}
-
-mongoose.connect("mongodb://admin:pass@ds249545.mlab.com:49545/bespinterest", options);
-
-var Schema = mongoose.Schema;
-
-var postSchema = new Schema({
-  _id: Number,
-  photourl: String,
-  info: String
+const sequelize = require('sequelize');
+const connection = new sequelize('bespinterest', 'root', '', {
+  host: 'localhost',
+  dialect: 'mysql'
 });
 
-var userSchema = new Schema({
-  _id: Number,
-  username: String,
-  password: String,
-  profilepic: String,
-  userinfo: String,
-  boards: [{type: Schema.ObjectId, ref: 'Board'}]
-});
-
-var boardSchema = new Schema({
-  _id: Number,
-  posts: [{type: Schema.ObjectId, ref: 'Post'}]
+sequelize
+.authenticate()
+.then(() => {
+  console.log('Connection has been established successfully.');
 })
+.catch(err => {
+  console.error('Unable to connect to the database:', err);
+});
 
-module.exports = {
-  post: post,
-  board: board,
-  user: user,
-}
+var Post = sequelize.define('post', {
+  id: Sequelize.INTEGER,
+  photoUrl: Sequelize.STRING,
+  info: Sequelize.STRING
+});
 
-var post = mongoose.model('Post', postSchema); 
-var board = mongoose.model('Board', boardSchema);
-var user = mongoose.model('User', userSchema);
+var User = sequelize.define('user', {
+  id: Sequelize.INTEGER,
+  username: Sequelize.STRING,
+  profilePic: Sequelize.STRING,
+  info: Sequelize.STRING
+});
+
+var Board = sequelize.define('board', {
+  id: Sequelize.INTEGER,
+  
+});
