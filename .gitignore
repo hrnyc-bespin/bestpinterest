@@ -1,4 +1,4 @@
 # Node Modules
 **/node_modules
-server/dist/bundle.js
-**/.DS_STORE
+server/dist
+**/.DS_Store

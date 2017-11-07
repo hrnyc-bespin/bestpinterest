@@ -52,6 +52,8 @@ table {
   width: 100vw;
 }
 
+/* Navbar */
+
 .navbar {
   height: 48px;
   background: #1e1d29;
@@ -66,6 +68,22 @@ table {
 
 .navbar_ul li {
   color: #F5F5F5;
+  align-self: center;
+  text-decoration: none;
+}
+
+.link {
+  color: #F5F5F5;
+  text-decoration: none;
+  margin: 0 12px;
+}
+
+.link:hover {
+  filter: brightness(0.8);
+}
+
+.link:active {
+  filter: brightness(0.4);
 }
 
 .navbar_logo {
@@ -73,26 +91,82 @@ table {
   background: #F5F5F5;
   height: 32px;
   width: 32px;
-  margin: 8px;
+  margin: 8px 16px;
 }
 
 .navbar_title {
   color: #F5F5F5;
   align-self: center;
-  font-family: 'Contrail One', cursive;
+  font-family: "Contrail One", cursive;
+  letter-spacing: 2px;
   font-size: 18px;
+  margin: 0 24px 0 24px;
 }
+
+/* Login Page */
 
 .login_main {
   display: flex;
   justify-content: center;
-  align-content: center;
+  background-image: url("../assets/ccbg.jpg");
+  background-size: cover;
+  height: calc(100vh - 48px);
+}
+
+.login_popup {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  height: 240px;
+  width: 440px;
+  margin-bottom: 40px;
+  background-color: rgba(73,73,73, 0.85);
+  filter: brightness(0.8);
+  border-radius: 8px;
 }
 
 .login_header {
-  
+  align-self: center;
+  margin: 40px 0 24px 0;
+  font-family: "Contrail One", cursive;
+  font-size: 48px; 
+  color: #F5F5F5;
 }
 
 .login_form {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  width: calc(320px);
+}
 
+.login_form input {
+  height: 1.4em;
+  margin: 2px;
+}
+
+.login_form button {
+  width: 80px;
+  background: none;
+  border: none;
+  margin-top: 8px;
+  color: #F5F5F5;
+  font-size: 14 px;
+  outline: none;
+}
+
+.login_form button:hover {
+  filter: brightness(0.8);
+}
+
+.login_form button:active {
+  filter: brightness(0.4);
+}
+
+.login_button {
+  align-self: flex-end;
+}
+
+.login_signup {
+  align-self: flex-end;
 }
