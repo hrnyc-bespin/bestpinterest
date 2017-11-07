@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.connect("mongodb://admin:pass@ds249545.mlab.com:49545/bespinterest");
 var Schema = mongoose.Schema;
 
 var post = mongoose.model('Post', postSchema);
