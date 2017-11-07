@@ -19,6 +19,8 @@ var userSchema = new Schema({
   _id: Number,
   username: String,
   password: String,
+  profilepic: String,
+  userinfo: String,
   boards: [{type: Schema.ObjectId, ref: 'Board'}]
 });
 
@@ -28,10 +30,11 @@ var boardSchema = new Schema({
 })
 
 module.exports = {
-  userSchema: userSchema,
-  postSchema: postSchema,
-  boardSchema: boardSchema
+  post: post,
+  board: board,
+  user: user,
 }
 
 var post = mongoose.model('Post', postSchema); 
 var board = mongoose.model('Board', boardSchema);
+var user = mongoose.model('User', userSchema);
