@@ -11,7 +11,9 @@ const axios = require('axios');
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			data: []
+		};
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
@@ -20,7 +22,10 @@ class App extends React.Component {
 	}
 
 	getData() {
-		// axios.get(url);
+		// axios.get('/posts')
+		// .then((data) => {
+		//   console.log(data)
+		// this.setState({data: data.data})
 	}
 
 	handleLogin(username, password) {
@@ -31,6 +36,9 @@ class App extends React.Component {
 	//in router add history={browserHistory} this will prevent reach to server??
 	//default page
 	// <IndexRoute component={Login} />
+	// <h1>Let us begin</h1>
+	// <h3>Bespinterest is BestPinterest</h3>
+	// <Login handleLogin={this.handleLogin} />
 	render() {
 		return (
 			<BrowserRouter>
@@ -41,15 +49,22 @@ class App extends React.Component {
 								<Link to={'/wall'}>Home</Link>
 							</li>
 							<li>
-								<Link to={'/user'}>user</Link>
+								<Link to={'/user'}>User</Link>
 							</li>
 						</ul>
 					</nav>
-					<Route path="wall" component={Wall} />
-					<Route path="user" component={Profile} />
-					<h1>Let us begin</h1>
-					<h3>Bespinterest is BestPinterest</h3>
-					<Login handleLogin={this.handleLogin} />
+					<Route
+						path="/"
+						render={() => (
+							<div>
+								<h1>Let us begin</h1>
+								<h3>Bespinterest is BestPinterest</h3>
+								<Login handleLogin={this.handleLogin} />
+							</div>
+						)}
+					/>
+					<Route path="wall" render={() => <Wall />} />
+					<Route path="user" render={() => <Wall />} />
 				</div>
 			</BrowserRouter>
 		);
