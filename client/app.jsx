@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, browserHistory } from 'react-router';
+import { Link, BrowserRouter, IndexRoute } from 'react-router-dom';
+// import Login from './components/Login.jsx';
+import Wall from './components/Wall.jsx';
+import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
-import { Link, Router, Route, browserHistory, IndexRoute} from 'react-router';
-import Wall from './components/Wall';
-import Profile from './components/Profile';
-import Login from './components/Login';
 const axios = require('axios');
 
 class App extends React.Component {
@@ -26,29 +27,35 @@ class App extends React.Component {
 		console.log('username: ', username);
 		console.log('password: ', password);
 	}
-
+	//need to add history
+	//in router add history={browserHistory} this will prevent reach to server??
+	//default page
+	// <IndexRoute component={Login} />
 	render() {
 		return (
-			<div>
-      <nav>
-        <ul>
-          <li><Link to={"/"}>Home</Link></li>
-          <li><Link to={"/"}>Home</Link></li>
-        </ul>
-      </nav>
-      //need to add history
-      //in router add history={browserHistory} this will prevent reach to server??
-      <Router>
-        <IndexRoute component={Login}>//default page
-        <Route path="/" component={Wall}/>
-        <Route path="/" component={Profile}/>
-      </Router>
-				<h1>Let us begin</h1>
-				<h3>Bespinterest is BestPinterest</h3>
-				<Login handleLogin={this.handleLogin} />
-			</div>
+			<BrowserRouter>
+				<div>
+					<nav>
+						<ul>
+							<li>
+								<Link to={'/wall'}>Home</Link>
+							</li>
+							<li>
+								<Link to={'/user'}>user</Link>
+							</li>
+						</ul>
+					</nav>
+					<Route path="wall" component={Wall} />
+					<Route path="user" component={Profile} />
+					<h1>Let us begin</h1>
+					<h3>Bespinterest is BestPinterest</h3>
+					<Login handleLogin={this.handleLogin} />
+				</div>
+			</BrowserRouter>
 		);
 	}
 }
+
+export default App;
 
 ReactDOM.render(<App />, document.getElementById('app'));
