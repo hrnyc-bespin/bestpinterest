@@ -2,18 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, browserHistory } from 'react-router';
 import { Link, BrowserRouter, IndexRoute } from 'react-router-dom';
-// import Login from './components/Login.jsx';
 import Wall from './components/Wall.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
+import Logo from './assets/Logo.jsx';
+import Main from './components/Main.jsx';
+require('./stylesheets/main.css');
+
 const axios = require('axios');
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+<<<<<<< HEAD
 			data: []
 		};
+=======
+      isLoggedIn: false,
+      user: {},
+      posts: []
+    };
+>>>>>>> uiUpdate
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
@@ -43,8 +53,10 @@ class App extends React.Component {
 		return (
 			<BrowserRouter>
 				<div>
-					<nav>
-						<ul>
+					<nav className="navbar">
+            <Logo />
+            <p className="navbar_title">Bespinterest</p>
+						<ul className="navbar_ul">
 							<li>
 								<Link to={'/wall'}>Home</Link>
 							</li>
@@ -65,6 +77,8 @@ class App extends React.Component {
 					/>
 					<Route path="wall" render={() => <Wall />} />
 					<Route path="user" render={() => <Wall />} />
+          {this.state.isLoggedIn ? <Main isLoggedIn={this.state.isLoggedIn} user={this.state.user} posts={this.state.posts} /> : 
+             <Login handleLogin={this.handleLogin} /> }
 				</div>
 			</BrowserRouter>
 		);
