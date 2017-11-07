@@ -1,48 +1,54 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './components/Login.jsx'
+import Login from './components/Login.jsx';
+import { Link, Router, Route, browserHistory, IndexRoute} from 'react-router';
+import Wall from './components/Wall';
+import Profile from './components/Profile';
+import Login from './components/Login';
 const axios = require('axios');
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.status = {}
-    this.handleLogin = this.handleLogin.bind(this);
-  }
+	constructor(props) {
+		super(props);
+		this.state = {};
+		this.handleLogin = this.handleLogin.bind(this);
+	}
 
-  ComponentDidMount() {
-    this.getData();
-  }
+	ComponentDidMount() {
+		this.getData();
+	}
 
-  getData() {
-    // axios.get(url);
-  }
+	getData() {
+		// axios.get(url);
+	}
 
-  handleLogin(username, password) {
-    console.log('username: ', username);
-    console.log('password: ', password);
-  }
+	handleLogin(username, password) {
+		console.log('username: ', username);
+		console.log('password: ', password);
+	}
 
-  render() {
-    return (
-      <div>
+	render() {
+		return (
+			<div>
+      <nav>
         <ul>
-          <li>
-            <Link to="/users">login/signup</Link>
-          </li>
-          <li>
-            <Link to="/posts">public wall</Link>
-          </li>
-          <li>
-            <Link to="/boards">personal wall</Link>
-          </li>
+          <li><Link to={"/"}>Home</Link></li>
+          <li><Link to={"/"}>Home</Link></li>
         </ul>
-        <h1>Let us begin</h1>
-        <h3>Bespinterest is BestPinterest</h3>
-        <Login handleLogin={this.handleLogin}/>
-      </div>
-    );
-  }
+      </nav>
+      //need to add history
+      //in router add history={browserHistory} this will prevent reach to server??
+      <Router>
+        <IndexRoute component={Login}>//default page
+        <Route path="/" component={Wall}/>
+        <Route path="/" component={Profile}/>
+      </Router>
+				<h1>Let us begin</h1>
+				<h3>Bespinterest is BestPinterest</h3>
+				<Login handleLogin={this.handleLogin} />
+			</div>
+		);
+	}
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
