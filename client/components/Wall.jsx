@@ -15,8 +15,7 @@ class Wall extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<h1>Wall Stuff goes here</h1>
+			<div className="wall">
 				{this.props.posts.map((post, i) => (
 					<Post
 						key={i}

@@ -54,7 +54,7 @@ class App extends React.Component {
             <p className="navbar_title">Bespinterest</p>
 						<ul className="navbar_ul">
 							<li>
-								<Link className="link" to={'/wall'}>Home</Link>
+								<Link className="link" to={'/wall'} onClick={() => this.setState({isLoggedIn: true})}>Home</Link>
 							</li>
 							<li>
 								<Link className="link" to={'/user'}>User</Link>
