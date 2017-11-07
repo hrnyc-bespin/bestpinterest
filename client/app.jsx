@@ -15,15 +15,10 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-<<<<<<< HEAD
-			data: []
-		};
-=======
       isLoggedIn: false,
       user: {},
       posts: []
     };
->>>>>>> uiUpdate
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
@@ -58,27 +53,20 @@ class App extends React.Component {
             <p className="navbar_title">Bespinterest</p>
 						<ul className="navbar_ul">
 							<li>
-								<Link to={'/wall'}>Home</Link>
+								<Link className="link" to={'/wall'}>Home</Link>
 							</li>
 							<li>
-								<Link to={'/user'}>User</Link>
+								<Link className="link" to={'/user'}>User</Link>
 							</li>
 						</ul>
 					</nav>
 					<Route
 						path="/"
-						render={() => (
-							<div>
-								<h1>Let us begin</h1>
-								<h3>Bespinterest is BestPinterest</h3>
-								<Login handleLogin={this.handleLogin} />
-							</div>
-						)}
+						render={() => this.state.isLoggedIn ? <Main isLoggedIn={this.state.isLoggedIn} user={this.state.user} posts={this.state.posts} /> : 
+             <Login handleLogin={this.handleLogin} /> }
 					/>
 					<Route path="wall" render={() => <Wall />} />
 					<Route path="user" render={() => <Wall />} />
-          {this.state.isLoggedIn ? <Main isLoggedIn={this.state.isLoggedIn} user={this.state.user} posts={this.state.posts} /> : 
-             <Login handleLogin={this.handleLogin} /> }
 				</div>
 			</BrowserRouter>
 		);
