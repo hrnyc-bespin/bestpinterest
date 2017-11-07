@@ -1,14 +1,14 @@
-var db = require('./db.js');
+var db = require('./db/db.js');
 
 exports.posts = {
 	get: function(req, res) {
-		db.posts.find({}).then(data => res.send(data));
+		db.postSchema.find({}).then(data => res.send(data));
 	},
 
 	post: function(req, res) {
-		db.posts.create(
+		db.postSchema.create(
 			{
-				id: req.body.id,
+				_id: req.body.id,
 				photourl: req.body.photourl,
 				info: req.body.info
 			},
@@ -25,16 +25,16 @@ exports.posts = {
 
 exports.users = {
 	get: function(req, res) {
-		db.users.find({}).then(data => res.send(data));
+		db.userSchema.find({}).then(data => res.send(data));
 	},
 
 	post: function(req, res) {
-		db.users.create(
+		db.userSchema.create(
 			{
-				id: req.body.id,
+				_id: req.body.id,
 				name: req.body.name,
 				password: req.body.password,
-				boads: req.body.boards
+				boards: req.body.boards
 			},
 			function(err, result) {
 				if (err) {
@@ -49,13 +49,13 @@ exports.users = {
 
 exports.boards = {
 	get: function(req, res) {
-		db.boards.find({}).then(data => res.send(data));
+		db.boardSchema.find({}).then(data => res.send(data));
 	},
 
 	post: function(req, res) {
-		db.boards.create(
+		db.boardSchema.create(
 			{
-				id: req.body.id,
+				_id: req.body.id,
 				posts: req.body.posts
 			},
 			function(err, result) {
