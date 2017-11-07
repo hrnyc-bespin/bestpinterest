@@ -20,6 +20,7 @@ var userSchema = new Schema({
   username: String,
   password: String,
   profilepic: String,
+  userinfo: String,
   boards: [{type: Schema.ObjectId, ref: 'Board'}]
 });
 
