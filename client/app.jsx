@@ -10,6 +10,10 @@ import Logo from './assets/Logo.jsx';
 import Main from './components/Main.jsx';
 import Addphoto from './components/Addphoto.jsx';
 
+// For testing purposes only
+import Users from './testData/usersJs.js';
+import Posts from './testData/postsJs.js';
+
 require('./stylesheets/main.css');
 
 const axios = require('axios');
@@ -81,9 +85,13 @@ class App extends React.Component {
               <li onClick={() => this.togglePopup()}>Add Photo</li>
             </ul>
           </nav>
-          {this.state.showPopup ? (
-            <Addphoto handleAddphoto={this.handleAddphoto} />
-          ) : null}
+          {this.state.isLoggedIn ? (
+            this.state.showPopup ? (
+              <Addphoto handleAddphoto={this.handleAddphoto} />
+            ) : null
+          ) : (
+            <Login handleLogin={this.handleLogin} />
+          )}
           <Route
             exact
             path="/"
