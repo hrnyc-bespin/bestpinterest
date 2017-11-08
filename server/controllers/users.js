@@ -15,6 +15,17 @@ router.post('/signup', function(req, res) {
 		});
 });
 
+router.get('/login', function(req, res) {
+	db.User
+		.find()
+		.then(function(data) {
+			res.send(200, data);
+		})
+		.catch(function(err) {
+			res.send(null);
+		});
+});
+
 // router.get('/:user_id/destroy', function(req, res) {
 // 	db.User
 // 		.destroy({
@@ -27,4 +38,4 @@ router.post('/signup', function(req, res) {
 // 		});
 // });
 
-module.exports = router;
+module.exports = controller;
