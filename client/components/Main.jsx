@@ -17,7 +17,7 @@ class Main extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <div className="">
         <Wall posts={Posts.posts} showInfo={true} handleClick={() => {}} />
       </div>
@@ -29,6 +29,6 @@ Main.propTypes = {
   isLoggedIn: PropTypes.bool,
   user: PropTypes.object, // User should have an array of board ids as part of its schema
   posts: PropTypes.array
-} 
+};
 
 export default Main;
