@@ -1,32 +1,40 @@
-const sequelize = require('sequelize');
-const connection = new sequelize('bespinterest', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql'
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('bespin', 'bes', 'passwordmajing', {
+  host: 'bes.csm1qfcrhywi.us-east-2.rds.amazonaws.com',
+  dialect: 'postgres'
 });
 
 sequelize
 .authenticate()
 .then(() => {
-  console.log('Connection has been established successfully.');
+  console.log('connection')
 })
-.catch(err => {
-  console.error('Unable to connect to the database:', err);
-});
+.catch(err => console.error('not connected'));
+
+
+var User = sequelize.define('user', {
+   username: Sequelize.STRING,
+   profilePic: Sequelize.STRING,
+   info: Sequelize.STRING
+ });
+ 
+ User.sync({force:false})
 
 var Post = sequelize.define('post', {
-  id: Sequelize.INTEGER,
   photoUrl: Sequelize.STRING,
   info: Sequelize.STRING
 });
 
-var User = sequelize.define('user', {
-  id: Sequelize.INTEGER,
-  username: Sequelize.STRING,
-  profilePic: Sequelize.STRING,
-  info: Sequelize.STRING
-});
+Post.belongsTo(User);
+
+Post.sync({force:false})
+
+
 
 var Board = sequelize.define('board', {
-  id: Sequelize.INTEGER,
   
 });
+
+Board.sync({force: false});
+
+

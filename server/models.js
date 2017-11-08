@@ -29,7 +29,7 @@ exports.users = {
   },
 
   post: function(req, res) {
-    db.userSchema.create(
+    db.userSchema.create( //user.create etc sql query are all promises 
       {
         _id: req.body.id,
         name: req.body.name,
