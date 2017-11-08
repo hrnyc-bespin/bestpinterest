@@ -54,28 +54,6 @@ class App extends React.Component {
           <nav className="navbar">
             <Logo />
             <p className="navbar_title">Bespinterest</p>
-<<<<<<< HEAD
-						<ul className="navbar_ul">
-							<li>
-								<Link className="link" to={'/wall'} onClick={() => this.setState({isLoggedIn: true})}>Home</Link>
-							</li>
-							<li>
-								<Link className="link" to={'/user'}>User</Link>
-							</li>
-						</ul>
-					</nav>
-					<Route
-						path="/"
-						render={() => this.state.isLoggedIn ? <Main isLoggedIn={this.state.isLoggedIn} user={this.state.user} posts={this.state.posts} /> : 
-             <Login handleLogin={this.handleLogin} /> }
-					/>
-					<Route path="wall" render={() => <Wall />} />
-					<Route path="user" render={() => <Wall />} />
-				</div>
-			</BrowserRouter>
-		);
-	}
-=======
             <ul className="navbar_ul">
               <li>
                 <Link className="link" to={'/wall'}>
@@ -112,7 +90,6 @@ class App extends React.Component {
       </HashRouter>
     );
   }
->>>>>>> fb2
 }
 
 export default App;
