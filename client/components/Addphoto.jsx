@@ -21,7 +21,6 @@ class Addphoto extends React.Component {
 
   handleAddphoto(e) {
     e.preventDefault();
-    console.log('working?');
     this.props.handleAddphoto(this.state.photoUrl, this.state.description);
   }
 
