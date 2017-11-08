@@ -38,4 +38,4 @@ router.get('/login', function(req, res) {
 // 		});
 // });
 
-module.exports = controller;
+module.exports = router;

@@ -1,4 +1,4 @@
-var models = require('../db/db.js');
+var db = require('../db/db.js');
 var express = require('express');
 var router = express.Router();
 
@@ -28,4 +28,4 @@ router.post('/boards', function(req, res) {
 // 		});
 // });
 
-module.exports = controller;
+module.exports = router;
