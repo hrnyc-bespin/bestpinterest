@@ -1,56 +1,137 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 body {
-	line-height: 1;
+  line-height: 1;
 }
-ol, ul {
-	list-style: none;
+ol,
+ul {
+  list-style: none;
 }
-blockquote, q {
-	quotes: none;
+blockquote,
+q {
+  quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 #app {
   height: 100vh;
   width: 100vw;
-  background-color: #BA4316;
+  background-color: #ba4316;
 }
 
 /* Navbar */
@@ -69,13 +150,13 @@ table {
 }
 
 .navbar_ul li {
-  color: #F5F5F5;
+  color: #f5f5f5;
   align-self: center;
   text-decoration: none;
 }
 
 .link {
-  color: #F5F5F5;
+  color: #f5f5f5;
   text-decoration: none;
   margin: 0 12px;
 }
@@ -90,16 +171,16 @@ table {
 
 .navbar_logo {
   border-radius: 16px;
-  background: #F5F5F5;
+  background: #f5f5f5;
   height: 32px;
   width: 32px;
   margin: 8px 16px;
 }
 
 .navbar_title {
-  color: #F5F5F5;
+  color: #f5f5f5;
   align-self: center;
-  font-family: "Contrail One", cursive;
+  font-family: 'Contrail One', cursive;
   letter-spacing: 2px;
   font-size: 24px;
   margin: 0 24px 0 24px;
@@ -110,7 +191,7 @@ table {
 .login_main {
   display: flex;
   justify-content: center;
-  background-image: url("../assets/ccbg.jpg");
+  background-image: url('../assets/ccbg.jpg');
   background-size: cover;
   height: calc(100vh - 48px);
 }
@@ -122,7 +203,7 @@ table {
   height: 240px;
   width: 440px;
   margin-bottom: 40px;
-  background-color: rgba(73,73,73, 0.85);
+  background-color: rgba(73, 73, 73, 0.85);
   filter: brightness(0.8);
   border-radius: 8px;
   box-shadow: 0 0 4px;
@@ -131,9 +212,9 @@ table {
 .login_header {
   align-self: center;
   margin: 40px 0 24px 0;
-  font-family: "Contrail One", cursive;
-  font-size: 48px; 
-  color: #F5F5F5;
+  font-family: 'Contrail One', cursive;
+  font-size: 48px;
+  color: #f5f5f5;
 }
 
 .login_form {
@@ -155,7 +236,7 @@ table {
   background: none;
   border: none;
   margin-top: 8px;
-  color: #F5F5F5;
+  color: #f5f5f5;
   font-size: 14 px;
   outline: none;
 }
@@ -181,7 +262,7 @@ table {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  background-color: #BA4316;
+  background-color: #ba4316;
 }
 
 /* Posts */
@@ -189,7 +270,7 @@ table {
   position: relative;
   margin: 16px;
   max-width: 360px;
-  background-color: #1E1D29;
+  background-color: #1e1d29;
   border-radius: 8px;
   box-shadow: 0 0 2px;
   display: flex;
@@ -209,8 +290,12 @@ table {
   bottom: 0;
   height: 48px;
   padding: 8px;
-  background-color: rgba(73,73,73, 0.85);
+  background-color: rgba(73, 73, 73, 0.85);
   border-radius: 0 0 8px 8px;
   object-fit: cover;
-  color: #F5F5F5;
+  color: #f5f5f5;
+}
+
+.addPhoto_form {
+  position: fixed;
 }

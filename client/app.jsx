@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, browserHistory } from 'react-router';
 import { Link, BrowserRouter, IndexRoute, HashRouter } from 'react-router-dom';
+import Popup from 'react-popup';
 import Wall from './components/Wall.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Logo from './assets/Logo.jsx';
 import Main from './components/Main.jsx';
+import Addphoto from './components/Addphoto.jsx';
 
 require('./stylesheets/main.css');
 
@@ -16,11 +18,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showPopup: false,
       isLoggedIn: false,
       user: {},
       posts: []
     };
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleAddphoto = this.handleAddphoto.bind(this);
   }
 
   ComponentDidMount() {
@@ -28,8 +32,8 @@ class App extends React.Component {
   }
 
   getData() {
-    this.setState({ user: users, posts: posts });
-    console.log(this.state);
+    this.setState({ user: Users, posts: Posts });
+    // console.log(this.state);
     // axios.get('/posts')
     // .then((data) => {
     //   console.log(data)
@@ -40,13 +44,22 @@ class App extends React.Component {
     console.log('username: ', username);
     console.log('password: ', password);
   }
-  //need to add history
-  //in router add history={browserHistory} this will prevent reach to server??
-  //default page
-  // <IndexRoute component={Login} />
-  // <h1>Let us begin</h1>
-  // <h3>Bespinterest is BestPinterest</h3>
-  // <Login handleLogin={this.handleLogin} />
+
+  togglePopup() {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  }
+
+  handleAddphoto(url, description) {
+    console.log('photo', description);
+    this.setState({
+      showPopup: false
+    });
+  }
+
+  handleClick() {}
+
   render() {
     return (
       <HashRouter>
@@ -61,12 +74,16 @@ class App extends React.Component {
                 </Link>
               </li>
               <li>
-                <Link className="link" to={'/user'}>
+                <Link className="link" to={'/profile'}>
                   User
                 </Link>
               </li>
+              <li onClick={() => this.togglePopup()}>Add Photo</li>
             </ul>
           </nav>
+          {this.state.showPopup ? (
+            <Addphoto handleAddphoto={this.handleAddphoto} />
+          ) : null}
           <Route
             exact
             path="/"
@@ -83,9 +100,11 @@ class App extends React.Component {
           />
           <Route
             path="/wall"
-            render={() => <Wall posts={this.state.posts} />}
+            render={() => (
+              <Main posts={this.state.posts} handleClick={this.handleClick} />
+            )}
           />
-          <Route path="/user" render={() => <Main />} />
+          <Route path="/profile" render={() => <Profile />} />
         </div>
       </HashRouter>
     );
