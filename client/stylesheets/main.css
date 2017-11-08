@@ -281,12 +281,7 @@ table {
 .post_main {
   position: relative;
   margin: 16px;
-<<<<<<< Updated upstream
-  max-width: 360px;
-  background-color: #1e1d29;
-=======
   background-color: #1E1D29;
->>>>>>> Stashed changes
   border-radius: 8px;
   box-shadow: 0 0 2px;
   display: flex;
