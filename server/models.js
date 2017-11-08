@@ -2,7 +2,7 @@ var db = require('./db/db.js');
 
 exports.posts = {
   get: function(req, res) {
-    res.send('posts data');
+    res.send('post');
   },
 
   post: function(req, res) {

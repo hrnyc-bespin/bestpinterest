@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, browserHistory } from 'react-router';
-import { Link, BrowserRouter, IndexRoute } from 'react-router-dom';
+import { Link, BrowserRouter, IndexRoute, HashRouter } from 'react-router-dom';
 import Wall from './components/Wall.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Logo from './assets/Logo.jsx';
 import Main from './components/Main.jsx';
+
 require('./stylesheets/main.css');
 
 const axios = require('axios');
@@ -27,7 +28,8 @@ class App extends React.Component {
   }
 
   getData() {
-    // console.log(this.state.user);
+    this.setState({ user: users, posts: posts });
+    console.log(this.state);
     // axios.get('/posts')
     // .then((data) => {
     //   console.log(data)
@@ -47,11 +49,12 @@ class App extends React.Component {
   // <Login handleLogin={this.handleLogin} />
   render() {
     return (
-      <BrowserRouter>
+      <HashRouter>
         <div>
           <nav className="navbar">
             <Logo />
             <p className="navbar_title">Bespinterest</p>
+<<<<<<< HEAD
 						<ul className="navbar_ul">
 							<li>
 								<Link className="link" to={'/wall'} onClick={() => this.setState({isLoggedIn: true})}>Home</Link>
@@ -72,6 +75,44 @@ class App extends React.Component {
 			</BrowserRouter>
 		);
 	}
+=======
+            <ul className="navbar_ul">
+              <li>
+                <Link className="link" to={'/wall'}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link className="link" to={'/user'}>
+                  User
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <Route
+            exact
+            path="/"
+            render={() =>
+              this.state.isLoggedIn ? (
+                <Main
+                  isLoggedIn={this.state.isLoggedIn}
+                  user={this.state.user}
+                  posts={this.state.posts}
+                />
+              ) : (
+                <Login handleLogin={this.handleLogin} />
+              )}
+          />
+          <Route
+            path="/wall"
+            render={() => <Wall posts={this.state.posts} />}
+          />
+          <Route path="/user" render={() => <Main />} />
+        </div>
+      </HashRouter>
+    );
+  }
+>>>>>>> fb2
 }
 
 export default App;
