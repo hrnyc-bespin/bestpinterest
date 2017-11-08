@@ -26,11 +26,11 @@ class App extends React.Component {
       isLoggedIn: true,
       user: {},
       posts: [],
-      photoUrl: '',
-      description: ''
+      boards: []
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleAddphoto = this.handleAddphoto.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
   ComponentDidMount() {
@@ -38,17 +38,39 @@ class App extends React.Component {
   }
 
   getData() {
-    this.setState({ user: Users, posts: Posts });
-    // console.log(this.state);
-    // axios.get('/posts')
-    // .then((data) => {
-    //   console.log(data)
-    // this.setState({data: data})
+    axios.get('/posts').then(data => {
+      this.setState({ posts: data });
+    });
   }
 
   handleLogin(username, password) {
+    axios.get(
+      '/login',
+      (params: {
+        username: username,
+        password: password
+      }).then(data => {
+        axios.get('/board', (params: { id: data.boards })).then(data => {
+          this.setState({ boards: data });
+        });
+      })
+    );
     console.log('username: ', username);
     console.log('password: ', password);
+  }
+
+  handleSignup(username, password) {
+    axios
+      .post('/signup', {
+        username: username,
+        password: password
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   togglePopup() {
@@ -59,9 +81,7 @@ class App extends React.Component {
 
   handleAddphoto(url, description) {
     this.setState({
-      showPopup: false,
-      photoUrl: url,
-      description: description
+      showPopup: false
     });
 
     axios
@@ -69,12 +89,20 @@ class App extends React.Component {
         photourl: url,
         info: description
       })
-      .then(function(res) {
+      .then(res => {
         console.log(res);
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log(error);
-      });
+      })
+      .then(
+        axios
+          .get('/post')
+          .then(data => {
+            setState({ posts: data });
+          })
+          .catch(error => console.log(error))
+      );
   }
 
   handleClick() {}
@@ -105,7 +133,10 @@ class App extends React.Component {
               <Addphoto handleAddphoto={this.handleAddphoto} />
             ) : null
           ) : (
-            <Login handleLogin={this.handleLogin} />
+            <Login
+              handleLogin={this.handleLogin}
+              handleSignup={this.handleSignup}
+            />
           )}
           <Route
             exact
@@ -118,7 +149,10 @@ class App extends React.Component {
                   posts={this.state.posts}
                 />
               ) : (
-                <Login handleLogin={this.handleLogin} />
+                <Login
+                  handleLogin={this.handleLogin}
+                  handleSignup={this.handleSignup}
+                />
               )}
           />
           <Route
@@ -127,7 +161,10 @@ class App extends React.Component {
               <Main posts={this.state.posts} handleClick={this.handleClick} />
             )}
           />
-          <Route path="profile" render={() => <Profile />} />
+          <Route
+            path="profile"
+            render={() => <Profile boards={this.state.boards} />}
+          />
         </div>
       </HashRouter>
     );
