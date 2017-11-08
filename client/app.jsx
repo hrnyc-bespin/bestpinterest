@@ -23,9 +23,11 @@ class App extends React.Component {
     super(props);
     this.state = {
       showPopup: false,
-      isLoggedIn: false,
+      isLoggedIn: true,
       user: {},
-      posts: []
+      posts: [],
+      photoUrl: '',
+      description: ''
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleAddphoto = this.handleAddphoto.bind(this);
@@ -56,10 +58,23 @@ class App extends React.Component {
   }
 
   handleAddphoto(url, description) {
-    console.log('photo', description);
     this.setState({
-      showPopup: false
+      showPopup: false,
+      photoUrl: url,
+      description: description
     });
+
+    axios
+      .post('/post', {
+        photourl: url,
+        info: description
+      })
+      .then(function(res) {
+        console.log(res);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   handleClick() {}
@@ -73,12 +88,12 @@ class App extends React.Component {
             <p className="navbar_title">Bespinterest</p>
             <ul className="navbar_ul">
               <li>
-                <Link className="link" to={'/wall'}>
+                <Link className="link" to={'wall'}>
                   Home
                 </Link>
               </li>
               <li>
-                <Link className="link" to={'/profile'}>
+                <Link className="link" to={'profile'}>
                   User
                 </Link>
               </li>
@@ -94,7 +109,7 @@ class App extends React.Component {
           )}
           <Route
             exact
-            path="/"
+            path=""
             render={() =>
               this.state.isLoggedIn ? (
                 <Main
@@ -107,12 +122,12 @@ class App extends React.Component {
               )}
           />
           <Route
-            path="/wall"
+            path="wall"
             render={() => (
               <Main posts={this.state.posts} handleClick={this.handleClick} />
             )}
           />
-          <Route path="/profile" render={() => <Profile />} />
+          <Route path="profile" render={() => <Profile />} />
         </div>
       </HashRouter>
     );
