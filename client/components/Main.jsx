@@ -18,7 +18,7 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div className="">
+      <div className="main">
         <Wall posts={Posts.posts} showInfo={true} handleClick={() => {}} />
       </div>
     );
