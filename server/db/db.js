@@ -1,15 +1,8 @@
 const Sequelize = require('sequelize');
-<<<<<<< Updated upstream
 const sequelize = new Sequelize('bespin', 'bespin', 'bespinpassword', {
   host: 'bespin.cpeh9sojapsn.us-east-2.rds.amazonaws.com',
   dialect: 'postgres',
   logging: false,
-=======
-const sequelize = new Sequelize('bespin', 'bes', 'passwordmajing', {
-  host: 'bes.csm1qfcrhywi.us-east-2.rds.amazonaws.com',
-  dialect: 'postgres',
-  logging: false // DELETE 
->>>>>>> Stashed changes
 });
 
 sequelize
