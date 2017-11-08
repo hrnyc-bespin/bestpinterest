@@ -13,6 +13,18 @@ router.post('/post', function(req, res) {
 			res.redirect('/');
 		});
 });
+
+router.get('/post', function(req, res) {
+	db.Post
+		.findAll()
+		.then(function(data) {
+			res.send(200, data);
+		})
+		.catch(function(err) {
+			res.send(null);
+		});
+});
+
 //
 // router.get('/:user_id/posts/:post_id/destroy', function(req, res) {
 // 	db.Post
@@ -26,4 +38,4 @@ router.post('/post', function(req, res) {
 // 		});
 // });
 
-module.exports = router;
+module.exports = controller;

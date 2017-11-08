@@ -5,7 +5,8 @@ var router = express.Router();
 router.post('/boards', function(req, res) {
 	db.boards
 		.create({
-			name: req.body.name
+			name: req.body.name,
+			user_id: req.body.user_id
 		})
 		.then(function() {
 			console.log('Board created!');
@@ -13,6 +14,7 @@ router.post('/boards', function(req, res) {
 			res.redirect('/');
 		});
 });
+
 //
 // router.get('/:user_id/boards/:board_id/destroy', function(req, res) {
 // 	db.Board
@@ -26,4 +28,4 @@ router.post('/boards', function(req, res) {
 // 		});
 // });
 
-module.exports = router;
+module.exports = controller;

@@ -1,24 +1,13 @@
-var models = require('./models.js');
+var controllers = require('./controllers');
 var router = require('express').Router();
 
-<<<<<<< HEAD
-router.get('/posts', models.posts.get);
-router.post('/posts', models.posts.post);
+router.get('/posts', controllers.posts.get);
+router.post('/posts', controllers.posts.post);
 
-router.get('/users', models.users.get);
-router.post('/users', models.users.post);
+router.get('/users', controllers.users.get);
+router.post('/users', controllers.users.post);
 
-router.get('/boards', models.boards.get);
-router.post('/boards', models.boards.post);
-=======
-router.get('/posts', controller.posts.get);
-router.post('/posts', controller.posts.post);
-
-router.get('/users', controller.users.get);
-router.post('/users', controller.users.post);
-
-router.get('/boards', controller.boards.get);
-router.post('/boards', controller.boards.post);
->>>>>>> routes
+router.get('/boards', controllers.boards.get);
+router.post('/boards', controllers.boards.post);
 
 module.exports = router;
