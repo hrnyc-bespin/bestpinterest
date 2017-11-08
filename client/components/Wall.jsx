@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Post from './Post.jsx';
 
+// For testing purposes only
+
 /**
  * Photowall used in both the main page and on a per user basis
  * Expects an array of posts from the wrapping app component
@@ -15,7 +17,7 @@ class Wall extends React.Component {
 
 	render() {
 		return (
-			<div className="wall">
+			<div className="wall_main">
 				{this.props.posts.map((post, i) => (
 					<Post
 						key={i}

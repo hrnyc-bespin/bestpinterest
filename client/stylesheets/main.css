@@ -50,12 +50,13 @@ table {
 #app {
   height: 100vh;
   width: 100vw;
+  background-color: #BA4316;
 }
 
 /* Navbar */
 
 .navbar {
-  height: 48px;
+  height: 64px;
   background: #1e1d29;
   box-shadow: -4px 1px 1px black;
   display: flex;
@@ -100,7 +101,7 @@ table {
   align-self: center;
   font-family: "Contrail One", cursive;
   letter-spacing: 2px;
-  font-size: 18px;
+  font-size: 24px;
   margin: 0 24px 0 24px;
 }
 
@@ -173,4 +174,43 @@ table {
 
 .login_signup {
   align-self: flex-end;
+}
+
+/* Wall */
+.wall_main {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  background-color: #BA4316;
+}
+
+/* Posts */
+.post_main {
+  position: relative;
+  margin: 16px;
+  max-width: 360px;
+  background-color: #1E1D29;
+  border-radius: 8px;
+  box-shadow: 0 0 2px;
+  display: flex;
+  flex-flow: column;
+}
+
+.post_main img {
+  height: 450px;
+  width: 360px;
+  border-radius: 8px;
+  box-shadow: 0 0 2px;
+  object-fit: cover;
+}
+
+.post_info {
+  position: absolute;
+  bottom: 0;
+  height: 48px;
+  padding: 8px;
+  background-color: rgba(73,73,73, 0.85);
+  border-radius: 0 0 8px 8px;
+  object-fit: cover;
+  color: #F5F5F5;
 }

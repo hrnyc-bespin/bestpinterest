@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import Wall from './Wall.jsx';
 import Profile from './Profile.jsx';
 
+// For testing purposes only
+import Users from '../testData/usersJs.js';
+import Posts from '../testData/postsJs.js';
+
 /**
  * TODO: Document this
  */
@@ -15,9 +19,7 @@ class Main extends React.Component {
   render() {
     return(
       <div className="">
-        <h1>Primary app screen to host all other components aside from login</h1>
-        <h1>This should receive most of it's data from above, may be able to shift this to a functional stateless</h1>
-        <Wall posts={[]} showInfo={true} handleClick={() => {}} />
+        <Wall posts={Posts.posts} showInfo={true} handleClick={() => {}} />
       </div>
     );
   }
