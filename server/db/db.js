@@ -1,40 +1,55 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('bespin', 'bes', 'passwordmajing', {
-  host: 'bes.csm1qfcrhywi.us-east-2.rds.amazonaws.com',
-  dialect: 'postgres'
+const sequelize = new Sequelize('bespin', 'bespin', 'bespinpassword', {
+  host: 'bespin.cpeh9sojapsn.us-east-2.rds.amazonaws.com',
+  dialect: 'postgres',
+  logging: false,
 });
 
 sequelize
 .authenticate()
 .then(() => {
-  console.log('connection')
+  console.log('connected')
 })
 .catch(err => console.error('not connected'));
 
 
-var User = sequelize.define('user', {
+var User = sequelize.define('users', {
    username: Sequelize.STRING,
-   profilePic: Sequelize.STRING,
-   info: Sequelize.STRING
+   profilepic: Sequelize.STRING,
+   info: Sequelize.STRING,
+   id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  }
  });
  
- User.sync({force:false})
+  User.sync({force:false})
 
 var Post = sequelize.define('post', {
-  photoUrl: Sequelize.STRING,
-  info: Sequelize.STRING
+  photourl: Sequelize.STRING,
+  info: Sequelize.STRING,
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  }
 });
 
-Post.belongsTo(User);
+  Post.sync({force:false})
 
-Post.sync({force:false})
-
-
-
-var Board = sequelize.define('board', {
-  
+var Board = sequelize.define('board', { 
+  name: Sequelize.STRING,
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  }
 });
 
-Board.sync({force: false});
+  User.hasMany(Board, {as: 'boards'});
+  Board.hasMany(Post, {foreignKey: 'id'});
+
+  Board.sync({force: false});
 
 
