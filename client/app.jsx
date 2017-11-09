@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom';
 // import { Route, browserHistory } from 'react-router';
 // import { Link, BrowserRouter, IndexRoute, HashRouter } from 'react-router-dom';
 // import Popup from 'react-popup';
-import Wall from './components/Wall.jsx';
+// import Wall from './components/Wall.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Logo from './assets/Logo.jsx';
 import Main from './components/Main.jsx';
+<<<<<<< Updated upstream
 import Clickphoto from './components/Clickphoto.jsx';
+=======
+import Addphoto from './components/Addphoto.jsx';
+// import Clickphoto from './components/Clickphoto.jsx';
+>>>>>>> Stashed changes
 
 // For testing purposes only
 import Users from './testData/usersJs.js';
@@ -33,7 +38,7 @@ class App extends React.Component {
     this.handleAddBoard = this.handleAddBoard.bind(this);
     // this.handleAddphoto = this.handleAddphoto.bind(this);
     this.handlePin = this.handlePin.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClickphoto = this.handleClickphoto.bind(this);
   }
 
   handleSignup(username, password) {
@@ -86,6 +91,8 @@ class App extends React.Component {
       .post('/board', { name: boardName, user_id: this.state.user.id })
       .then(res => console.log(res))
       .catch(err => console.log(err));
+    console.log('userId', this.state.user.id);
+    console.log('boardName', boardName);
   }
 
   togglePopup() {
@@ -118,18 +125,20 @@ class App extends React.Component {
   //     });
   // }
 
-  handlePin(postid, boardid) {
+  handlePin(postiId, boardId) {
     axios
-      .post('/bespin', { postid: postid, boardid: boardid })
+      .post('/bespin', { postid: postId, boardid: boardId })
       .then(res => {
         console.log(res);
       })
       .catch(err => {
         console.log(err);
       });
+    console.log('postId', postId); // Passed up from Profile.jsx
+    console.log('boardId', boardId);
   }
 
-  handleClick(photoUrl, photoInfo) {
+  handleClickphoto(photoUrl, photoInfo) {
     this.setState({
       showphoto: !this.state.showphoto,
       clickedPhoto: { photoUrl: photoUrl, photoInfo: photoInfo }
@@ -153,6 +162,8 @@ class App extends React.Component {
             user={this.state.user}
             posts={this.state.posts}
             boards={this.state.boards}
+            handlePin={this.handlePin}
+            handleAddBoard={this.handleAddBoard}
           />
         ) : (
           <Login
