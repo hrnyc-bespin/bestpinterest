@@ -23,7 +23,7 @@ class Profile extends React.Component {
   }
 
   handleAddBoard(e) {
-    console.log(e.target.value);
+    console.log(e);
   }
 
   render() {
@@ -69,6 +69,7 @@ class Profile extends React.Component {
         <div className="user_wall">
           {this.state.posts.length > 0 ? (
             <Wall
+              boardId={0}
               posts={Posts.posts}
               showInfo={true}
               handleClick={() => console.log('tbd')}
@@ -88,7 +89,9 @@ Profile.propTypes = {
   username: PropTypes.string,
   profilePic: PropTypes.string,
   userInfo: PropTypes.string,
-  boards: PropTypes.array
+  boards: PropTypes.array,
+  handleBespin: PropTypes.func,
+  handleFetchBoard: PropTypes.func
 };
 
 export default Profile;
