@@ -30,7 +30,7 @@ class Profile extends React.Component {
     return (
       <div>
         <div className="user_summary">
-          <img src={this.props.profilePic} alt={this.props.username}/>
+          <img src={this.props.profilePic} alt={this.props.username} />
           <div className="user_details">
             <p className="user_username">{this.props.username}</p>
             <p className="user_info">{this.props.userInfo}</p>
@@ -38,17 +38,46 @@ class Profile extends React.Component {
         </div>
         <div className="user_boards">
           <ul className="user_boards_navbar">
-            <li className="link" key={-1} value={-1} onClick={this.handleBoardClick}>Public Board</li>
-            {this.props.boards.map((board) => 
-              <li className="link" key={board.id} value={board.id} onClick={this.handleBoardClick}>{board.name}</li>) }
-            <li className="link" key={this.props.boards.length + 1} value={this.props.boards.length + 1} onClick={this.handleAddBoard}>+ Add a board</li>
+            <li
+              className="link"
+              key={-1}
+              value={-1}
+              onClick={this.handleBoardClick}
+            >
+              Public Board
+            </li>
+            {this.props.boards.map(board => (
+              <li
+                className="link"
+                key={board.id}
+                value={board.id}
+                onClick={this.handleBoardClick}
+              >
+                {board.name}
+              </li>
+            ))}
+            <li
+              className="link"
+              key={this.props.boards.length + 1}
+              value={this.props.boards.length + 1}
+              onClick={this.handleAddBoard}
+            >
+              + Add a board
+            </li>
           </ul>
         </div>
         <div className="user_wall">
-          {this.state.posts.length > 0 ? <Wall posts={Posts.posts} showInfo={true} handleClick={() => console.log('tbd')} /> :
+          {this.state.posts.length > 0 ? (
+            <Wall
+              posts={Posts.posts}
+              showInfo={true}
+              handleClick={() => console.log('tbd')}
+            />
+          ) : (
             <div className="user_empty_wall">
               <p>Add a board!</p>
-            </div>}
+            </div>
+          )}
         </div>
       </div>
     );

@@ -10,7 +10,7 @@ import Posts from '../testData/postsJs.js';
 /**
  * TODO: Document this
  */
-
+//responsible for rendering all the page
 class Main extends React.Component {
   constructor(props) {
     super(props);
