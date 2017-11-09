@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Handles form submissions
-class Addphoto extends React.Component {
+class AddPhoto extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,8 +42,8 @@ class Addphoto extends React.Component {
   }
 }
 
-Addphoto.propTypes = {
+AddPhoto.propTypes = {
   handleAddPhoto: PropTypes.func
 };
 
-export default Addphoto;
+export default AddPhoto;

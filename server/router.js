@@ -1,5 +1,6 @@
 var routes = require('./routes');
 var router = require('express').Router();
+var url = require('url');
 var db = require('./db/db.js');
 
 //OK
@@ -56,40 +57,35 @@ router.post('/bespin', function(req, res) {
 
 //OK
 //upon login receieve username and password,
-//serve all public posts,
 //serve board ids and board names that belong to user
 //serve user id, name
 router.get('/login', function(req, res) {
-	var responseObj = {};
-
+  var responseObj = {};
+  let reqParams = url.parse(req.url, true).query;
 	//findOne returns one object
 	//findAll returns an array of objects
 	db.User
 		.findOne({
-			where: { id: {req.body.id} }
-		)
-
-		.then(function(data) {
-			responseObj.user = data;
-
-			return db.Post.findAll()
-		})
-
-    .then(function(data) {
-      responseObj.post = data;
-
-			return db.Board.findAll({
-		      where: { id: {req.body.id} }
-		    )
+      where: { username: reqParams.username}
     })
 
-		.then(function(data) {
-			responseObj.board = data;
+		.then(function(data) { // This is now the found user
+      responseObj.user = data;
+
+			return db.Board.findAll({
+        where: { id: data.id }
+      })
+    })
+
+		.then(function(data) { // Check for boards, pass back empty array if null
+			responseObj.boards = data || [];
 			res.send(200, responseObj);
-		})
+    })
+    
 		.catch(function(err) {
-			console.log('Incorrect username or password');
-			res.send(400);
+      console.log('Incorrect username or password');
+      console.log(err);
+			res.sendStatus(401);
 		});
 });
 
@@ -118,14 +114,15 @@ router.post('/signup', function(req, res) {
 //serve -1 = all
 //else serve all posts filtered by board id
 router.get('/board', function(req, res) {
-	req.body.board_id === -1 ?
-  db.Board
+  let reqParams = url.parse(req.url, true);
+	reqParams.boardId === -1 ?
+  db.Post
     .findAll()
     .then(function(data){
       res.send(200, data);
     })
     .catch(function(err){
-      res.send(null);
+      res.sendStatus(400);
     }) :
   db.Board
 		.find({ where: {id: `${req.body.board_id}`}})
@@ -133,7 +130,7 @@ router.get('/board', function(req, res) {
 			res.send(200, data);
 		})
 		.catch(function(err) {
-			res.send(null);
+			res.sendStatus(400);
 		});
 });
 

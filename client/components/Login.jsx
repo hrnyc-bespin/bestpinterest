@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 require('../stylesheets/main.css');
 
-// Handles form submissions
+/**
+ * Houses two controlled components managed in its state. 
+ */
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +29,7 @@ class Login extends React.Component {
     this.props.handleLogin(this.state.username, this.state.password);
   }
 
+  // If user wishes to signup, rely on main.js 
   handleSignup(e) {
     e.preventDefault();
     this.props.handleSignup(this.state.username, this.state.password);
@@ -41,7 +44,7 @@ class Login extends React.Component {
             <input type="text" name="username" onChange={this.onChange} placeholder="Username" />
             <input type="password" name="password" onChange={this.onChange} placeholder="Password" />
             <button className="login_button" onClick={this.handleLogin}>
-              Submit
+              Login
             </button>
             <button className="login_signup" onClick={this.handleSignup}>
               Sign up

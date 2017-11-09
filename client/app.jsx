@@ -4,22 +4,20 @@ import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Logo from './assets/Logo.jsx';
 import Main from './components/Main.jsx';
-import Addphoto from './components/Addphoto.jsx';
+require('./stylesheets/main.css');
 
 // For testing purposes only
 import Users from './testData/usersJs.js';
 import Posts from './testData/postsJs.js';
-require('./stylesheets/main.css');
 
 const axios = require('axios');
-//responsible for getting all the data
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // showPhoto: false,
-      isLoggedIn: true,
-      user: Users.users[0]
+      isLoggedIn: false,
+      user: null
     };
     this.handleSignup = this.handleSignup.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -40,41 +38,28 @@ class App extends React.Component {
     console.log('signup: ', username, password);
   }
 
-  handleLogin(username, password) {
-    axios
-      .get('/login', {
-        params: {
-          username: username,
-          password: password
-        }
-      })
-      .then(data => {
+  handleLogin(username1, password1) {
+    console.log(`user: ${username1} pw: ${password1}`);
+    axios.get('login', {
+      params: {
+        username: username1,
+        password: password1
+      }
+    })
+      .then(({data}) => {
         this.setState({
-          user: data.User,
-          boards: data.Board,
-          posts: data.Post,
+          user: data.user,
           isLoggedIn: true
         });
       })
-      .then(res => console.log(res))
       .catch(err => console.log(err));
-    console.log('login ', username);
   }
 
   handleLogout() {
     this.setState({
       isLoggedIn: false,
-      user: {}
+      user: null
     });
-  }
-
-  handleAddBoard(boardName) {
-    axios
-      .post('/board', { name: boardName, user_id: this.state.user.id })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-    console.log('userId', this.state.user.id);
-    console.log('boardName', boardName);
   }
 
   render() {
@@ -93,7 +78,6 @@ class App extends React.Component {
           <Main
             isLoggedIn={this.state.isLoggedIn}
             user={this.state.user}
-            handleAddBoard={this.handleAddBoard}
           />
         ) : (
           <Login

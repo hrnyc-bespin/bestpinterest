@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Clickphoto extends React.Component {
+class ClickPhoto extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -24,4 +24,4 @@ class Clickphoto extends React.Component {
   }
 }
 
-export default Clickphoto;
+export default ClickPhoto;
