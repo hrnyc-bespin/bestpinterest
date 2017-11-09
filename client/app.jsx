@@ -1,19 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { Route, browserHistory } from 'react-router';
-// import { Link, BrowserRouter, IndexRoute, HashRouter } from 'react-router-dom';
-// import Popup from 'react-popup';
-import Wall from './components/Wall.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Logo from './assets/Logo.jsx';
 import Main from './components/Main.jsx';
-import Clickphoto from './components/Clickphoto.jsx';
+import Addphoto from './components/Addphoto.jsx';
 
 // For testing purposes only
 import Users from './testData/usersJs.js';
 import Posts from './testData/postsJs.js';
-
 require('./stylesheets/main.css');
 
 const axios = require('axios');
@@ -22,18 +17,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showPhoto: false,
+      // showPhoto: false,
       isLoggedIn: true,
-      user: Users.users[0],
-      posts: [],
-      boards: []
+      user: Users.users[0]
     };
     this.handleSignup = this.handleSignup.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-    this.handleAddBoard = this.handleAddBoard.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.handlePin = this.handlePin.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   handleSignup(username, password) {
@@ -75,9 +64,7 @@ class App extends React.Component {
   handleLogout() {
     this.setState({
       isLoggedIn: false,
-      user: {},
-      posts: [],
-      boards: []
+      user: {}
     });
   }
 
@@ -86,54 +73,8 @@ class App extends React.Component {
       .post('/board', { name: boardName, user_id: this.state.user.id })
       .then(res => console.log(res))
       .catch(err => console.log(err));
-  }
-
-  togglePopup() {
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
-  }
-
-  // This was moved to Main.jsx
-  // handleAddphoto(url, description) {
-  //   this.setState({
-  //     showPopup: false
-  //   });
-
-  //   axios
-  //     .post('/post', {
-  //       photourl: url,
-  //       info: description
-  //     })
-  //     .then(res => {
-  //       console.log(res);
-  //       axios
-  //         .get('/post')
-  //         .then(axios.get('/post'))
-  //         .then(data => this.setState({ posts: data }))
-  //         .catch(error => console.log(error));
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }
-
-  handlePin(postid, boardid) {
-    axios
-      .post('/bespin', { postid: postid, boardid: boardid })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  handleClick(photoUrl, photoInfo) {
-    this.setState({
-      showphoto: !this.state.showphoto,
-      clickedPhoto: { photoUrl: photoUrl, photoInfo: photoInfo }
-    });
+    console.log('userId', this.state.user.id);
+    console.log('boardName', boardName);
   }
 
   render() {
@@ -143,16 +84,16 @@ class App extends React.Component {
           <Logo />
           <p className="navbar_title">Bespinterest</p>
           <ul className="navbar_ul">
-            {this.state.isLoggedIn ?
-              <li onClick={this.handleLogout}>Logout</li> : null} 
+            {this.state.isLoggedIn ? (
+              <li onClick={this.handleLogout}>Logout</li>
+            ) : null}
           </ul>
         </nav>
         {this.state.isLoggedIn ? (
           <Main
             isLoggedIn={this.state.isLoggedIn}
             user={this.state.user}
-            posts={this.state.posts}
-            boards={this.state.boards}
+            handleAddBoard={this.handleAddBoard}
           />
         ) : (
           <Login
