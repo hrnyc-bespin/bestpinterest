@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Wall from './Wall.jsx';
 import Profile from './Profile.jsx';
-import Addphoto from './Addphoto.jsx';
+import AddPhoto from './AddPhoto.jsx';
 
 // For testing purposes only
 import Users from '../testData/usersJs.js';
@@ -31,8 +31,18 @@ class Main extends React.Component {
   }
 
   ComponentDidMount() {
-    axios.get('/post').then(res => this.setState({ posts: res.body.data }));
-    axios.get('/board', { params: { boardId: this.props.user.id } }).then();
+    axios.get('/board', { 
+      params: { 
+        boardId: -1
+      } 
+    }).then((response) => {
+      console.log(response);
+      // this.setState({
+      //   posts: response
+      // })
+    }).catch((err) => {
+      console.log(err)
+    });
   }
   // User pressed on heart over a photo
   handleBespin(postId, boardId) {
@@ -41,7 +51,9 @@ class Main extends React.Component {
     console.log('postId', postId); // Passed up from Profile.jsx
     console.log('boardId', boardId);
     axios
-      .post('/bespin', { postid: postId, boardid: boardId })
+      .post('/bespin', { 
+        postid: postId, 
+        boardid: boardId })
       .then(res => {
         console.log(res);
       })
@@ -107,16 +119,16 @@ class Main extends React.Component {
     return (
       <div className="main">
         <Profile
-          username={Users.users[0].username}
-          profilePic={Users.users[0].profilePic}
-          userInfo={Users.users[0].info}
-          boards={[{ id: 0, name: 'hey' }, { id: 1, name: 'yusaku' }]}
+          username={this.props.user.username}
+          profilePic={this.props.user.profilepic}
+          userInfo={this.props.user.info}
+          boards={[]}
           handleBespin={this.handleBespin}
           handleFetchBoard={this.handleFetchBoard}
           handleMakeBoard={this.handleMakeBoard}
         />
         {this.state.showAddPhoto ? (
-          <Addphoto handleAddPhoto={this.handleAddPhoto} />
+          <AddPhoto handleAddPhoto={this.handleAddPhoto} />
         ) : null}
         <button className="add_photo_button" onClick={this.onAddPhoto}>
           +

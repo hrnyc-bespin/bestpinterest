@@ -11,6 +11,7 @@ var logger = (req, res, next) => {
 
 app.use(logger);
 app.use(express.static(__dirname + '/dist'));
+app.use(bodyParser.json());
 app.use('/', router);
 
 app.listen(process.env.port || 3000, () =>
