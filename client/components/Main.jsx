@@ -23,16 +23,20 @@ class Main extends React.Component {
   }
 
   handleBespin(postId, boardId) {
-    console.log(postId, boardId); // Passed up from Profile.jsx
+    console.log('postId', postId); // Passed up from Profile.jsx
+    console.log('boardId', boardId);
   }
 
   handleMakeBoard(boardName) {
-    console.log(this.props.user.id);
-    console.log(boardName);
+    console.log('userId', this.props.user.id);
+    console.log('boardName', boardName);
   }
 
-  handleFetchBoard(e) {
-    console.log(e.target.value); // Board ID
+  // Need to handle initial fetch, probably using react lifecycle methods.
+  // Will need to do this today.
+  handleFetchBoard(boardId) {
+    console.log('boardId', boardId); // Board ID
+    console.log('exampleQuery', `/boards?=${boardId}`);
   }
 
   render() {
@@ -44,7 +48,8 @@ class Main extends React.Component {
           userInfo={Users.users[0].info} 
           boards={[{id:0, name:'hey'},{id:1,name:'yusaku'}]}
           handleBespin={this.handleBespin}
-          handleFetchBoard={this.handleFetchBoard} /> 
+          handleFetchBoard={this.handleFetchBoard}
+          handleMakeBoard={this.handleMakeBoard} /> 
       </div>
     );
   }

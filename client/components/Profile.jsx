@@ -2,28 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Wall from './Wall.jsx';
 import Posts from '../testData/postsJs.js';
+import AddBoard from './AddBoard.jsx';
 require('../stylesheets/profile.css');
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: [1]
+      showAddBoard: false
     };
     this.handleBoardClick = this.handleBoardClick.bind(this);
-    this.handleAddBoard = this.handleAddBoard.bind(this);
+    this.onAddBoard = this.onAddBoard.bind(this);
+    this.boardAdded = this.boardAdded.bind(this);
   }
 
-  /**
-   * This uses the <li> element's value for requests to the server
-   * @param {*} e - emitted event, containing the desired board value
-   */
   handleBoardClick(e) {
-    console.log(e.target.value);
+    this.props.handleFetchBoard(e.target.value);
   }
 
-  handleAddBoard(e) {
-    console.log(e);
+  onAddBoard(e) {
+    this.setState({
+      showAddBoard: true
+    });
+  }
+
+  boardAdded(boardName, cancel = false) {
+    if (!cancel) {
+      this.props.handleMakeBoard(boardName);
+    }
+    this.setState({
+      showAddBoard: false
+    });
   }
 
   render() {
@@ -60,25 +69,21 @@ class Profile extends React.Component {
               className="link"
               key={this.props.boards.length + 1}
               value={this.props.boards.length + 1}
-              onClick={this.handleAddBoard}
+              onClick={this.onAddBoard}
             >
               + Add a board
             </li>
           </ul>
         </div>
+        {this.state.showAddBoard ? <AddBoard boardAdded={this.boardAdded} /> : null}
         <div className="user_wall">
-          {this.state.posts.length > 0 ? (
-            <Wall
-              boardId={0}
-              posts={Posts.posts}
-              showInfo={true}
-              handleClick={() => console.log('tbd')}
-            />
-          ) : (
-            <div className="user_empty_wall">
-              <p>Add a board!</p>
-            </div>
-          )}
+          <Wall
+            boardId={-1}
+            posts={Posts.posts}
+            showInfo={true}
+            handleClick={() => console.log('tbd')}
+            handleBespin={this.props.handleBespin}
+          />
         </div>
       </div>
     );
@@ -91,7 +96,8 @@ Profile.propTypes = {
   userInfo: PropTypes.string,
   boards: PropTypes.array,
   handleBespin: PropTypes.func,
-  handleFetchBoard: PropTypes.func
+  handleFetchBoard: PropTypes.func,
+  handleMakeBoard: PropTypes.func,
 };
 
 export default Profile;
