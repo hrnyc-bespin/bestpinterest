@@ -310,9 +310,34 @@ table {
   color: #f5f5f5;
 }
 
-.addPhoto_form {
+/* Add Photo */
+.add_photo_form {
   position: fixed;
-  
+  z-index: 1000;
+  height: 240px;
+  width: 400px;
+  top: calc(50% - 120px);
+  left: calc(50% - 200px);
+  background-color: rgba(73, 73, 73, 0.85);
+  filter: brightness(0.8);
+  border-radius: 8px;
+  box-shadow: 0 0 4px;
+}
+
+.add_photo_button {
+  position: fixed;
+  z-index: 1001;
+  right: 32px;
+  bottom: 32px;
+  background: #830d00;
+  height: 48px;
+  width: 48px;
+  border-style: none;
+  border-radius: 24px;
+  outline: none;
+  color: white;
+  font-size: 24px;
+  padding-bottom: 6px;
 }
 
 /* Profile page */
