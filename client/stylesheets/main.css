@@ -228,7 +228,7 @@ table {
   margin: 40px 0 24px 0;
   font-family: 'Contrail One', cursive;
   font-size: 48px;
-  color: #f5f5f5;
+  color: #F5F5F5;
 }
 
 .login_form {
@@ -250,7 +250,7 @@ table {
   background: none;
   border: none;
   margin-top: 8px;
-  color: #f5f5f5;
+  color: #F5F5F5;
   font-size: 14 px;
   outline: none;
 }
@@ -312,6 +312,7 @@ table {
 
 .addPhoto_form {
   position: fixed;
+  
 }
 
 /* Profile page */
@@ -364,5 +365,4 @@ table {
 
 .user_boards_navbar li {
   margin: 0 32px;
-
 }

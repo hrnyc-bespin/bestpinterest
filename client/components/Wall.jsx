@@ -12,19 +12,25 @@ import Post from './Post.jsx';
  */
 class Wall extends React.Component {
 	constructor(props) {
-		super(props);
-	}
+    super(props);
+    this.handleHeart = this.handleHeart.bind(this);
+  }
+  
+  handleHeart(postId) {
+    this.props.handleBespin(postId, this.props.boardId)
+  }
 
 	render() {
 		return (
 			<div className="wall_main">
 				{this.props.posts.map((post, i) => (
 					<Post
-						key={i}
-						handleClick={this.props.handleClick}
-						showInfo={this.props.showInfo}
+            key={i}
+            photoId={post.id}
 						photoUrl={post.photoUrl}
 						photoInfo={post.info}
+            handleHeart={this.handleHeart}
+            showInfo={this.props.showInfo}
 					/>
 				))}
 			</div>
@@ -33,9 +39,10 @@ class Wall extends React.Component {
 }
 
 Wall.propTypes = {
+  boardId: PropTypes.number,
 	posts: PropTypes.array,
-	showInfo: PropTypes.bool,
-	handleClick: PropTypes.func
+  showInfo: PropTypes.bool,
+  handleBespin: PropTypes.func
 };
 
 export default Wall;
