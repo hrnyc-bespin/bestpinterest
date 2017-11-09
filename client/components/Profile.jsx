@@ -75,7 +75,9 @@ class Profile extends React.Component {
             </li>
           </ul>
         </div>
-        {this.state.showAddBoard ? <AddBoard boardAdded={this.boardAdded} /> : null}
+        {this.state.showAddBoard ? (
+          <AddBoard boardAdded={this.boardAdded} />
+        ) : null}
         <div className="user_wall">
           <Wall
             boardId={-1}
