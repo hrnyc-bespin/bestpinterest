@@ -10,7 +10,7 @@ class Addphoto extends React.Component {
       description: ''
     };
     this.setChange = this.setChange.bind(this);
-    this.handleAddphoto = this.handleAddphoto.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   setChange(e) {
@@ -19,22 +19,23 @@ class Addphoto extends React.Component {
     });
   }
 
-  handleAddphoto(e) {
+  onSubmit(e, cancel) {
     e.preventDefault();
-    this.props.handleAddphoto(this.state.photoUrl, this.state.description);
+    this.props.handleAddPhoto(this.state.photoUrl, this.state.description, cancel);
   }
 
   render() {
     return (
-      <div className="addPhoto_form">
+      <div className="add_photo_form">
         <form>
           <p>photo url</p>
           <input type="text" name="photoUrl" onChange={this.setChange} />
-          <p>descriotion</p>
+          <p>description</p>
           <input type="text" name="description" onChange={this.setChange} />
-          <button className="add" onClick={this.handleAddphoto}>
+          <button onClick={this.onSubmit}>
             Submit
           </button>
+          <button onClick={(e) => this.onSubmit(e, true)}>Cancel</button>
         </form>
       </div>
     );
@@ -42,7 +43,7 @@ class Addphoto extends React.Component {
 }
 
 Addphoto.propTypes = {
-  handleAddphoto: PropTypes.func
+  handleAddPhoto: PropTypes.func
 };
 
 export default Addphoto;

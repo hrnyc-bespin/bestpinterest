@@ -8,7 +8,6 @@ import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Logo from './assets/Logo.jsx';
 import Main from './components/Main.jsx';
-import Addphoto from './components/Addphoto.jsx';
 import Clickphoto from './components/Clickphoto.jsx';
 
 // For testing purposes only
@@ -32,7 +31,7 @@ class App extends React.Component {
     this.handleSignup = this.handleSignup.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleAddBoard = this.handleAddBoard.bind(this);
-    this.handleAddphoto = this.handleAddphoto.bind(this);
+    // this.handleAddphoto = this.handleAddphoto.bind(this);
     this.handlePin = this.handlePin.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -95,28 +94,29 @@ class App extends React.Component {
     });
   }
 
-  handleAddphoto(url, description) {
-    this.setState({
-      showPopup: false
-    });
+  // This was moved to Main.jsx
+  // handleAddphoto(url, description) {
+  //   this.setState({
+  //     showPopup: false
+  //   });
 
-    axios
-      .post('/post', {
-        photourl: url,
-        info: description
-      })
-      .then(res => {
-        console.log(res);
-        axios
-          .get('/post')
-          .then(axios.get('/post'))
-          .then(data => this.setState({ posts: data }))
-          .catch(error => console.log(error));
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
+  //   axios
+  //     .post('/post', {
+  //       photourl: url,
+  //       info: description
+  //     })
+  //     .then(res => {
+  //       console.log(res);
+  //       axios
+  //         .get('/post')
+  //         .then(axios.get('/post'))
+  //         .then(data => this.setState({ posts: data }))
+  //         .catch(error => console.log(error));
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
 
   handlePin(postid, boardid) {
     axios
@@ -143,20 +143,10 @@ class App extends React.Component {
           <Logo />
           <p className="navbar_title">Bespinterest</p>
           <ul className="navbar_ul">
-            <li onClick={() => this.togglePopup()}>Add Photo</li>
+            <li onClick={() => this.togglePopup()}>TBD</li>
             <li onClick={() => this.handleLogOut()}>Logout</li>
           </ul>
         </nav>
-        {this.state.isLoggedIn ? (
-          this.state.showPopup ? (
-            <Addphoto handleAddphoto={this.handleAddphoto} />
-          ) : null
-        ) : (
-          <Login
-            handleLogin={this.handleLogin}
-            handleSignup={this.handleSignup}
-          />
-        )}
         {this.state.isLoggedIn ? (
           <Main
             isLoggedIn={this.state.isLoggedIn}

@@ -97,7 +97,7 @@ Profile.propTypes = {
   boards: PropTypes.array,
   handleBespin: PropTypes.func,
   handleFetchBoard: PropTypes.func,
-  handleMakeBoard: PropTypes.func,
+  handleMakeBoard: PropTypes.func
 };
 
 export default Profile;
