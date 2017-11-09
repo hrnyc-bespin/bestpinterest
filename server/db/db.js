@@ -15,7 +15,7 @@ sequelize
 var User = sequelize.define('users', {
    username: Sequelize.STRING,
    password: Sequelize.STRING,
-   profilepic: Sequelize.STRING,
+   profilePic: Sequelize.STRING,
    info: Sequelize.STRING,
    id: {
     type: Sequelize.INTEGER,
@@ -25,7 +25,7 @@ var User = sequelize.define('users', {
  });
  
 var Post = sequelize.define('posts', {
-  photourl: Sequelize.STRING,
+  photoUrl: Sequelize.STRING,
   info: Sequelize.STRING,
   id: {
     type: Sequelize.INTEGER,
@@ -53,8 +53,8 @@ var BoardPost = sequelize.define('boardpost', {
 
   User.hasMany(Board, {as: 'board'});
 
-  Post.belongsToMany(Board, {through: 'boardpost', foreignKey: 'postid'});
-  Board.belongsToMany(Post, {through: 'boardpost', foreignKey: 'boardid'});
+  Post.belongsToMany(Board, {through: 'boardpost'});
+  Board.belongsToMany(Post, {through: 'boardpost'});
 
   User.sync({force:false})
   .then(() => {
@@ -77,4 +77,28 @@ var BoardPost = sequelize.define('boardpost', {
   })
   .catch((e) => {
     console.log('BoardPostCatch', e)
+  })
+
+
+  //testing database 
+  User.create({
+    username: 'user1',
+    password: 'password1',
+    profilepic: 'https://media.wired.com/photos/5926c3878d4ebc5ab806b67f/master/pass/SpockHP-464967684.jpg',
+    info: 'I am Spock'
+  })
+
+  Post.create({
+    photourl: 'http://www.startrek.com/uploads/assets/articles/9a5570aa205c967c350c52e4ad43bc8ab6fdecd0.png',
+    info: 'star trek logo'
+  })
+
+  Board.create({
+    name: 'Star Trek',
+    userId: 3 //should pass req.body.id
+  })
+
+  BoardPost.create({
+    postId: null,  //should pass req.body.postid
+    userId: null //should pass req.body.id
   })
