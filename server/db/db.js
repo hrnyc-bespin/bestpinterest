@@ -12,7 +12,6 @@ sequelize
 })
 .catch(err => console.error('not connected'));
 
-
 var User = sequelize.define('users', {
    username: Sequelize.STRING,
    password: Sequelize.STRING,
@@ -25,21 +24,17 @@ var User = sequelize.define('users', {
   }
  });
  
-  User.sync({force:false})
-
-var Post = sequelize.define('post', {
+var Post = sequelize.define('posts', {
   photourl: Sequelize.STRING,
   info: Sequelize.STRING,
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-  }
+  },
 });
 
-  Post.sync({force:false})
-
-var Board = sequelize.define('board', { 
+var Board = sequelize.define('boards', { 
   name: Sequelize.STRING,
   id: {
     type: Sequelize.INTEGER,
@@ -48,9 +43,38 @@ var Board = sequelize.define('board', {
   }
 });
 
-  User.hasMany(Board, {as: 'boards'});
-  Board.hasMany(Post, {foreignKey: 'id'});
+var BoardPost = sequelize.define('boardpost', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  }
+})
 
-  Board.sync({force: false});
+  User.hasMany(Board, {as: 'board'});
 
+  Post.belongsToMany(Board, {through: 'boardpost', foreignKey: 'postid'});
+  Board.belongsToMany(Post, {through: 'boardpost', foreignKey: 'boardid'});
 
+  User.sync({force:false})
+  .then(() => {
+    return Post.sync({force:false}).then((data) => {
+      console.log('PostThen');
+    })
+  })
+  .then(() => {
+    return Board.sync({force: false}).then((data) => { 
+      console.log('BoardThen')
+    })
+  })
+  .catch((e) => {
+    console.log('catchingPost', e);
+  }) 
+  .then(() => {
+    return BoardPost.sync({force:false}).then((data) => {
+      console.log('BoardPostThen')
+    })
+  })
+  .catch((e) => {
+    console.log('BoardPostCatch', e)
+  })
