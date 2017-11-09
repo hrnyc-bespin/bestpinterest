@@ -19,7 +19,8 @@ class Main extends React.Component {
   render() {
     return (
       <div className="main">
-        <Wall posts={Posts.posts} showInfo={true} handleClick={() => {}} />
+        {/* <Wall posts={Posts.posts} showInfo={true} handleClick={() => {}} /> */}
+        <Profile username={Users.users[0].username} profilePic={Users.users[0].profilePic} userInfo={Users.users[0].info} boards={[{id:0, name:'hey'},{id:1,name:'yusaku'}]} /> 
       </div>
     );
   }

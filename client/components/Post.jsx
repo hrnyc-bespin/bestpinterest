@@ -8,7 +8,8 @@ class Post extends React.Component{
     super(props);
     this.state = {
       style: {},
-      showHeart: false
+      showHeart: false,
+      showInfo: false
     }
     this.mouseEnter = this.mouseEnter.bind(this);
     this.mouseLeave = this.mouseLeave.bind(this);
@@ -24,14 +25,16 @@ class Post extends React.Component{
       style: {
         filter: 'brightness(0.6)'
       },
-      showHeart: true
+      showHeart: true,
+      showInfo: true
     });
   }
 
   mouseLeave(e) {
     this.setState({
       style: {},
-      showHeart: false
+      showHeart: false,
+      showInfo: false
     });
   }
 
@@ -44,11 +47,12 @@ class Post extends React.Component{
 
     return (
       <div className="post_main" style={this.state.style} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
-        {this.state.showHeart ? <Heart style={heartStyle} onClick={() => console.log('hello')} /> : null}
         <img src={this.props.photoUrl} alt={this.props.photoInfo} onClick={this.props.handleClick} />
-        <div className="post_info">
-          {this.props.showInfo ? <p>{this.props.photoInfo}</p> : null}
-        </div>
+        {this.state.showHeart ? <Heart style={heartStyle} onClick={() => console.log('hello')} /> : null}
+        {this.state.showInfo ? 
+          (<div className="post_info">
+            <p>{this.props.photoInfo}</p>
+          </div>) : null}
       </div>
     );
   }
