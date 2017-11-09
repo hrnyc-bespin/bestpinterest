@@ -31,7 +31,6 @@ class App extends React.Component {
     };
     this.handleSignup = this.handleSignup.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogOut = this.handleLogOut.bind(this);
     this.handleAddBoard = this.handleAddBoard.bind(this);
     this.handleAddphoto = this.handleAddphoto.bind(this);
     this.handlePin = this.handlePin.bind(this);
@@ -62,7 +61,6 @@ class App extends React.Component {
         }
       })
       .then(data => {
-        //userid, name , boardid, boardnames
         this.setState({
           user: data.User,
           boards: data.Board,
@@ -76,7 +74,7 @@ class App extends React.Component {
   }
 
   handleLogOut() {
-    this.setSate({
+    this.setState({
       isLoggedIn: false,
       user: {},
       posts: [],
@@ -146,6 +144,7 @@ class App extends React.Component {
           <p className="navbar_title">Bespinterest</p>
           <ul className="navbar_ul">
             <li onClick={() => this.togglePopup()}>Add Photo</li>
+            <li onClick={() => this.handleLogOut()}>Logout</li>
           </ul>
         </nav>
         {this.state.isLoggedIn ? (
