@@ -26,11 +26,11 @@ class Addphoto extends React.Component {
 
   render() {
     return (
-      <div className="add_photo_form">
-        <form>
-          <p>photo url</p>
+      <div className="add_form add_photo_div">
+        <form className="add_photo_form">
+          <p>Photo url</p>
           <input type="text" name="photoUrl" onChange={this.setChange} />
-          <p>description</p>
+          <p>Photo info</p>
           <input type="text" name="description" onChange={this.setChange} />
           <button onClick={this.onSubmit}>
             Submit

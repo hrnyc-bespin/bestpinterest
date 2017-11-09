@@ -39,16 +39,11 @@ class Post extends React.Component{
   }
 
   render() {
-    let heartStyle = {
-      'position': 'absolute',
-      'top': '16px',
-      'right': '16px'
-    };
 
     return (
       <div className="post_main" style={this.state.style} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
         <img src={this.props.photoUrl} alt={this.props.photoInfo} />
-        {this.state.showHeart ? <Heart style={heartStyle} onClick={this.handleClick} /> : null}
+        {this.state.showHeart ? <Heart onClick={this.handleClick} /> : null}
         {this.state.showInfo ? 
           (<div className="post_info">
             <p>{this.props.photoInfo}</p>
