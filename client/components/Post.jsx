@@ -13,11 +13,11 @@ class Post extends React.Component{
     }
     this.mouseEnter = this.mouseEnter.bind(this);
     this.mouseLeave = this.mouseLeave.bind(this);
-    this.handleHeart = this.handleHeart.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleHeart(e) {
-    console.log('sup');
+  handleClick(e) {
+    this.props.handleHeart()
   }
 
   mouseEnter(e) {
@@ -47,8 +47,8 @@ class Post extends React.Component{
 
     return (
       <div className="post_main" style={this.state.style} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
-        <img src={this.props.photoUrl} alt={this.props.photoInfo} onClick={this.props.handleClick} />
-        {this.state.showHeart ? <Heart style={heartStyle} onClick={() => console.log('hello')} /> : null}
+        <img src={this.props.photoUrl} alt={this.props.photoInfo} />
+        {this.state.showHeart ? <Heart style={heartStyle} onClick={this.handleClick} /> : null}
         {this.state.showInfo ? 
           (<div className="post_info">
             <p>{this.props.photoInfo}</p>
@@ -59,10 +59,11 @@ class Post extends React.Component{
 }
 
 Post.propTypes = {
+  photoId: PropTypes.number,
 	photoUrl: PropTypes.string,
 	photoInfo: PropTypes.string,
 	showInfo: PropTypes.bool,
-	handleClick: PropTypes.func
+	handleHeart: PropTypes.func
 };
 
 export default Post;

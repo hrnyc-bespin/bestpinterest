@@ -7,7 +7,7 @@
 We are simple people. Simple and pretty. So we used <a href="https://github.com/prettier/prettier">Prettier</a>.
 Take a chance to look at it, but essentially it's a more powerful ES-Linter. Otherwise, we are following the style-guide
 as enumerated by <a href="https://github.com/hackreactor/hrnyc11-greenfield/blob/master/_STYLE-GUIDE.md">Hack Reactor</a>,
-copy and pasted below for your convenience.
+copy and pasted below for your convenience. Also for what it's worth, Prettier formats JSX pretty terribly so get ready. 
 
 ## Bespinterest Commit Guidelines
 All lowercase commit messages, comma delineated, no periods
