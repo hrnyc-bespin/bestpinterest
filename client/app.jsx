@@ -31,7 +31,7 @@ class App extends React.Component {
     this.handleSignup = this.handleSignup.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleAddBoard = this.handleAddBoard.bind(this);
-    // this.handleAddphoto = this.handleAddphoto.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.handlePin = this.handlePin.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -72,7 +72,7 @@ class App extends React.Component {
     console.log('login ', username);
   }
 
-  handleLogOut() {
+  handleLogout() {
     this.setState({
       isLoggedIn: false,
       user: {},
@@ -143,8 +143,8 @@ class App extends React.Component {
           <Logo />
           <p className="navbar_title">Bespinterest</p>
           <ul className="navbar_ul">
-            <li onClick={() => this.togglePopup()}>TBD</li>
-            <li onClick={() => this.handleLogOut()}>Logout</li>
+            {this.state.isLoggedIn ?
+              <li onClick={this.handleLogout}>Logout</li> : null} 
           </ul>
         </nav>
         {this.state.isLoggedIn ? (

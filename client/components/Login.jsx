@@ -38,8 +38,8 @@ class Login extends React.Component {
         <div className="login_popup">
           <h3 className="login_header">Bespinterest</h3>
           <form className="login_form">
-            <input type="text" name="username" onChange={this.onChange} />
-            <input type="password" name="password" onChange={this.onChange} />
+            <input type="text" name="username" onChange={this.onChange} placeholder="Username" />
+            <input type="password" name="password" onChange={this.onChange} placeholder="Password" />
             <button className="login_button" onClick={this.handleLogin}>
               Submit
             </button>

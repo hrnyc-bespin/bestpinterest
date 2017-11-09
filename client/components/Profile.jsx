@@ -71,7 +71,7 @@ class Profile extends React.Component {
               value={this.props.boards.length + 1}
               onClick={this.onAddBoard}
             >
-              + Add a board
+              + Add board
             </li>
           </ul>
         </div>
