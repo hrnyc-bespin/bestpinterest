@@ -17,7 +17,7 @@ import Posts from './testData/postsJs.js';
 require('./stylesheets/main.css');
 
 const axios = require('axios');
-
+//responsible for getting all the data
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -33,33 +33,38 @@ class App extends React.Component {
     this.handleSignup = this.handleSignup.bind(this);
   }
 
-  ComponentDidMount() {
-    this.getData();
-  }
-
-  getData() {
-    axios.get('/posts').then(data => {
-      this.setState({ posts: data });
-    });
-  }
+  // ComponentDidMount() {
+  //   this.getData();
+  // }
+  //
+  // getData() {
+  //   axios.get('/post').then(data => {
+  //     this.setState({ posts: data });
+  //   });
+  // }
 
   handleLogin(username, password) {
-    axios.get(
-      '/login',
-      (params: {
-        username: username,
-        password: password
-      }).then(data => {
-        axios.get('/board', (params: { id: data.boards })).then(data => {
-          this.setState({ boards: data });
-        });
+    axios
+      .get('/login', {
+        params: {
+          username: username,
+          password: password
+        }
       })
-    );
-    console.log('username: ', username);
-    console.log('password: ', password);
+      .then(data => {
+        axios.get('/board', { params: { id: data.boards } }).then(data => {
+          this.setState({ boards: data, isLoggedIn: true });
+        });
+      });
+    console.log('login ', username);
+  }
+
+  handleAddBoard(postid, boardid) {
+    axios.post('/bespin', { postid: postid, boardid: boardid });
   }
 
   handleSignup(username, password) {
+    console.log('signup: ', username, password);
     axios
       .post('/signup', {
         username: username,
@@ -109,64 +114,38 @@ class App extends React.Component {
 
   render() {
     return (
-      <HashRouter>
-        <div>
-          <nav className="navbar">
-            <Logo />
-            <p className="navbar_title">Bespinterest</p>
-            <ul className="navbar_ul">
-              <li>
-                <Link className="link" to={'wall'}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link className="link" to={'profile'}>
-                  User
-                </Link>
-              </li>
-              <li onClick={() => this.togglePopup()}>Add Photo</li>
-            </ul>
-          </nav>
-          {this.state.isLoggedIn ? (
-            this.state.showPopup ? (
-              <Addphoto handleAddphoto={this.handleAddphoto} />
-            ) : null
-          ) : (
-            <Login
-              handleLogin={this.handleLogin}
-              handleSignup={this.handleSignup}
-            />
-          )}
-          <Route
-            exact
-            path=""
-            render={() =>
-              this.state.isLoggedIn ? (
-                <Main
-                  isLoggedIn={this.state.isLoggedIn}
-                  user={this.state.user}
-                  posts={this.state.posts}
-                />
-              ) : (
-                <Login
-                  handleLogin={this.handleLogin}
-                  handleSignup={this.handleSignup}
-                />
-              )}
+      <div>
+        <nav className="navbar">
+          <Logo />
+          <p className="navbar_title">Bespinterest</p>
+          <ul className="navbar_ul">
+            <li onClick={() => this.togglePopup()}>Add Photo</li>
+          </ul>
+        </nav>
+        {this.state.isLoggedIn ? (
+          this.state.showPopup ? (
+            <Addphoto handleAddphoto={this.handleAddphoto} />
+          ) : null
+        ) : (
+          <Login
+            handleLogin={this.handleLogin}
+            handleSignup={this.handleSignup}
           />
-          <Route
-            path="wall"
-            render={() => (
-              <Main posts={this.state.posts} handleClick={this.handleClick} />
-            )}
+        )}
+        {this.state.isLoggedIn ? (
+          <Main
+            isLoggedIn={this.state.isLoggedIn}
+            user={this.state.user}
+            posts={this.state.posts}
+            boards={this.state.boards}
           />
-          <Route
-            path="profile"
-            render={() => <Profile boards={this.state.boards} />}
+        ) : (
+          <Login
+            handleLogin={this.handleLogin}
+            handleSignup={this.handleSignup}
           />
-        </div>
-      </HashRouter>
+        )}
+      </div>
     );
   }
 }
