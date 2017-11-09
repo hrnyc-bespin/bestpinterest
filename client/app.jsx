@@ -24,70 +24,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       showPhoto: false,
-      clickedPhoto: { photoUrl: '', photoInfo: '' },
-      showPopup: false,
       isLoggedIn: true,
       user: {},
       posts: [],
       boards: []
     };
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleAddphoto = this.handleAddphoto.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
-    this.handlePin = this.handlePin.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogOut = this.handleLogOut.bind(this);
     this.handleAddBoard = this.handleAddBoard.bind(this);
+    this.handleAddphoto = this.handleAddphoto.bind(this);
+    this.handlePin = this.handlePin.bind(this);
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  // ComponentDidMount() {
-  //   this.getData();
-  // }
-  //
-  // getData() {
-  //   axios.get('/post').then(data => {
-  //     this.setState({ posts: data });
-  //   });
-  // }
-
-  handleLogin(username, password) {
-    axios
-      .get('/login', {
-        params: {
-          username: username,
-          password: password
-        }
-      })
-      .then(data => {
-        axios
-          .get('/board', { params: { id: data.id } })
-          .then(data => {
-            this.setState({ boards: data, isLoggedIn: true });
-          })
-          .then(axios.get('/post', { params: { id: -1 } }))
-          .then(data => this.setState({ posts: data }))
-          .catch(err => console.log(err));
-      })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-    console.log('login ', username);
-  }
-
-  handlePin(postid, boardid) {
-    axios
-      .post('/bespin', { postid: postid, boardid: boardid })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  handleAddBoard(boardName, userId) {
-    axios
-      .post('/board', { name: boardName, foreignKey: userId })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
   }
 
   handleSignup(username, password) {
@@ -103,6 +51,44 @@ class App extends React.Component {
         console.log(err);
       });
     console.log('signup: ', username, password);
+  }
+
+  handleLogin(username, password) {
+    axios
+      .get('/login', {
+        params: {
+          username: username,
+          password: password
+        }
+      })
+      .then(data => {
+        //userid, name , boardid, boardnames
+        this.setState({
+          user: data.User,
+          boards: data.Board,
+          posts: data.Post,
+          isLoggedIn: true
+        });
+      })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+    console.log('login ', username);
+  }
+
+  handleLogOut() {
+    this.setSate({
+      isLoggedIn: false,
+      user: {},
+      posts: [],
+      boards: []
+    });
+  }
+
+  handleAddBoard(boardName) {
+    axios
+      .post('/board', { name: boardName, user_id: this.state.user.id })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   }
 
   togglePopup() {
@@ -123,17 +109,26 @@ class App extends React.Component {
       })
       .then(res => {
         console.log(res);
+        axios
+          .get('/post')
+          .then(axios.get('/post'))
+          .then(data => this.setState({ posts: data }))
+          .catch(error => console.log(error));
       })
       .catch(err => {
         console.log(err);
+      });
+  }
+
+  handlePin(postid, boardid) {
+    axios
+      .post('/bespin', { postid: postid, boardid: boardid })
+      .then(res => {
+        console.log(res);
       })
-      .then(
-        axios
-          .get('/post')
-          .then(axios.get('/post', { params: { id: -1 } }))
-          .then(data => this.setState({ posts: data }))
-          .catch(error => console.log(error))
-      );
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handleClick(photoUrl, photoInfo) {
