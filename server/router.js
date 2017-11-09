@@ -2,7 +2,7 @@ var routes = require('./routes');
 var router = require('express').Router();
 var db = require('./db/db.js');
 
-
+//OK
 //get all public posts to populate the wall
 //serves 200 and data or null
 router.get('/post', function(req, res) {
@@ -16,6 +16,7 @@ router.get('/post', function(req, res) {
 		});
 });
 
+//OK
 // add a new picture/post, receives photourl and info
 // serves 200 OK and 400
 router.post('/post', function(req, res) {
@@ -34,6 +35,7 @@ router.post('/post', function(req, res) {
 		});
 });
 
+//OK
 //add a picture to board, receives post_id and board_id
 //serves 200 OK or 400
 router.post('/bespin', function(req, res) {
@@ -52,40 +54,46 @@ router.post('/bespin', function(req, res) {
 		});
 });
 
+//OK
 //upon login receieve username and password,
 //serve all public posts,
 //serve board ids and board names that belong to user
 //serve user id, name
 router.get('/login', function(req, res) {
-	db.Post
-    .findAll()
-    .then(function(data) {
-      res.send(200, data);
-    });
-	db.Board
-		.find({
-      where: { user_id: {req.body.id} }
-      attributes: [ 'id', ['name']] }
-    )
-		.then(function(data) {
-			res.send(200, data);
-		})
-		.catch(function(err) {
-			res.send(401);
-		});
+	var responseObj = {};
+
+	//findOne returns one object
+	//findAll returns an array of objects
 	db.User
-		.find({
-      where: { user_id: {req.body.id} }
-      attributes: [ 'id', ['name']] }
-    )
+		.findOne({
+			where: { id: {req.body.id} }
+		)
+
 		.then(function(data) {
-			res.send(200, data);
+			responseObj.user = data;
+
+			return db.Post.findAll()
+		})
+
+    .then(function(data) {
+      responseObj.post = data;
+
+			return db.Board.findAll({
+		      where: { id: {req.body.id} }
+		    )
+    })
+
+		.then(function(data) {
+			responseObj.board = data;
+			res.send(200, responseObj);
 		})
 		.catch(function(err) {
-			res.send(401);
+			console.log('Incorrect username or password');
+			res.send(400);
 		});
 });
 
+//OK
 //receive user and password
 //serve 201 or 400
 router.post('/signup', function(req, res) {
@@ -105,6 +113,7 @@ router.post('/signup', function(req, res) {
 		});
 });
 
+//OK
 //boards?={id}, will receive -1 by default
 //serve -1 = all
 //else serve all posts filtered by board id
@@ -128,6 +137,7 @@ router.get('/board', function(req, res) {
 		});
 });
 
+//OK
 //recieve user id  and board name
 //201 serve board id and board name
 //400 error
@@ -139,11 +149,11 @@ router.post('/makeboard', function(req, res) {
 		})
 		.then(function() {
 			console.log('Board created successfully!');
-			res.send(200);
+			res.send(201);
 		})
 		.catch(function(err) {
-			res.send(400);
 			console.log('Board NOT created!');
+			res.send(400);
 		});
 });
 
