@@ -25,7 +25,7 @@ class App extends React.Component {
     this.state = {
       showPhoto: false,
       isLoggedIn: true,
-      user: {},
+      user: Users.users[0],
       posts: [],
       boards: []
     };

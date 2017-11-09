@@ -16,8 +16,8 @@ class Post extends React.Component{
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e) {
-    this.props.handleHeart()
+  handleClick() {
+    this.props.handleHeart(this.props.photoId);
   }
 
   mouseEnter(e) {
@@ -59,7 +59,7 @@ class Post extends React.Component{
 }
 
 Post.propTypes = {
-  photoId: PropTypes.number,
+  photoId: PropTypes.string,
 	photoUrl: PropTypes.string,
 	photoInfo: PropTypes.string,
 	showInfo: PropTypes.bool,
