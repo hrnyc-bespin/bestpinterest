@@ -18,8 +18,11 @@ class AddBoard extends React.Component {
 
   render() {
     return (
-      <div className="addBoard">
-        <input type="text" value={this.state.boardName} onChange={this.onChange} />
+      <div className="add_form add_board_form">
+        <div className="add_board_name">
+          <p>What's the new board name?</p>
+          <input type="text" value={this.state.boardName} onChange={this.onChange} />
+        </div>
         <button onClick={() => this.props.boardAdded(this.state.boardName)}>Submit</button>
         <button onClick={() => this.props.boardAdded(null, true)}>Cancel</button>
       </div>

@@ -128,6 +128,20 @@ table {
   border-spacing: 0;
 }
 
+/* Local defaults */
+input,
+button {
+  outline: none;
+  border: none;
+}
+
+button {
+  background: none;
+  color: #f5f5f5;
+}
+
+/* Need to start concatenating similar styles */
+
 #app {
   height: calc(100vh - 64px);
   width: 100vw;
@@ -150,15 +164,15 @@ table {
 }
 
 .navbar_ul {
-  display: flex;
-  flex-direction: row;
-  align-content: center;
+  width: 100%;
+  align-self: center;
+  justify-content: flex-end;
 }
 
 .navbar_ul li {
   color: #f5f5f5;
-  align-self: center;
   text-decoration: none;
+  align-self: center;
 }
 
 .link {
@@ -215,7 +229,7 @@ table {
   display: flex;
   flex-direction: column;
   height: 240px;
-  width: 440px;
+  width: 480px;
   margin-bottom: 40px;
   background-color: rgba(73, 73, 73, 0.85);
   filter: brightness(0.8);
@@ -225,7 +239,7 @@ table {
 
 .login_header {
   align-self: center;
-  margin: 40px 0 24px 0;
+  margin: 32px 0 24px 0;
   font-family: 'Contrail One', cursive;
   font-size: 48px;
   color: #F5F5F5;
@@ -235,11 +249,12 @@ table {
   align-self: center;
   display: flex;
   flex-direction: column;
-  width: calc(320px);
+  width: calc(100% - 120px);
 }
 
 .login_form input {
   height: 1.6em;
+  padding: 2px;
   margin: 2px;
   border-style: none;
   border-radius: 4px;
@@ -251,8 +266,7 @@ table {
   border: none;
   margin-top: 8px;
   color: #F5F5F5;
-  font-size: 14 px;
-  outline: none;
+  font-size: 14px;
 }
 
 .login_form button:hover {
@@ -310,9 +324,26 @@ table {
   color: #f5f5f5;
 }
 
-/* Add Photo */
-.add_photo_form {
+/* Heart */
+.bespin_heart_div {
+  background: rgba(42, 42, 42, 0.84);
+  border-radius: 48px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.bespin_heart {
+  position: relative;
+  top: 2px;
+}
+
+
+/* Default Add Forms */
+.add_form {
   position: fixed;
+  display: flex;
+  flex-direction: column;
   z-index: 1000;
   height: 240px;
   width: 400px;
@@ -321,7 +352,42 @@ table {
   background-color: rgba(73, 73, 73, 0.85);
   filter: brightness(0.8);
   border-radius: 8px;
+  color: #F5F5F5;
   box-shadow: 0 0 4px;
+}
+
+/* Add Photo */
+.add_photo_div {
+  padding: 16px;
+  align-content: center;
+  justify-content: center;
+  height: 200px;
+  padding: 32px;
+}
+
+.add_photo_form p {
+  margin: 16px 0 8px 0;
+  font-size: 18px;
+}
+
+.add_photo_form input {
+  width: 392px;
+  padding: 2px;
+  font-size: 14px;
+}
+
+.add_photo_form button {
+  align-self: flex-end;
+  font-size: 16px;
+  margin: 8px;
+}
+
+.add_photo_form button:hover {
+  filter: brightness(0.8);
+}
+
+.add_photo_form button:active {
+  filter: brightness(0.4);
 }
 
 .add_photo_button {
@@ -334,10 +400,46 @@ table {
   width: 48px;
   border-style: none;
   border-radius: 24px;
-  outline: none;
-  color: white;
+  color: #F5F5F5;
   font-size: 24px;
   padding-bottom: 6px;
+}
+
+/* Add Board */
+.add_board_form {
+  align-content: center;
+  justify-content: center;
+  height: 180px;
+  padding: 32px;
+}
+
+.add_board_name {
+  margin-bottom: 16px;
+}
+
+.add_board_name p {
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.add_board_name input {
+  width: 392px;
+  padding: 2px;
+  font-size: 14px;
+}
+
+.add_board_form button {
+  align-self: flex-end;
+  font-size: 16px;
+  margin: 8px;
+}
+
+.add_board_form button:hover {
+  filter: brightness(0.8);
+}
+
+.add_board_form button:active {
+  filter: brightness(0.4);
 }
 
 /* Profile page */
@@ -348,7 +450,7 @@ table {
 }
 
 .user_summary img {
-  margin: 16px 16px 16px 64px;
+  margin: 16px 16px 16px 24px;
   width: 240;
   height: 400;
   border-radius: 8px;
@@ -372,6 +474,7 @@ table {
 
 .user_boards {
   position: sticky;
+  overflow-x: auto;
   top: 64px;
   height: 64px;
   z-index: 999;
@@ -390,4 +493,6 @@ table {
 
 .user_boards_navbar li {
   margin: 0 32px;
+  height: 100%;
+  max-width: 96px;
 }
