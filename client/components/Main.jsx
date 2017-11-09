@@ -19,7 +19,9 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAddPhoto: false
+      showAddPhoto: false,
+      posts: [],
+      boards: []
     };
     this.handleBespin = this.handleBespin.bind(this);
     this.handleMakeBoard = this.handleMakeBoard.bind(this);
@@ -28,18 +30,37 @@ class Main extends React.Component {
     this.onAddPhoto = this.onAddPhoto.bind(this);
   }
 
+  ComponentDidMount() {
+    axios.get('/post').then(res => this.setState({ posts: res.body.data }));
+    axios.get('/board', { params: { boardId: this.props.user.id } }).then();
+  }
   // User pressed on heart over a photo
   handleBespin(postId, boardId) {
-    // console.log('postId', postId); // Passed up from Profile.jsx
-    // console.log('boardId', boardId);
-    this.porps.handlePin(postId, boardId);
+    console.log('postId', postId); // Passed up from Profile.jsx
+    console.log('boardId', boardId);
+    axios
+      .post('/bespin', { postid: postId, boardid: boardId })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   // User pressed Add Board
   handleMakeBoard(boardName) {
-    // console.log('userId', this.props.user.id);
-    // console.log('boardName', boardName);
-    this.props.handleAddBoard(boardName);
+    console.log('userId', this.props.user.id);
+    console.log('boardName', boardName);
+    axios
+      .post('/makeboard', { name: boardName, id: this.props.user.id })
+      .then(
+        res =>
+          res.status === 201
+            ? axios.get('/board').then(data => this.setState({ boards: data }))
+            : console.log(err)
+      )
+      .catch(err => console.log(err));
   }
 
   // Need to handle initial fetch, probably using react lifecycle methods.
@@ -54,6 +75,19 @@ class Main extends React.Component {
     if (!cancel) {
       console.log('photoUrl', photoUrl);
       console.log('photoInfo', photoInfo);
+      axios
+        .post('/post', {
+          photourl: photoUrl,
+          info: photoInfo
+        })
+        .then(res => {
+          res.status === 200
+            ? axios.get('/post').then(data => setState({ posts: data }))
+            : console.log(err);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
     this.setState({
       showAddPhoto: false
@@ -77,16 +111,15 @@ class Main extends React.Component {
           boards={[{ id: 0, name: 'hey' }, { id: 1, name: 'yusaku' }]}
           handleBespin={this.handleBespin}
           handleFetchBoard={this.handleFetchBoard}
-<<<<<<< Updated upstream
-          handleMakeBoard={this.handleMakeBoard} />
-        
-        {this.state.showAddPhoto ? 
-          <Addphoto handleAddPhoto={this.handleAddPhoto} /> : null }
-        <button className="add_photo_button" onClick={this.onAddPhoto}>+</button>
-=======
           handleMakeBoard={this.handleMakeBoard}
         />
->>>>>>> Stashed changes
+
+        {this.state.showAddPhoto ? (
+          <Addphoto handleAddPhoto={this.handleAddPhoto} />
+        ) : null}
+        <button className="add_photo_button" onClick={this.onAddPhoto}>
+          +
+        </button>
       </div>
     );
   }
