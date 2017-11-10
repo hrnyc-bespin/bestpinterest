@@ -95,7 +95,8 @@ router.get('/login', function(req, res) {
 router.post('/signup', function(req, res) {
 	db.User
 		.create({
-			username: req.body.username,
+      username: req.body.username,
+      password: req.body.password,
 			profilepic: req.body.profilepic,
 			info: req.body.info
 		})
@@ -114,14 +115,15 @@ router.post('/signup', function(req, res) {
 //serve -1 = all
 //else serve all posts filtered by board id
 router.get('/board', function(req, res) {
-  let reqParams = url.parse(req.url, true);
-	reqParams.boardId === -1 ?
+  let reqParams = url.parse(req.url, true).query;
+	reqParams.boardId === '-1' ?
   db.Post
     .findAll()
     .then(function(data){
       res.send(200, data);
     })
     .catch(function(err){
+      console.log(err);
       res.sendStatus(400);
     }) :
   db.Board

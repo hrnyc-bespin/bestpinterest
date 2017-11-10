@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios'
 import Wall from './Wall.jsx';
 import Profile from './Profile.jsx';
 import AddPhoto from './AddPhoto.jsx';
@@ -30,16 +31,15 @@ class Main extends React.Component {
     this.onAddPhoto = this.onAddPhoto.bind(this);
   }
 
-  ComponentDidMount() {
+  componentDidMount() {
     axios.get('/board', { 
       params: { 
         boardId: -1
       } 
     }).then((response) => {
-      console.log(response);
-      // this.setState({
-      //   posts: response
-      // })
+      this.setState({
+        posts: response.data
+      });
     }).catch((err) => {
       console.log(err)
     });
@@ -123,6 +123,7 @@ class Main extends React.Component {
           profilePic={this.props.user.profilepic}
           userInfo={this.props.user.info}
           boards={[]}
+          posts={this.state.posts}
           handleBespin={this.handleBespin}
           handleFetchBoard={this.handleFetchBoard}
           handleMakeBoard={this.handleMakeBoard}
@@ -141,7 +142,6 @@ class Main extends React.Component {
 Main.propTypes = {
   isLoggedIn: PropTypes.bool,
   user: PropTypes.object,
-  posts: PropTypes.array,
   boards: PropTypes.array
 };
 

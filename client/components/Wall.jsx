@@ -27,7 +27,7 @@ class Wall extends React.Component {
 					<Post
             key={i}
             photoId={post.id}
-						photoUrl={post.photoUrl}
+						photoUrl={post.photourl}
 						photoInfo={post.info}
             handleHeart={this.handleHeart}
             showInfo={this.props.showInfo}
