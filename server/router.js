@@ -77,6 +77,7 @@ router.get('/login', function(req, res) {
       }
 			responseObj.user = data;
 			return db.Board.findAll({
+        attributes: ['id', 'name'],
 				where: { id: data.id }
 			});
 		})
@@ -94,6 +95,23 @@ router.get('/login', function(req, res) {
 			console.log(err);
 		});
 });
+
+router.get('/userboards', function(req, res) {
+  let reqParams = url.parse(req.url, true).query;
+  responseObj = {};
+  db.Board
+    .findAll({
+      attributes: ['id', 'name'],
+      where: { userId: reqParams.id }
+    })
+    .then(function(data) {
+      responseObj.boards = data || [];
+      res.status(200).send(responseObj);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+})
 
 //OK
 //receive user and password
@@ -143,23 +161,22 @@ router.get('/board', function(req, res) {
 });
 
 //OK
-//recieve user id  and board name
+//receive user id  and board name
 //201 serve board id and board name
 //400 error
 router.post('/makeboard', function(req, res) {
   db.Board
     .create({
       name: req.body.name,
-      userId: req.body.userId
+      userId: req.body.id
     })
-    .findOne({ where: { userId: req.body.userId } })
     .then(function(data) {
       console.log('Board created successfully!');
-      res.send(201, data);
+      res.status(201).send(data);
     })
     .catch(function(err) {
       console.log('Board NOT created!');
-      res.send(400);
+      res.sendStatus(400);
     });
 });
 

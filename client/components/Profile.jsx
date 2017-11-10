@@ -9,9 +9,7 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAddBoard: false,
-      boards: [],
-      currentBoard: -1
+      showAddBoard: false
     };
     this.handleBoardClick = this.handleBoardClick.bind(this);
     this.onAddBoard = this.onAddBoard.bind(this);
@@ -57,7 +55,7 @@ class Profile extends React.Component {
             >
               Public Board
             </li>
-            {this.state.boards.map(board => (
+            {this.props.boards.map(board => (
               <li
                 className="link"
                 key={board.id}
@@ -98,6 +96,7 @@ Profile.propTypes = {
   profilePic: PropTypes.string,
   userInfo: PropTypes.string,
   posts: PropTypes.array,
+  boards: PropTypes.array,
   handleBespin: PropTypes.func,
   handleFetchBoard: PropTypes.func,
   handleMakeBoard: PropTypes.func
