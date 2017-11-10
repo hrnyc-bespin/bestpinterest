@@ -9,8 +9,8 @@ router.post('/bespin', controller.boards.bespin.post);
 router.get('/userboards', controller.boards.userboards.get);
 router.get('/board', controller.boards.board.get);
 
-router.get('/login', controller.users.login.post);
-router.post('/signup', controller.users.signup.get);
+router.get('/login', controller.users.login.get);
+router.post('/signup', controller.users.signup.post);
 
 router.get('/post', controller.posts.post.get);
 router.post('/post', controller.posts.post.post);
