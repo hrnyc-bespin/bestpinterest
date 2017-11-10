@@ -38,9 +38,9 @@ class Main extends React.Component {
           boardId: -1
         }
       })
-      .then(response => {
+      .then(res => {
         this.setState({
-          posts: response.data
+          posts: res.data
         });
       })
       .catch(err => {
@@ -70,11 +70,7 @@ class Main extends React.Component {
     console.log('boardName', boardName);
     axios
       .post('/makeboard', { name: boardName, userId: this.props.user.id })
-      .then(
-        axios
-          .get(`/board?userId=${this.props.user.id}`)
-          .then(data => this.setState({ boards: data.data }))
-      )
+      .then(res => this.setState({ boards: res.data }))
       .catch(err => console.log(err));
   }
 
@@ -83,6 +79,9 @@ class Main extends React.Component {
   handleFetchBoard(boardId) {
     console.log('boardId', boardId); // Board ID
     console.log('exampleQuery', `/boards?=${boardId}`);
+    axios
+      .get(`/board?userId=${boardId}`)
+      .then(res => this.setState({ posts: res.data }));
   }
 
   // If cancel is true, user pressed cancel button
@@ -95,7 +94,9 @@ class Main extends React.Component {
           photourl: photoUrl,
           info: photoInfo
         })
-        .then(axios.get('/post').then(res => setState({ posts: res.data })))
+        .then(
+          axios.get('/post').then(res => this.setState({ posts: res.data }))
+        )
         .catch(err => {
           console.log(err);
         });
@@ -126,7 +127,7 @@ class Main extends React.Component {
           username={this.props.user.username}
           profilePic={this.props.user.profilepic}
           userInfo={this.props.user.info}
-          boards={[]}
+          boards={this.state.boards}
           posts={this.state.posts}
           handleBespin={this.handleBespin}
           handleFetchBoard={this.handleFetchBoard}
