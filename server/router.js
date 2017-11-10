@@ -126,7 +126,7 @@ router.get('/board', function(req, res) {
           res.sendStatus(400);
         })
     : db.Board
-        .findOne({ where: { id: req.body.boardId } })
+        .findOne({ where: { id: req.body.userId } })
         .then(function(data) {
           res.send(200, data);
         })

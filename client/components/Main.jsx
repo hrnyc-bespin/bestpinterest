@@ -69,14 +69,11 @@ class Main extends React.Component {
     console.log('userId', this.props.user.id);
     console.log('boardName', boardName);
     axios
-      .post('/makeboard', { name: boardName, id: this.props.user.id })
+      .post('/makeboard', { name: boardName, userId: this.props.user.id })
       .then(
-        res =>
-          res.status === 201
-            ? axios
-                .get('/board')
-                .then(data => this.setState({ boards: res.body.data }))
-            : console.log(err)
+        axios
+          .get(`/board?userId=${this.props.user.id}`)
+          .then(data => this.setState({ boards: data.data }))
       )
       .catch(err => console.log(err));
   }
@@ -98,11 +95,7 @@ class Main extends React.Component {
           photourl: photoUrl,
           info: photoInfo
         })
-        .then(res => {
-          res.status === 200
-            ? axios.get('/post').then(res => setState({ posts: res.body.data }))
-            : console.log(err);
-        })
+        .then(axios.get('/post').then(res => setState({ posts: res.data })))
         .catch(err => {
           console.log(err);
         });
@@ -117,6 +110,13 @@ class Main extends React.Component {
     this.setState({
       showAddPhoto: true
     });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state !== nextState) {
+      return true;
+    }
+    return false;
   }
 
   render() {
