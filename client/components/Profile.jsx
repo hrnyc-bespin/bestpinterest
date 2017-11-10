@@ -5,6 +5,10 @@ import Posts from '../testData/postsJs.js';
 import AddBoard from './AddBoard.jsx';
 require('../stylesheets/profile.css');
 
+/**
+ * Responsible for the actual rendering of user data and the selected wall
+ * of desired posts
+ */
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -16,16 +20,30 @@ class Profile extends React.Component {
     this.boardAdded = this.boardAdded.bind(this);
   }
 
+  /**
+   * Click handler for the list of boards, passes back the selected board to
+   * Main
+   * @param {*} e 
+   */
   handleBoardClick(e) {
     this.props.handleFetchBoard(e.target.value);
   }
 
+  /**
+   * Display the AddBoard component
+   * @param {*} e 
+   */
   onAddBoard(e) {
     this.setState({
       showAddBoard: true
     });
   }
 
+  /**
+   * The callback for the AddBoard component.
+   * @param {*} boardName 
+   * @param {*} cancel - optional parameter 
+   */
   boardAdded(boardName, cancel = false) {
     if (!cancel) {
       this.props.handleMakeBoard(boardName);

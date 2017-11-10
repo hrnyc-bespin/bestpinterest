@@ -55,10 +55,19 @@ export default class Helpers {
     }
   }
 
+  /**
+   * Quick validation
+   * @param {*} postId 
+   * @param {*} boardId 
+   */
   validateBespin(postId, boardId) {
     return postId >= 0 && boardId >= 0;
   }
 
+  /**
+   * No empty board names
+   * @param {*} boardName 
+   */
   validateBoardName(boardName) {
     return boardName.length > 0;
   }
