@@ -13,6 +13,9 @@ import Posts from './testData/postsJs.js';
 
 const axios = require('axios');
 
+/**
+ * Responsible for managing user access into and out of the application
+ */
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +29,14 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
+  /**
+   * Handles server requests for signing up, logging the user in if sign-up
+   * is valid
+   * @param {*} username 
+   * @param {*} password 
+   * @param {*} info 
+   * @param {*} profilepic 
+   */
   handleSignup(username, password, info, profilepic) {
     if (this.helper.validateSignup(username, password, info, profilepic)) {
       axios

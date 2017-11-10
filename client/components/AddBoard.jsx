@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Handles the controlled component
+ */
 class AddBoard extends React.Component {
   constructor(props) {
     super(props);

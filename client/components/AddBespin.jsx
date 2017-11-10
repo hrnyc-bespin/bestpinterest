@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * This caches the given prop, so that it can pass it back when the user
+ * selects the desired board name
+ * @param {*} props 
+ */
 var AddBespin = (props) => {
   var handleBespin = (e) => {
     props.handleBespin(props.postId, e.target.value);
@@ -8,12 +13,14 @@ var AddBespin = (props) => {
 
   return (
     <div className="add_form">
-      <ul style={{'height': '300px'}}>
+      <ul className="bespin_list">
         {props.boards.map((board, i) => {
-          return <li key={i} value={board.id} onClick={handleBespin}>{board.name}</li>
+          return <li className="bespin_elem"key={i} value={board.id} onClick={handleBespin}>{board.name}</li>
         })}
       </ul>
-      <button onClick={()=>props.handleBespin(null, null, true)}>Cancel</button>
+      <div className="button_holder">
+        <button className="bespin_button" onClick={()=>props.handleBespin(null, null, true)}>Cancel</button>
+      </div>
     </div>
   );
 }
