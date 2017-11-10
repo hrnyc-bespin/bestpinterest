@@ -145,8 +145,9 @@ aren't adding a board id association at time of upload
     return false;
   }
 
+  // Profile will fetch its own boards
   render() {
-    let boardsWithPublic = []
+    let boardsWithPublic = [];
     return (
       <div className="main">
         <Profile
