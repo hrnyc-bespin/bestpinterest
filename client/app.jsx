@@ -99,7 +99,7 @@ class App extends React.Component {
           <p className="navbar_title">Bespinterest</p>
           <ul className="navbar_ul">
             {this.state.isLoggedIn ? (
-              <li onClick={this.handleLogout}>Logout</li>
+              <li className="link"onClick={this.handleLogout}>Logout</li>
             ) : null}
           </ul>
         </nav>
