@@ -9,7 +9,9 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAddBoard: false
+      showAddBoard: false,
+      boards: [],
+      currentBoard: -1
     };
     this.handleBoardClick = this.handleBoardClick.bind(this);
     this.onAddBoard = this.onAddBoard.bind(this);
@@ -39,7 +41,7 @@ class Profile extends React.Component {
     return (
       <div>
         <div className="user_summary">
-          <img src={this.props.profilePic} alt={this.props.username} />
+          <img src={this.props.profilePic} alt={`error loading photo for ${this.props.username}`} />
           <div className="user_details">
             <p className="user_username">{this.props.username}</p>
             <p className="user_info">{this.props.userInfo}</p>
@@ -55,7 +57,7 @@ class Profile extends React.Component {
             >
               Public Board
             </li>
-            {this.props.boards.map(board => (
+            {this.state.boards.map(board => (
               <li
                 className="link"
                 key={board.id}
@@ -67,8 +69,6 @@ class Profile extends React.Component {
             ))}
             <li
               className="link"
-              key={this.props.boards.length + 1}
-              value={this.props.boards.length + 1}
               onClick={this.onAddBoard}
             >
               + Add board
@@ -93,10 +93,10 @@ class Profile extends React.Component {
 }
 
 Profile.propTypes = {
+  userId: PropTypes.number,
   username: PropTypes.string,
   profilePic: PropTypes.string,
   userInfo: PropTypes.string,
-  boards: PropTypes.array,
   posts: PropTypes.array,
   handleBespin: PropTypes.func,
   handleFetchBoard: PropTypes.func,

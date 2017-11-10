@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 require('../stylesheets/main.css');
 
 /**
- * Houses two controlled components managed in its state. 
+ * Responsible for managing the login and signup requests from the user
+ * Validation is handled by parent component, since this is a default screen
+ * i.e. it will only show if the user is not logged in, which the parent
+ * component is responsible for managing. 
  */
 class Login extends React.Component {
   constructor(props) {
@@ -19,14 +22,24 @@ class Login extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
+    this.offSignUp = this.offSignUp.bind(this);
   }
 
+  /**
+   * Required for creating controlled components
+   * @param {*} e 
+   */
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value // Able to pull name straight from element
     });
   }
 
+  /**
+   * Component handler for rendering the extended sign-up div as opposed to the
+   * more punctate login div 
+   * @param {*} e 
+   */
   onSignUp(e) {
     e.preventDefault();
     this.setState({
@@ -34,7 +47,19 @@ class Login extends React.Component {
     });
   }
 
-  // Dishes out username and password as entered by user
+  offSignUp(e) {
+    e.preventDefault();
+    this.setState({
+      showSignUp: false
+    });
+  }
+
+  /**
+   * Informs parent that this is ready for managing. As this is a default screen,
+   * the parent component will be responsible for determining data validity. 
+   * 
+   * @param {*} e 
+   */
   handleLogin(e) {
     e.preventDefault();
     this.props.handleLogin(this.state.username, this.state.password);
@@ -54,7 +79,10 @@ class Login extends React.Component {
           <input type="password" name="password" onChange={this.onChange} placeholder="Password" value={this.state.password} />
           <input type="text" name="profilepic" onChange={this.onChange} placeholder="Enter a profile pic url" value={this.state.profilepic} />
           <input type="text" name="info" onChange={this.onChange} placeholder="Give us a summary about yourself" value={this.state.info} />
-          <button className="signup_button" onClick={this.handleSignup}>Request signup!</button>
+          <div className="button_holder">
+            <button className="login_button" onClick={this.handleSignup}>Submit</button>
+            <button className="login_button" onClick={this.offSignUp}>Cancel</button>
+          </div>
       </form>
     );
 
@@ -62,12 +90,12 @@ class Login extends React.Component {
       <form className="login_form">
         <input type="text" name="username" onChange={this.onChange} placeholder="Username" value={this.state.username} />
         <input type="password" name="password" onChange={this.onChange} placeholder="Password" value={this.state.password} />
-        <button className="login_button" onClick={this.handleLogin}>
-          Login
-        </button>
-        <button className="login_button" onClick={this.onSignUp}>Sign Up</button>
+        <div className="button_holder">
+          <button className="login_button" onClick={this.handleLogin}>Login</button>
+          <button className="login_button" onClick={this.onSignUp}>Sign Up</button>
+        </div>
       </form>
-    )
+    );
 
     return (
       <div className="login_main">

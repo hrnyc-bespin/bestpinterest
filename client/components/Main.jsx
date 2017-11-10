@@ -31,6 +31,7 @@ class Main extends React.Component {
     this.onAddPhoto = this.onAddPhoto.bind(this);
   }
 
+  // Fetch all public posts upon initial load
   componentDidMount() {
     axios
       .get('/board', {
@@ -47,31 +48,45 @@ class Main extends React.Component {
         console.log(err);
       });
   }
+
   // User pressed on heart over a photo
   handleBespin(postId, boardId) {
     console.log('postId', postId); // Passed up from Profile.jsx
     console.log('boardId', boardId);
-    axios
-      .post('/bespin', {
-        postid: postId,
-        boardid: boardId
-      })
+    if (this.props.helper.validateBespin(postId, boardId)) {
+      axios
+      .post('/bespin', { 
+        postid: postId, 
+        boardid: boardId })
       .then(res => {
         console.log(res);
       })
       .catch(err => {
         console.log(err);
+        alert('There was an error attempting to pin this post');
       });
+    } else {
+      alert('There was an error attempting to pin this post');
+    }
   }
 
   // User pressed Add Board
   handleMakeBoard(boardName) {
     console.log('userId', this.props.user.id);
     console.log('boardName', boardName);
-    axios
-      .post('/makeboard', { name: boardName, userId: this.props.user.id })
-      .then(res => this.setState({ boards: res.data }))
+    if (this.props.helper.validateBoardName(boardName)) {
+      axios
+      .post('/makeboard', { name: boardName, id: this.props.user.id })
+      .then(res => this.setState({ boards: res.data })
+        // res =>
+        //   res.status === 201
+        //     ? axios.get('/board').then(data => this.setState({ boards: data }))
+        //     : console.log(err)
+      )
       .catch(err => console.log(err));
+    } else {
+      alert('Invalid board name');
+    }
   }
 
   // Need to handle initial fetch, probably using react lifecycle methods.
@@ -85,25 +100,41 @@ class Main extends React.Component {
   }
 
   // If cancel is true, user pressed cancel button
+  // Photo validated by AddPhoto for UI purposes
+  // Axios by default handles non-ok status codes as errors
+/*
+This needs to refetch the currently selected boards, but we
+aren't adding a board id association at time of upload
+*/
+
   handleAddPhoto(photoUrl, photoInfo, cancel = false) {
     if (!cancel) {
-      console.log('photoUrl', photoUrl);
-      console.log('photoInfo', photoInfo);
       axios
         .post('/post', {
           photourl: photoUrl,
           info: photoInfo
         })
-        .then(
-          axios.get('/post').then(res => this.setState({ posts: res.data }))
-        )
-        .catch(err => {
-          console.log(err);
+        .then((res) => {
+          alert('posted! refresh to view (sorry)');
+          this.setState({
+            showAddPhoto: false
+          });
+        })
+        .catch((err) => {
+          alert('There was a problem trying to upload that photo :(');
         });
+
+        // 
+        // .then(
+        //   axios.get('/post').then(res => this.setState({ posts: res.data }))
+        // )
+        // .catch(err => {
+        //   console.log(err);
+    } else {
+      this.setState({
+        showAddPhoto: false
+      });
     }
-    this.setState({
-      showAddPhoto: false
-    });
   }
 
   // User clicked the add photo button
@@ -120,21 +151,25 @@ class Main extends React.Component {
     return false;
   }
 
+  // Profile will fetch its own boards
   render() {
+    let boardsWithPublic = [];
     return (
       <div className="main">
         <Profile
+          userId={this.props.user.id}
           username={this.props.user.username}
           profilePic={this.props.user.profilepic}
           userInfo={this.props.user.info}
-          boards={this.state.boards}
           posts={this.state.posts}
           handleBespin={this.handleBespin}
           handleFetchBoard={this.handleFetchBoard}
           handleMakeBoard={this.handleMakeBoard}
         />
         {this.state.showAddPhoto ? (
-          <AddPhoto handleAddPhoto={this.handleAddPhoto} />
+          <AddPhoto 
+            helper={this.props.helper}
+            handleAddPhoto={this.handleAddPhoto} />
         ) : null}
         <button className="add_photo_button" onClick={this.onAddPhoto}>
           +
@@ -145,6 +180,7 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
+  helper: PropTypes.object,
   isLoggedIn: PropTypes.bool,
   user: PropTypes.object,
   boards: PropTypes.array
