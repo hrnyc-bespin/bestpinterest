@@ -189,7 +189,6 @@ aren't adding a board id association at time of upload
       this.state.boards
     );
     let posts = this.state.posts.sort((a, b) => a.id - b.id);
-    console.log(posts);
     return (
       <div className="main">
         <Profile
