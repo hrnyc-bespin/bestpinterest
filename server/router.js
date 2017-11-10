@@ -92,21 +92,21 @@ router.get('/login', function(req, res) {
 //receive user and password
 //serve 201 or 400
 router.post('/signup', function(req, res) {
-  db.User
-    .create({
-      username: req.body.username,
-      password: req.body.password,
-      profilepic: req.body.profilepic,
-      info: req.body.info
-    })
-    .then(function() {
+	db.User
+		.create({
+			username: req.body.username,
+			password: req.body.password,
+			profilepic: req.body.profilepic,
+			info: req.body.info
+		})
+		.then(function(user) {
       console.log('User created!');
-      res.send(201);
-    })
-    .catch(function(err) {
-      console.log('User was NOT created!');
-      res.send(400);
-    });
+			res.status(201).send(user);
+		})
+		.catch(function(err) {
+			console.log('User was NOT created!');
+			res.send(400);
+		});
 });
 
 //OK
@@ -114,25 +114,25 @@ router.post('/signup', function(req, res) {
 //serve -1 = all
 //else serve all posts filtered by board id
 router.get('/board', function(req, res) {
-  let reqParams = url.parse(req.url, true).query;
-  reqParams.boardId === '-1'
-    ? db.Post
-        .findAll()
-        .then(function(data) {
-          res.send(200, data);
-        })
-        .catch(function(err) {
-          console.log(err);
-          res.sendStatus(400);
-        })
-    : db.Board
-        .findOne({ where: { id: req.body.userId } })
-        .then(function(data) {
-          res.send(200, data);
-        })
-        .catch(function(err) {
-          res.sendStatus(400);
-        });
+	let reqParams = url.parse(req.url, true).query;
+	reqParams.boardId === '-1'
+		? db.Post
+				.findAll()
+				.then(function(data) {
+					res.status(200).send(data);
+				})
+				.catch(function(err) {
+					console.log(err);
+					res.sendStatus(400);
+				})
+		: db.Board
+				.findOne({ where: { id: req.body.boardId } })
+				.then(function(data) {
+					res.send(200, data);
+				})
+				.catch(function(err) {
+					res.sendStatus(400);
+				});
 });
 
 //OK
