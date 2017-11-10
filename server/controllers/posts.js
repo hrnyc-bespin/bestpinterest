@@ -12,13 +12,13 @@ module.exports = {
 					info: req.body.info
 				})
 				.then(function() {
-					res.send(200);
-					console.log('Post created successfully!');
+          console.log('Post created successfully!');
+					res.sendStatus(200);          
 				})
 				.catch(function(err) {
-          res.send(400);
           console.log(err);
-					console.log('Post NOT created!');
+          console.log('Post NOT created!');
+          res.sendStatus(400);          
 				});
 		}
 	}
