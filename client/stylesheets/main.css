@@ -163,16 +163,11 @@ button {
   box-shadow: 0 4px 4px #202020;
 }
 
+/* In case you want to add more stuff */
 .navbar_ul {
   width: 100%;
   align-self: center;
   justify-content: flex-end;
-}
-
-.navbar_ul li {
-  color: #f5f5f5;
-  text-decoration: none;
-  align-self: center;
 }
 
 .link {
@@ -496,4 +491,21 @@ button {
   margin: 0 32px;
   height: 100%;
   max-width: 96px;
+}
+
+/* Bespin */
+.bespin_list {
+  display: flex;
+  flex-flow: row wrap;
+  height: 240px;
+  padding: 16px;
+}
+
+.bespin_list li {
+  padding: 4px;
+}
+
+.bespin_button {
+  padding: 32px;
+  font-size: 16px;
 }
