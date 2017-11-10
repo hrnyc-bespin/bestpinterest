@@ -5,10 +5,13 @@ const sequelize = new Sequelize('bespin', 'bespin', 'bespinpassword', {
   logging: false,
 });
 
+var isConnected = false;
+
 sequelize
 .authenticate()
 .then(() => {
-  console.log('connected')
+  console.log('connected');
+  isConnected = true;
 })
 .catch(err => console.error('not connected'));
 
@@ -83,6 +86,7 @@ exports.User = User;
 exports.Post = Post;
 exports.Board = Board;
 exports.BoardPost = BoardPost;
+exports.isConnected = isConnected;
 
 // testing database 
 // User.create({
