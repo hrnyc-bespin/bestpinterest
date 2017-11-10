@@ -96,3 +96,4 @@ exports.Post = Post;
 exports.Board = Board;
 exports.BoardPost = BoardPost;
 exports.isConnected = isConnected;
+exports.sequelize = sequelize;

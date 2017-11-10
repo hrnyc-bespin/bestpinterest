@@ -31,7 +31,7 @@ module.exports = {
 				.then(function(data) {
 					// Check for boards, pass back empty array if null
 					responseObj.boards = data || [];
-					res.send(200, responseObj);
+					res.status(200).send(responseObj);
 				})
 				.catch(function(err) {
 					if (err === 'none') {

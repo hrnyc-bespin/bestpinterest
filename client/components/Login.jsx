@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-require('../stylesheets/main.css');
 
 /**
  * Responsible for managing the login and signup requests from the user
@@ -36,7 +35,7 @@ class Login extends React.Component {
   }
 
   /**
-   * Component handler for rendering the extended sign-up div as opposed to the
+   * Component handlers for rendering the extended sign-up div as opposed to the
    * more punctate login div 
    * @param {*} e 
    */
