@@ -228,7 +228,7 @@ button {
   align-self: center;
   display: flex;
   flex-direction: column;
-  height: 240px;
+  min-height: 240px;
   width: 480px;
   margin-bottom: 40px;
   background-color: rgba(73, 73, 73, 0.85);
@@ -267,6 +267,7 @@ button {
   margin-top: 8px;
   color: #F5F5F5;
   font-size: 14px;
+  align-self: flex-end;
 }
 
 .login_form button:hover {
@@ -278,12 +279,8 @@ button {
   filter: brightness(0.4);
 }
 
-.login_button {
-  align-self: flex-end;
-}
-
-.login_signup {
-  align-self: flex-end;
+.signup_button {
+  margin-bottom: 32px;
 }
 
 /* Wall */
