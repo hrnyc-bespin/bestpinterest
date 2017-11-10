@@ -214,7 +214,6 @@ button {
 }
 
 /* Login Page */
-
 .login_main {
   display: flex;
   margin-top: 64px;
@@ -279,8 +278,12 @@ button {
   filter: brightness(0.4);
 }
 
-.signup_button {
-  margin-bottom: 32px;
+.button_holder {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  align-content: flex-end;
+  margin-bottom: 32px;  
 }
 
 /* Wall */

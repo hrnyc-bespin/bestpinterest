@@ -60,32 +60,39 @@ router.post('/bespin', function(req, res) {
 //serve board ids and board names that belong to user
 //serve user id, name
 router.get('/login', function(req, res) {
-  var responseObj = {};
-  let reqParams = url.parse(req.url, true).query;
-  //findOne returns one object
-  //findAll returns an array of objects
-  db.User
-    .findOne({
-      where: { username: reqParams.username }
-    })
-    .then(function(data) {
+	var responseObj = {};
+	let reqParams = url.parse(req.url, true).query;
+	//findOne returns one object
+	//findAll returns an array of objects
+	db.User
+		.findOne({
+			where: { username: reqParams.username }
+		})
+		.then(function(data) {
       // This is now the found user
-      responseObj.user = data;
-
-      return db.Board.findAll({
-        where: { id: data.id }
-      });
-    })
-    .then(function(data) {
-      // Check for boards, pass back empty array if null
-      responseObj.boards = data || [];
-      res.send(200, responseObj);
-    })
-    .catch(function(err) {
-      console.log('Incorrect username or password');
-      console.log(err);
-      res.sendStatus(401);
-    });
+      if (data === null) {
+        throw 'none';
+      } else if (data.password !== reqParams.password) {
+        throw 'password';
+      }
+			responseObj.user = data;
+			return db.Board.findAll({
+				where: { id: data.id }
+			});
+		})
+		.then(function(data) {
+			// Check for boards, pass back empty array if null
+			responseObj.boards = data || [];
+			res.send(200, responseObj);
+		})
+		.catch(function(err) {
+      if (err === 'none') {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(401);
+      }
+			console.log(err);
+		});
 });
 
 //OK
