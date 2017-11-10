@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Wall from './Wall.jsx';
 import Posts from '../testData/postsJs.js';
 import AddBoard from './AddBoard.jsx';
-require('../stylesheets/profile.css');
 
 /**
  * Responsible for the actual rendering of user data and the selected wall

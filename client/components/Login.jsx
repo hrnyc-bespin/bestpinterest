@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-require('../stylesheets/main.css');
 
 /**
  * Responsible for managing the login and signup requests from the user
