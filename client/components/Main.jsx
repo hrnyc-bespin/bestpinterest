@@ -27,11 +27,12 @@ class Main extends React.Component {
     this.handleBespin = this.handleBespin.bind(this);
     this.handleMakeBoard = this.handleMakeBoard.bind(this);
     this.handleFetchBoard = this.handleFetchBoard.bind(this);
+    this.handleFetchUserBoards = this.handleFetchUserBoards.bind(this);
     this.handleAddPhoto = this.handleAddPhoto.bind(this);
     this.onAddPhoto = this.onAddPhoto.bind(this);
   }
 
-  // Fetch all public posts upon initial load
+  // Fetch all public posts upon initial load and user's board ids
   componentDidMount() {
     axios
       .get('/board', {
@@ -39,15 +40,19 @@ class Main extends React.Component {
           boardId: -1
         }
       })
-      .then(res => {
+      .then((res) => {
         this.setState({
           posts: res.data
         });
+        return this.handleFetchUserBoards();
       })
       .catch(err => {
         console.log(err);
       });
   }
+
+  // Axios.get /userboards, params is id (userId);
+  // status codes 200 or 400, 200 is ok, but 400 means error with query
 
   // User pressed on heart over a photo
   handleBespin(postId, boardId) {
@@ -73,17 +78,12 @@ class Main extends React.Component {
 
   // User pressed Add Board
   handleMakeBoard(boardName) {
-    console.log('userId', this.props.user.id);
-    console.log('boardName', boardName);
     if (this.props.helper.validateBoardName(boardName)) {
       axios
       .post('/makeboard', { name: boardName, id: this.props.user.id })
-      .then(res => this.setState({ boards: res.data })
-        // res =>
-        //   res.status === 201
-        //     ? axios.get('/board').then(data => this.setState({ boards: data }))
-        //     : console.log(err)
-      )
+      .then((res) => {
+        console.log('successful');
+      })
       .catch(err => console.log(err));
     } else {
       alert('Invalid board name');
@@ -98,6 +98,26 @@ class Main extends React.Component {
     axios
       .get(`/board?userId=${boardId}`)
       .then(res => this.setState({ posts: res.data }));
+  }
+
+  handleFetchUserBoards(userId = this.props.user.id) {
+    console.log(userId);
+    axios
+      .get('/userboards', {
+        params: {
+          id: userId
+        }
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
+          boards: res.data.boards
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('error fetching your boards');
+      })
   }
 
   // If cancel is true, user pressed cancel button
@@ -147,7 +167,9 @@ aren't adding a board id association at time of upload
 
   // Profile will fetch its own boards
   render() {
-    let boardsWithPublic = [];
+    // No matter what boards we fetch, should always have at least the public board
+    // ID of -1 indicates to server that we want all posts
+    let boardsWithPublic = [{name:'Public Board', id: -1}].concat(this.state.boards);
     return (
       <div className="main">
         <Profile
@@ -156,6 +178,7 @@ aren't adding a board id association at time of upload
           profilePic={this.props.user.profilepic}
           userInfo={this.props.user.info}
           posts={this.state.posts}
+          boards={this.state.boards}
           handleBespin={this.handleBespin}
           handleFetchBoard={this.handleFetchBoard}
           handleMakeBoard={this.handleMakeBoard}
