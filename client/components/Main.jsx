@@ -4,6 +4,7 @@ import axios from 'axios';
 import Wall from './Wall.jsx';
 import Profile from './Profile.jsx';
 import AddPhoto from './AddPhoto.jsx';
+import AddBespin from './AddBespin.jsx';
 
 // For testing purposes only
 import Users from '../testData/usersJs.js';
@@ -21,9 +22,14 @@ class Main extends React.Component {
     super(props);
     this.state = {
       showAddPhoto: false,
+      showBespin: false,
       posts: [],
-      boards: []
+      boards: [],
+      currentBoard: -1,
+      // Used for handling Bespin
+      currentPost: null
     };
+    this.onBespin = this.onBespin.bind(this);
     this.handleBespin = this.handleBespin.bind(this);
     this.handleMakeBoard = this.handleMakeBoard.bind(this);
     this.handleFetchBoard = this.handleFetchBoard.bind(this);
@@ -55,25 +61,47 @@ class Main extends React.Component {
   // status codes 200 or 400, 200 is ok, but 400 means error with query
 
   // User pressed on heart over a photo
-  handleBespin(postId, boardId) {
+  onBespin(postId) {
     console.log('postId', postId); // Passed up from Profile.jsx
-    console.log('boardId', boardId);
+    if (this.state.boards.length === 0) {
+      return alert('you don\'t have any boards yet!');
+    }
+    this.setState({
+      showBespin: true,
+      currentPost: postId
+    });
+  }
+
+  handleBespin(postId, boardId, cancel) {
+    console.log('handling bespin');
+    console.log(postId, boardId);
+    if (cancel) {
+      return this.setState({
+        showBespin: false,
+        currentPost: null
+      });
+    }
+    console.log(this.props.helper.validateBespin(postId, boardId));
     if (this.props.helper.validateBespin(postId, boardId)) {
       axios
         .post('/bespin', {
-          postid: postId,
-          boardid: boardId
+          postId: postId,
+          boardId: boardId
         })
         .then(res => {
           console.log(res);
         })
         .catch(err => {
           console.log(err);
-          alert('There was an error attempting to pin this post');
+          alert('Couldn\'t save your post!');
         });
     } else {
-      alert('There was an error attempting to pin this post');
+      alert('Invalid post params, where\'s the debugger');
     }
+    this.setState({
+      showBespin: false,
+      currentPost: null
+    })
   }
 
   // User pressed Add Board
@@ -93,6 +121,7 @@ class Main extends React.Component {
 
   // Need to handle initial fetch, probably using react lifecycle methods.
   // Will need to do this today.
+  // Handlebespin first.
   handleFetchBoard(boardId) {
     console.log('boardId', boardId); // Board ID
     console.log('exampleQuery', `/boards?=${boardId}`);
@@ -108,7 +137,6 @@ class Main extends React.Component {
   }
 
   handleFetchUserBoards(userId = this.props.user.id) {
-    console.log(userId);
     axios
       .get('/userboards', {
         params: {
@@ -172,7 +200,6 @@ aren't adding a board id association at time of upload
     return false;
   }
 
-  // Profile will fetch its own boards
   render() {
     // No matter what boards we fetch, should always have at least the public board
     // ID of -1 indicates to server that we want all posts
@@ -187,8 +214,9 @@ aren't adding a board id association at time of upload
           profilePic={this.props.user.profilepic}
           userInfo={this.props.user.info}
           posts={this.state.posts}
-          boards={this.state.boards}
-          handleBespin={this.handleBespin}
+          boards={boardsWithPublic}
+          currentBoard={this.state.currentBoard}
+          onBespin={this.onBespin}
           handleFetchBoard={this.handleFetchBoard}
           handleMakeBoard={this.handleMakeBoard}
         />
@@ -197,6 +225,12 @@ aren't adding a board id association at time of upload
             helper={this.props.helper}
             handleAddPhoto={this.handleAddPhoto}
           />
+        ) : null}
+        {this.state.showBespin ? (
+          <AddBespin
+            postId={this.state.currentPost}
+            boards={this.state.boards}
+            handleBespin={this.handleBespin} />
         ) : null}
         <button className="add_photo_button" onClick={this.onAddPhoto}>
           +

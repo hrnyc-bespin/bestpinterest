@@ -398,7 +398,7 @@ button {
   background: #830d00;
   height: 48px;
   width: 48px;
-  border-style: none;
+  border: solid 1px #1e1d29;
   border-radius: 24px;
   color: #F5F5F5;
   font-size: 24px;

@@ -50,14 +50,6 @@ class Profile extends React.Component {
         </div>
         <div className="user_boards">
           <ul className="user_boards_navbar">
-            <li
-              className="link"
-              key={-1}
-              value={-1}
-              onClick={this.handleBoardClick}
-            >
-              Public Board
-            </li>
             {this.props.boards.map(board => (
               <li
                 className="link"
@@ -78,11 +70,11 @@ class Profile extends React.Component {
         ) : null}
         <div className="user_wall">
           <Wall
-            boardId={-1}
+            boardId={this.props.currentBoard}
             posts={this.props.posts}
             showInfo={true}
             handleClick={() => console.log('tbd')}
-            handleBespin={this.props.handleBespin}
+            onBespin={this.props.onBespin}
           />
         </div>
       </div>
@@ -97,7 +89,8 @@ Profile.propTypes = {
   userInfo: PropTypes.string,
   posts: PropTypes.array,
   boards: PropTypes.array,
-  handleBespin: PropTypes.func,
+  currentBoard: PropTypes.number,
+  onBespin: PropTypes.func,
   handleFetchBoard: PropTypes.func,
   handleMakeBoard: PropTypes.func
 };
