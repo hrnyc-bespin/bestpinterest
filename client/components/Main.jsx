@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios'
+import axios from 'axios';
 import Wall from './Wall.jsx';
 import Profile from './Profile.jsx';
 import AddPhoto from './AddPhoto.jsx';
@@ -32,28 +32,30 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/board', { 
-      params: { 
-        boardId: -1
-      } 
-    }).then((response) => {
-      this.setState({
-        posts: response.data
+    axios
+      .get('/board', {
+        params: {
+          boardId: -1
+        }
+      })
+      .then(response => {
+        this.setState({
+          posts: response.data
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    }).catch((err) => {
-      console.log(err)
-    });
   }
   // User pressed on heart over a photo
   handleBespin(postId, boardId) {
     console.log('postId', postId); // Passed up from Profile.jsx
     console.log('boardId', boardId);
-    console.log('postId', postId); // Passed up from Profile.jsx
-    console.log('boardId', boardId);
     axios
-      .post('/bespin', { 
-        postid: postId, 
-        boardid: boardId })
+      .post('/bespin', {
+        postid: postId,
+        boardid: boardId
+      })
       .then(res => {
         console.log(res);
       })
@@ -67,12 +69,11 @@ class Main extends React.Component {
     console.log('userId', this.props.user.id);
     console.log('boardName', boardName);
     axios
-      .post('/makeboard', { name: boardName, id: this.props.user.id })
+      .post('/makeboard', { name: boardName, userId: this.props.user.id })
       .then(
-        res =>
-          res.status === 201
-            ? axios.get('/board').then(data => this.setState({ boards: data }))
-            : console.log(err)
+        axios
+          .get(`/board?userId=${this.props.user.id}`)
+          .then(data => this.setState({ boards: data.data }))
       )
       .catch(err => console.log(err));
   }
@@ -94,11 +95,7 @@ class Main extends React.Component {
           photourl: photoUrl,
           info: photoInfo
         })
-        .then(res => {
-          res.status === 200
-            ? axios.get('/post').then(data => setState({ posts: data }))
-            : console.log(err);
-        })
+        .then(axios.get('/post').then(res => setState({ posts: res.data })))
         .catch(err => {
           console.log(err);
         });
@@ -113,6 +110,13 @@ class Main extends React.Component {
     this.setState({
       showAddPhoto: true
     });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state !== nextState) {
+      return true;
+    }
+    return false;
   }
 
   render() {
