@@ -1,44 +1,53 @@
+//require sequelize and connect to the aws server, using postgres
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('bespin', 'bespin', 'bespinpassword', {
   host: 'bespin.cpeh9sojapsn.us-east-2.rds.amazonaws.com',
   dialect: 'postgres',
-  logging: false,
+  logging: false, //stops sequelize from outputting sql to the terminal 
 });
 
-var isConnected = false;
+var isConnected = false; //var can be sent to the front end if the db is not working 
 
 sequelize
-.authenticate()
+.authenticate() //checks the connection to the database 
 .then(() => {
   console.log('connected');
   isConnected = true;
 })
 .catch(err => console.error('not connected'));
 
-var User = sequelize.define('users', {
-   username: Sequelize.STRING,
-   password: Sequelize.STRING,
-   profilepic: Sequelize.STRING,
-   info: Sequelize.STRING,
-   id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  }
- });
- 
-var Post = sequelize.define('posts', {
-  photourl: Sequelize.STRING,
-  info: Sequelize.STRING,
+var User = sequelize.define('users', { //set up for user table, Post, Board and BoardPost are similar 
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
+  username: Sequelize.STRING,
+  password: Sequelize.STRING,
+  profilepic: Sequelize.STRING,
+  info: Sequelize.STRING
+ });
+ 
+var Post = sequelize.define('posts', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  photourl: Sequelize.STRING,
+  info: Sequelize.STRING
 });
 
 var Board = sequelize.define('boards', { 
-  name: Sequelize.STRING,
+id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+name: Sequelize.STRING
+});
+
+var BoardPost = sequelize.define('boardpost', { //this table is for linking boards and posts by id 
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -46,20 +55,20 @@ var Board = sequelize.define('boards', {
   }
 });
 
-var BoardPost = sequelize.define('boardpost', {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  }
-});
+User.hasMany(Board, {as: 'board'}); //one to many relationship - one user, many boards 
 
-User.hasMany(Board, {as: 'board'});
+Post.belongsToMany(Board, {through: 'boardpost'}); //these two lines create the many to many for boards and posts 
+Board.belongsToMany(Post, {through: 'boardpost'}); //they are linked through the boardpost table by id
 
-Post.belongsToMany(Board, {through: 'boardpost'});
-Board.belongsToMany(Post, {through: 'boardpost'});
+/*
+When making relational connections between tables, sequelize needs to handle async, 
+the sequelize sync function returns a promise, which is why they are all chained
 
-User.sync({force:false})
+to reform the table(s), change force:true and it will delete the current and recreate it as a blank table,
+then change back to false after the file has been run 
+*/
+
+User.sync({force:false}) //sync creates the above table in the db
   .then(() => {
     return Post.sync({force:false}).then((data) => {
       console.log('PostThen');
@@ -87,26 +96,3 @@ exports.Post = Post;
 exports.Board = Board;
 exports.BoardPost = BoardPost;
 exports.isConnected = isConnected;
-
-// testing database 
-// User.create({
-//   username: 'user1',
-//   password: 'password1',
-//   profilepic: 'https://media.wired.com/photos/5926c3878d4ebc5ab806b67f/master/pass/SpockHP-464967684.jpg',
-//   info: 'I am Spock'
-// });
-
-// Post.create({
-//   photourl: 'http://www.startrek.com/uploads/assets/articles/9a5570aa205c967c350c52e4ad43bc8ab6fdecd0.png',
-//   info: 'star trek logo'
-// });
-
-// Board.create({
-//   name: 'Star Trek',
-//   userId: 3 //should pass req.body.id
-// });
-
-// BoardPost.create({
-//   postId: null,  //should pass req.body.postid
-//   userId: null //should pass req.body.id
-// });
