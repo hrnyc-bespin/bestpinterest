@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * Handles the controlled component
+ * Handles the controlled component for adding a board
  */
 class AddBoard extends React.Component {
   constructor(props) {

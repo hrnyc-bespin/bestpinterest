@@ -66,8 +66,9 @@ module.exports = {
 					res.status(201).send(user);
 				})
 				.catch(function(err) {
-					console.log('User was NOT created!');
-					res.send(400);
+          console.log('User was NOT created!');
+          console.log(err);
+					res.sendStatus(400);
 				});
 		}
   },
