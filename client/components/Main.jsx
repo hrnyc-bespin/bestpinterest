@@ -83,6 +83,7 @@ class Main extends React.Component {
       .post('/makeboard', { name: boardName, id: this.props.user.id })
       .then((res) => {
         console.log('successful');
+        return this.handleFetchUserBoards();
       })
       .catch(err => console.log(err));
     } else {
