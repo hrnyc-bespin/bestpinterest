@@ -81,7 +81,7 @@ class Profile extends React.Component {
         <div className="user_wall">
           <Wall
             boardId={-1}
-            posts={Posts.posts}
+            posts={this.props.posts}
             showInfo={true}
             handleClick={() => console.log('tbd')}
             handleBespin={this.props.handleBespin}
@@ -97,6 +97,7 @@ Profile.propTypes = {
   profilePic: PropTypes.string,
   userInfo: PropTypes.string,
   boards: PropTypes.array,
+  posts: PropTypes.array,
   handleBespin: PropTypes.func,
   handleFetchBoard: PropTypes.func,
   handleMakeBoard: PropTypes.func

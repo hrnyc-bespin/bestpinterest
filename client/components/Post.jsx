@@ -54,7 +54,7 @@ class Post extends React.Component{
 }
 
 Post.propTypes = {
-  photoId: PropTypes.string,
+  photoId: PropTypes.number,
 	photoUrl: PropTypes.string,
 	photoInfo: PropTypes.string,
 	showInfo: PropTypes.bool,

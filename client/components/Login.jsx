@@ -30,9 +30,10 @@ class Login extends React.Component {
   }
 
   // If user wishes to signup, rely on main.js 
+  // Add info
   handleSignup(e) {
     e.preventDefault();
-    this.props.handleSignup(this.state.username, this.state.password);
+    this.props.handleSignup(this.state.username, this.state.password, 'testdata');
   }
 
   render() {

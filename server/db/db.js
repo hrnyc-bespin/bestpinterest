@@ -25,7 +25,7 @@ var User = sequelize.define('users', {
  });
  
 var Post = sequelize.define('posts', {
-  photoUrl: Sequelize.STRING,
+  photourl: Sequelize.STRING,
   info: Sequelize.STRING,
   id: {
     type: Sequelize.INTEGER,
