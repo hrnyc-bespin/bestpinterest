@@ -1,4 +1,4 @@
-var routes = require('./routes');
+// var routes = require('./routes');
 var router = require('express').Router();
 var url = require('url');
 var db = require('./db/db.js');
