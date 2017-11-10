@@ -36,7 +36,7 @@ class Login extends React.Component {
   }
 
   /**
-   * Component handler for rendering the extended sign-up div as opposed to the
+   * Component handlers for rendering the extended sign-up div as opposed to the
    * more punctate login div 
    * @param {*} e 
    */

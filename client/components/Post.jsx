@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import Heart from '../assets/Heart.jsx';
 require('../stylesheets/main.css');
 
+/**
+ * Base level class with ability to manage current display state
+ */
 class Post extends React.Component{
   constructor(props) {
     super(props);
@@ -20,6 +23,10 @@ class Post extends React.Component{
     this.props.handleHeart(this.props.photoId);
   }
 
+  /**
+   * Hover handlers
+   * @param {*} e 
+   */
   mouseEnter(e) {
     this.setState({
       style: {
