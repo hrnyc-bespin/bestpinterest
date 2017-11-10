@@ -61,7 +61,6 @@ module.exports = {
 						})
         : db.sequelize.query(`SELECT * FROM posts INNER JOIN boardposts ON boardposts."boardId" = ${reqParams.boardId} AND posts.id = boardposts."postId"`)
             .then(function(data) {
-              console.log(data);
               res.status(200).send(data[0]);
             })
             .catch(function(err) {
