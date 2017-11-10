@@ -17,7 +17,7 @@ class Wall extends React.Component {
   }
   
   handleHeart(postId) {
-    this.props.handleBespin(postId, this.props.boardId)
+    this.props.onBespin(postId, this.props.boardId)
   }
 
 	render() {
@@ -42,7 +42,7 @@ Wall.propTypes = {
   boardId: PropTypes.number,
 	posts: PropTypes.array,
   showInfo: PropTypes.bool,
-  handleBespin: PropTypes.func
+  onBespin: PropTypes.func
 };
 
 export default Wall;
