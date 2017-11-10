@@ -64,7 +64,7 @@ class Main extends React.Component {
   onBespin(postId) {
     console.log('postId', postId); // Passed up from Profile.jsx
     if (this.state.boards.length === 0) {
-      return alert('you don\'t have any boards yet!');
+      return alert("you don't have any boards yet!");
     }
     this.setState({
       showBespin: true,
@@ -93,15 +93,15 @@ class Main extends React.Component {
         })
         .catch(err => {
           console.log(err);
-          alert('Couldn\'t save your post!');
+          alert("Couldn't save your post!");
         });
     } else {
-      alert('Invalid post params, where\'s the debugger');
+      alert("Invalid post params, where's the debugger");
     }
     this.setState({
       showBespin: false,
       currentPost: null
-    })
+    });
   }
 
   // User pressed Add Board
@@ -119,21 +119,23 @@ class Main extends React.Component {
     }
   }
 
-  // Need to handle initial fetch, probably using react lifecycle methods.
-  // Will need to do this today.
-  // Handlebespin first.
+  // fetching the posts that associated with clicked board
   handleFetchBoard(boardId) {
     console.log('boardId', boardId); // Board ID
     console.log('exampleQuery', `/boards?=${boardId}`);
-    if (boardId === -1) {
-      axios
-        .get(`/board?boardId=${boardId}`)
-        .then(res => this.setState({ posts: res.data }));
-    } else {
-      axios
-        .get(`/board?id=${boardId}`)
-        .then(res => this.setState({ posts: res.data }));
-    }
+    axios
+      .get('/board', {
+        params: {
+          boardId: boardId
+        }
+      })
+      .then(res => {
+        this.setState({
+          posts: res.data
+        });
+        console.log(res);
+      })
+      .catch(err => console.log(err));
   }
 
   handleFetchUserBoards(userId = this.props.user.id) {
@@ -193,13 +195,6 @@ aren't adding a board id association at time of upload
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state !== nextState) {
-      return true;
-    }
-    return false;
-  }
-
   render() {
     // No matter what boards we fetch, should always have at least the public board
     // ID of -1 indicates to server that we want all posts
@@ -230,7 +225,8 @@ aren't adding a board id association at time of upload
           <AddBespin
             postId={this.state.currentPost}
             boards={this.state.boards}
-            handleBespin={this.handleBespin} />
+            handleBespin={this.handleBespin}
+          />
         ) : null}
         <button className="add_photo_button" onClick={this.onAddPhoto}>
           +
