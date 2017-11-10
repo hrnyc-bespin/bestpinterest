@@ -43,7 +43,7 @@ router.post('/bespin', function(req, res) {
   db.BoardPost
     .create({
       postId: req.body.postId,
-      boardId: reg.body.boardId
+      boardId: req.body.boardId
     })
     .then(function() {
       res.send(200);
