@@ -7,11 +7,7 @@ import Main from './components/Main.jsx';
 import Helper from './helpers/helpers.js';
 require('./stylesheets/main.css');
 
-// For testing purposes only
-import Users from './testData/usersJs.js';
-import Posts from './testData/postsJs.js';
-
-const axios = require('axios');
+var axios = require('axios');
 
 /**
  * Responsible for managing user access into and out of the application
@@ -68,11 +64,9 @@ class App extends React.Component {
    */
   handleLogin(username, password) {
     if (this.helper.validateLogin(username, password)) {
-      axios.get('login', {
-        params: {
+      axios.post('login', {
           username: username,
           password: password
-        }
       })
         .then((res) => {
           this.setState({
@@ -100,6 +94,15 @@ class App extends React.Component {
       isLoggedIn: false,
       user: null
     });
+    axios
+      .get('/logout')
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('error with server');
+      })
   }
 
   render() {

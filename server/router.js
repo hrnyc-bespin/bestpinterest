@@ -10,7 +10,8 @@ router.get('/userboards', controller.boards.userboards.get);
 router.get('/board', controller.boards.board.get);
 router.post('/makeboard', controller.boards.makeboard.post);
 
-router.get('/login', controller.users.login.get);
+router.post('/login', controller.users.login.post);
+router.get('/logout', controller.users.logout.get);
 router.post('/signup', controller.users.signup.post);
 
 router.post('/post', controller.posts.post.post);

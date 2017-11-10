@@ -16,7 +16,8 @@ module.exports = {
 					console.log('Post created successfully!');
 				})
 				.catch(function(err) {
-					res.send(400);
+          res.send(400);
+          console.log(err);
 					console.log('Post NOT created!');
 				});
 		}

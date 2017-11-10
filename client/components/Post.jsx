@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Heart from '../assets/Heart.jsx';
-require('../stylesheets/main.css');
 
 /**
  * Base level class with ability to manage current display state

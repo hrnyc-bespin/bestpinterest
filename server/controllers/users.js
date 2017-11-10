@@ -6,23 +6,29 @@ module.exports = {
 	//serves board ids and board names that belong to user
 	//serves user id, name
 	login: {
-		get: function(req, res) {
+		post: function(req, res) {
 			var responseObj = {};
 			let reqParams = url.parse(req.url, true).query;
 			//findOne returns one object
 			//findAll returns an array of objects
 			db.User
 				.findOne({
-					where: { username: reqParams.username }
+					where: { username: req.body.username }
 				})
 				.then(function(data) {
 					// This is now the found user
 					if (data === null) {
 						throw 'none';
-					} else if (data.password !== reqParams.password) {
+					} else if (data.password !== req.body.password) {
 						throw 'password';
-					}
-					responseObj.user = data;
+          }
+          let newUser = {
+            id: data.id,
+            info: data.info,
+            profilepic: data.profilepic,
+            username: data.username
+          }
+					responseObj.user = newUser;
 					return db.Board.findAll({
 						attributes: ['id', 'name'],
 						where: { id: data.id }
@@ -64,5 +70,14 @@ module.exports = {
 					res.send(400);
 				});
 		}
-	}
+  },
+  
+  /**
+   * For when sessions are implemented
+   */
+  logout: {
+    get: function(req, res) {
+      res.sendStatus(200);
+    }
+  }
 };

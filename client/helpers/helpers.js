@@ -47,7 +47,6 @@ export default class Helpers {
   validatePhoto(photoUrl, info) {
     try {
       let test = url.parse(photoUrl);
-      console.log(photoUrl, info);
       // Have last as explicit boolean to coerce
       return test.hostname && photoUrl.length && info.length !== 0;
     } catch (err) {

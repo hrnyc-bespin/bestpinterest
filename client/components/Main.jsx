@@ -6,10 +6,6 @@ import Profile from './Profile.jsx';
 import AddPhoto from './AddPhoto.jsx';
 import AddBespin from './AddBespin.jsx';
 
-// For testing purposes only
-import Users from '../testData/usersJs.js';
-import Posts from '../testData/postsJs.js';
-
 /**
  * Acts as the intermediary component between the lower components
  * Handle all server interactions
@@ -62,7 +58,6 @@ class Main extends React.Component {
 
   // User pressed on heart over a photo
   onBespin(postId) {
-    console.log('postId', postId); // Passed up from Profile.jsx
     if (this.state.boards.length === 0) {
       return alert("you don't have any boards yet!");
     }
@@ -73,25 +68,22 @@ class Main extends React.Component {
   }
 
   handleBespin(postId, boardId, cancel) {
-    console.log('handling bespin');
-    console.log(postId, boardId);
     if (cancel) {
       return this.setState({
         showBespin: false,
         currentPost: null
       });
     }
-    console.log(this.props.helper.validateBespin(postId, boardId));
     if (this.props.helper.validateBespin(postId, boardId)) {
       axios
         .post('/bespin', {
           postId: postId,
           boardId: boardId
         })
-        .then(res => {
-          console.log(res);
+        .then((res) => {
+          console.log('successful');
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           alert("Couldn't save your post!");
         });
@@ -109,11 +101,10 @@ class Main extends React.Component {
     if (this.props.helper.validateBoardName(boardName)) {
       axios
         .post('/makeboard', { name: boardName, id: this.props.user.id })
-        .then(res => {
-          console.log('successful');
+        .then((res) => {
           return this.handleFetchUserBoards();
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     } else {
       alert('Invalid board name');
     }
@@ -121,21 +112,18 @@ class Main extends React.Component {
 
   // fetching the posts that associated with clicked board
   handleFetchBoard(boardId) {
-    console.log('boardId', boardId); // Board ID
-    console.log('exampleQuery', `/boards?=${boardId}`);
     axios
       .get('/board', {
         params: {
           boardId: boardId
         }
       })
-      .then(res => {
+      .then((res) => {
         this.setState({
           posts: res.data
         });
-        console.log(res);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   handleFetchUserBoards(userId = this.props.user.id) {
@@ -146,7 +134,6 @@ class Main extends React.Component {
         }
       })
       .then(res => {
-        console.log(res.data);
         this.setState({
           boards: res.data.boards
         });
@@ -172,13 +159,13 @@ aren't adding a board id association at time of upload
           photourl: photoUrl,
           info: photoInfo
         })
-        .then(res => {
-          alert('posted! refresh to view (sorry)');
+        .then((res) => {
           this.setState({
             showAddPhoto: false
           });
+          return this.handleFetchBoard(this.state.currentBoard);
         })
-        .catch(err => {
+        .catch((err) => {
           alert('There was a problem trying to upload that photo :(');
         });
     } else {
