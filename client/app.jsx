@@ -21,6 +21,7 @@ class App extends React.Component {
     };
     this.handleSignup = this.handleSignup.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleSignup(username, password, info, profilepic) {
@@ -40,12 +41,12 @@ class App extends React.Component {
     console.log('signup: ', username, password);
   }
 
-  handleLogin(username1, password1) {
-    console.log(`user: ${username1} pw: ${password1}`);
+  handleLogin(username, password) {
+    console.log(`user: ${username} pw: ${password}`);
     axios.get('login', {
       params: {
-        username: username1,
-        password: password1
+        username: username,
+        password: password
       }
     })
       .then(({data}) => {
