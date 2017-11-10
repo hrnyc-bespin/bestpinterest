@@ -99,9 +99,9 @@ router.post('/signup', function(req, res) {
 			profilepic: req.body.profilepic,
 			info: req.body.info
 		})
-		.then(function() {
-			console.log('User created!');
-			res.send(201);
+		.then(function(user) {
+      console.log('User created!');
+			res.status(201).send(user);
 		})
 		.catch(function(err) {
 			console.log('User was NOT created!');
@@ -119,7 +119,7 @@ router.get('/board', function(req, res) {
 		? db.Post
 				.findAll()
 				.then(function(data) {
-					res.send(200, data);
+					res.status(200).send(data);
 				})
 				.catch(function(err) {
 					console.log(err);
