@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var router = require('./router.js');
+var db = require('./db/db.js');
 var app = express();
 
 var logger = (req, res, next) => {
@@ -9,7 +10,8 @@ var logger = (req, res, next) => {
 };
 
 app.use(logger);
-app.use(express.static(__dirname + './dist'));
+app.use(express.static(__dirname + '/dist'));
+app.use(bodyParser.json());
 app.use('/', router);
 
 app.listen(process.env.port || 3000, () =>

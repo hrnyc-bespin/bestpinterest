@@ -1,13 +1,18 @@
-var models = require('./models.js');
+var controller = require('./controllers');
 var router = require('express').Router();
+var url = require('url');
+var db = require('./db/db.js');
 
-router.get('/posts', models.posts.get);
-router.post('/posts', models.posts.post);
+//Connect controller methods to their corresponding routes
 
-router.get('/users', models.users.get);
-router.post('/users', models.users.post);
+router.post('/bespin', controller.boards.bespin.post);
+router.get('/userboards', controller.boards.userboards.get);
+router.get('/board', controller.boards.board.get);
+router.post('/makeboard', controller.boards.makeboard.post);
 
-router.get('/boards', models.boards.get);
-router.post('/boards', models.boards.post);
+router.get('/login', controller.users.login.get);
+router.post('/signup', controller.users.signup.post);
+
+router.post('/post', controller.posts.post.post);
 
 module.exports = router;
