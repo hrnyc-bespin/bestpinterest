@@ -8,6 +8,7 @@ var db = require('./db/db.js');
 router.post('/bespin', controller.boards.bespin.post);
 router.get('/userboards', controller.boards.userboards.get);
 router.get('/board', controller.boards.board.get);
+router.post('/makeboard', controller.boards.makeboard.post);
 
 router.get('/login', controller.users.login.get);
 router.post('/signup', controller.users.signup.post);
