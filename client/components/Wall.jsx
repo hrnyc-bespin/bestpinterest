@@ -11,36 +11,38 @@ import Post from './Post.jsx';
  * TODO: Change this to functional stateless if supported?
  */
 class Wall extends React.Component {
-	constructor(props) {
+  constructor(props) {
     super(props);
     this.handleHeart = this.handleHeart.bind(this);
   }
-  
+
   handleHeart(postId) {
     this.props.onBespin(postId, this.props.boardId)
   }
 
-	render() {
-		return (
-			<div className="wall_main">
-				{this.props.posts.map((post, i) => (
-					<Post
-            key={i}
-            photoId={post.id}
-						photoUrl={post.photourl}
-						photoInfo={post.info}
-            handleHeart={this.handleHeart}
-            showInfo={this.props.showInfo}
-					/>
-				))}
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div className="wall_main">
+        {this.props.posts.length > 0
+          ? this.props.posts.map((post, i) => (
+              <Post
+                key={i}
+                photoId={post.id}
+                photoUrl={post.photourl}
+                photoInfo={post.info}
+                handleHeart={this.handleHeart}
+                showInfo={this.props.showInfo}
+              />
+            ))
+          : 'add posts!'}
+      </div>
+    );
+  }
 }
 
 Wall.propTypes = {
   boardId: PropTypes.number,
-	posts: PropTypes.array,
+  posts: PropTypes.array,
   showInfo: PropTypes.bool,
   onBespin: PropTypes.func
 };

@@ -46,7 +46,7 @@ class Main extends React.Component {
           boardId: -1
         }
       })
-      .then((res) => {
+      .then(res => {
         this.setState({
           posts: res.data
         });
@@ -109,7 +109,7 @@ class Main extends React.Component {
     if (this.props.helper.validateBoardName(boardName)) {
       axios
         .post('/makeboard', { name: boardName, id: this.props.user.id })
-        .then((res) => {
+        .then(res => {
           console.log('successful');
           return this.handleFetchUserBoards();
         })
@@ -125,15 +125,15 @@ class Main extends React.Component {
   handleFetchBoard(boardId) {
     console.log('boardId', boardId); // Board ID
     console.log('exampleQuery', `/boards?=${boardId}`);
-    // axios
-    //   .get('/board', {
-    //     params: {
-
-    //     }
-    //   })
-    // axios
-    //   .get(`/board?userId=${boardId}`)
-    //   .then(res => this.setState({ posts: res.data }));
+    if (boardId === -1) {
+      axios
+        .get(`/board?boardId=${boardId}`)
+        .then(res => this.setState({ posts: res.data }));
+    } else {
+      axios
+        .get(`/board?id=${boardId}`)
+        .then(res => this.setState({ posts: res.data }));
+    }
   }
 
   handleFetchUserBoards(userId = this.props.user.id) {
@@ -143,22 +143,22 @@ class Main extends React.Component {
           id: userId
         }
       })
-      .then((res) => {
+      .then(res => {
         console.log(res.data);
         this.setState({
           boards: res.data.boards
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
         alert('error fetching your boards');
-      })
+      });
   }
 
   // If cancel is true, user pressed cancel button
   // Photo validated by AddPhoto for UI purposes
   // Axios by default handles non-ok status codes as errors
-/*
+  /*
 This needs to refetch the currently selected boards, but we
 aren't adding a board id association at time of upload
 */
@@ -170,13 +170,13 @@ aren't adding a board id association at time of upload
           photourl: photoUrl,
           info: photoInfo
         })
-        .then((res) => {
+        .then(res => {
           alert('posted! refresh to view (sorry)');
           this.setState({
             showAddPhoto: false
           });
         })
-        .catch((err) => {
+        .catch(err => {
           alert('There was a problem trying to upload that photo :(');
         });
     } else {
@@ -203,7 +203,9 @@ aren't adding a board id association at time of upload
   render() {
     // No matter what boards we fetch, should always have at least the public board
     // ID of -1 indicates to server that we want all posts
-    let boardsWithPublic = [{name:'Public Board', id: -1}].concat(this.state.boards);
+    let boardsWithPublic = [{ name: 'Public Board', id: -1 }].concat(
+      this.state.boards
+    );
     return (
       <div className="main">
         <Profile
@@ -219,9 +221,10 @@ aren't adding a board id association at time of upload
           handleMakeBoard={this.handleMakeBoard}
         />
         {this.state.showAddPhoto ? (
-          <AddPhoto 
+          <AddPhoto
             helper={this.props.helper}
-            handleAddPhoto={this.handleAddPhoto} />
+            handleAddPhoto={this.handleAddPhoto}
+          />
         ) : null}
         {this.state.showBespin ? (
           <AddBespin

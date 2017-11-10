@@ -39,7 +39,10 @@ class Profile extends React.Component {
     return (
       <div>
         <div className="user_summary">
-          <img src={this.props.profilePic} alt={`error loading photo for ${this.props.username}`} />
+          <img
+            src={this.props.profilePic}
+            alt={`error loading photo for ${this.props.username}`}
+          />
           <div className="user_details">
             <p className="user_username">{this.props.username}</p>
             <p className="user_info">{this.props.userInfo}</p>
@@ -57,10 +60,7 @@ class Profile extends React.Component {
                 {board.name}
               </li>
             ))}
-            <li
-              className="link"
-              onClick={this.onAddBoard}
-            >
+            <li className="link" onClick={this.onAddBoard}>
               + Add board
             </li>
           </ul>
