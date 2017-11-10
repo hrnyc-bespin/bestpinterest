@@ -68,5 +68,25 @@ module.exports = {
 							res.sendStatus(400);
 						});
 		}
+	},
+
+	//receive user id  and board name
+	//201 serve board id and board name else 400 error
+	makeboard: {
+		post: function(req, res) {
+			db.Board
+				.create({
+					name: req.body.name,
+					userId: req.body.id
+				})
+				.then(function(data) {
+					console.log('Board created successfully!');
+					res.status(201).send(data);
+				})
+				.catch(function(err) {
+					console.log('Board NOT created!');
+					res.sendStatus(400);
+				});
+		}
 	}
 };
