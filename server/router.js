@@ -37,13 +37,13 @@ router.post('/post', function(req, res) {
 });
 
 //OK
-//add a picture to board, receives post_id and board_id
+//add a picture to board, receives postId and boardId
 //serves 200 OK or 400
 router.post('/bespin', function(req, res) {
 	db.BoardPost
 		.create({
-			post_id: req.body.post_id,
-			board_id: reg.body.board_id
+			postId: req.body.postId,
+			boardId: reg.body.boardId
 		})
 		.then(function() {
 			res.send(200);
@@ -60,31 +60,30 @@ router.post('/bespin', function(req, res) {
 //serve board ids and board names that belong to user
 //serve user id, name
 router.get('/login', function(req, res) {
-  var responseObj = {};
-  let reqParams = url.parse(req.url, true).query;
+	var responseObj = {};
+	let reqParams = url.parse(req.url, true).query;
 	//findOne returns one object
 	//findAll returns an array of objects
 	db.User
 		.findOne({
-      where: { username: reqParams.username}
-    })
-
-		.then(function(data) { // This is now the found user
-      responseObj.user = data;
+			where: { username: reqParams.username }
+		})
+		.then(function(data) {
+			// This is now the found user
+			responseObj.user = data;
 
 			return db.Board.findAll({
-        where: { id: data.id }
-      })
-    })
-
-		.then(function(data) { // Check for boards, pass back empty array if null
+				where: { id: data.id }
+			});
+		})
+		.then(function(data) {
+			// Check for boards, pass back empty array if null
 			responseObj.boards = data || [];
 			res.send(200, responseObj);
-    })
-    
+		})
 		.catch(function(err) {
-      console.log('Incorrect username or password');
-      console.log(err);
+			console.log('Incorrect username or password');
+			console.log(err);
 			res.sendStatus(401);
 		});
 });
@@ -95,8 +94,8 @@ router.get('/login', function(req, res) {
 router.post('/signup', function(req, res) {
 	db.User
 		.create({
-      username: req.body.username,
-      password: req.body.password,
+			username: req.body.username,
+			password: req.body.password,
 			profilepic: req.body.profilepic,
 			info: req.body.info
 		})
@@ -115,25 +114,25 @@ router.post('/signup', function(req, res) {
 //serve -1 = all
 //else serve all posts filtered by board id
 router.get('/board', function(req, res) {
-  let reqParams = url.parse(req.url, true).query;
-	reqParams.boardId === '-1' ?
-  db.Post
-    .findAll()
-    .then(function(data){
-      res.send(200, data);
-    })
-    .catch(function(err){
-      console.log(err);
-      res.sendStatus(400);
-    }) :
-  db.Board
-		.find({ where: {id: `${req.body.board_id}`}})
-		.then(function(data) {
-			res.send(200, data);
-		})
-		.catch(function(err) {
-			res.sendStatus(400);
-		});
+	let reqParams = url.parse(req.url, true).query;
+	reqParams.boardId === '-1'
+		? db.Post
+				.findAll()
+				.then(function(data) {
+					res.send(200, data);
+				})
+				.catch(function(err) {
+					console.log(err);
+					res.sendStatus(400);
+				})
+		: db.Board
+				.findOne({ where: { id: req.body.boardId } })
+				.then(function(data) {
+					res.send(200, data);
+				})
+				.catch(function(err) {
+					res.sendStatus(400);
+				});
 });
 
 //OK
@@ -144,11 +143,12 @@ router.post('/makeboard', function(req, res) {
 	db.Board
 		.create({
 			name: req.body.name,
-			user_id: req.body.user_id
+			userId: req.body.userId
 		})
-		.then(function() {
+		.findOne((where: { userId: req.body.userId }))
+		.then(function(data) {
 			console.log('Board created successfully!');
-			res.send(201);
+			res.send(201, data);
 		})
 		.catch(function(err) {
 			console.log('Board NOT created!');
