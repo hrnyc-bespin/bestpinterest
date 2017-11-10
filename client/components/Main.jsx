@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios'
+import axios from 'axios';
 import Wall from './Wall.jsx';
 import Profile from './Profile.jsx';
 import AddPhoto from './AddPhoto.jsx';
@@ -32,28 +32,30 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/board', { 
-      params: { 
-        boardId: -1
-      } 
-    }).then((response) => {
-      this.setState({
-        posts: response.data
+    axios
+      .get('/board', {
+        params: {
+          boardId: -1
+        }
+      })
+      .then(response => {
+        this.setState({
+          posts: response.data
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    }).catch((err) => {
-      console.log(err)
-    });
   }
   // User pressed on heart over a photo
   handleBespin(postId, boardId) {
     console.log('postId', postId); // Passed up from Profile.jsx
     console.log('boardId', boardId);
-    console.log('postId', postId); // Passed up from Profile.jsx
-    console.log('boardId', boardId);
     axios
-      .post('/bespin', { 
-        postid: postId, 
-        boardid: boardId })
+      .post('/bespin', {
+        postid: postId,
+        boardid: boardId
+      })
       .then(res => {
         console.log(res);
       })
@@ -71,7 +73,9 @@ class Main extends React.Component {
       .then(
         res =>
           res.status === 201
-            ? axios.get('/board').then(data => this.setState({ boards: data }))
+            ? axios
+                .get('/board')
+                .then(data => this.setState({ boards: res.body.data }))
             : console.log(err)
       )
       .catch(err => console.log(err));
@@ -96,7 +100,7 @@ class Main extends React.Component {
         })
         .then(res => {
           res.status === 200
-            ? axios.get('/post').then(data => setState({ posts: data }))
+            ? axios.get('/post').then(res => setState({ posts: res.body.data }))
             : console.log(err);
         })
         .catch(err => {
