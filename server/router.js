@@ -145,7 +145,7 @@ router.post('/makeboard', function(req, res) {
 			name: req.body.name,
 			userId: req.body.userId
 		})
-		.findOne((where: { userId: req.body.userId }))
+		.findOne({ where: { userId: req.body.userId } })
 		.then(function(data) {
 			console.log('Board created successfully!');
 			res.send(201, data);
