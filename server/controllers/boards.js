@@ -12,11 +12,11 @@ module.exports = {
 					boardId: req.body.boardId
 				})
 				.then(function() {
-					res.send(200);
+					res.sendStatus(200);
 					console.log('Post bespinned to board successfully!');
 				})
 				.catch(function(err) {
-					res.send(400);
+					res.sendStatus(400);
 					console.log('Post NOT bespinned to board!');
 				});
 		}
@@ -48,7 +48,7 @@ module.exports = {
 	//else serve all posts belonging to that board id
 	board: {
 		get: function(req, res) {
-			let reqParams = url.parse(req.url, true).query;
+      let reqParams = url.parse(req.url, true).query;
 			reqParams.boardId === '-1'
 				? db.Post
 						.findAll()
@@ -59,14 +59,15 @@ module.exports = {
 							console.log(err);
 							res.sendStatus(400);
 						})
-				: db.BoardPost
-						.findAll({ where: { boardId: req.body.boardId } })
-						.then(function(data) {
-							res.send(200, data);
-						})
-						.catch(function(err) {
-							res.sendStatus(400);
-						});
+        : db.sequelize.query(`SELECT * FROM posts INNER JOIN boardposts ON boardposts."boardId" = ${reqParams.boardId} AND posts.id = boardposts."postId"`)
+            .then(function(data) {
+              console.log(data);
+              res.status(200).send(data[0]);
+            })
+            .catch(function(err) {
+              console.log(err);
+              res.sendStatus(400);
+            });
 		}
 	},
 

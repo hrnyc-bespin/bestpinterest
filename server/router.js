@@ -13,7 +13,6 @@ router.post('/makeboard', controller.boards.makeboard.post);
 router.get('/login', controller.users.login.get);
 router.post('/signup', controller.users.signup.post);
 
-router.get('/post', controller.posts.post.get);
 router.post('/post', controller.posts.post.post);
 
 module.exports = router;

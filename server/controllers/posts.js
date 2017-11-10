@@ -3,19 +3,6 @@ var db = require('../db/db.js');
 
 module.exports = {
 	post: {
-		//get all public posts to populate the wall
-		//serves 200 and data or null
-		get: function(req, res) {
-			db.Post
-				.findAll()
-				.then(function(data) {
-					res.send(200, data);
-				})
-				.catch(function(err) {
-					res.send(400);
-				});
-		},
-
 		// add a new picture/post, receives photourl and info
 		// serves 200 OK and 400
 		post: function(req, res) {
