@@ -69,9 +69,13 @@ router.get('/login', function(req, res) {
 			where: { username: reqParams.username }
 		})
 		.then(function(data) {
-			// This is now the found user
+      // This is now the found user
+      if (data === null) {
+        throw 'none';
+      } else if (data.password !== reqParams.password) {
+        throw 'password';
+      }
 			responseObj.user = data;
-
 			return db.Board.findAll({
 				where: { id: data.id }
 			});
@@ -82,9 +86,12 @@ router.get('/login', function(req, res) {
 			res.send(200, responseObj);
 		})
 		.catch(function(err) {
-			console.log('Incorrect username or password');
+      if (err === 'none') {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(401);
+      }
 			console.log(err);
-			res.sendStatus(401);
 		});
 });
 

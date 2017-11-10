@@ -49,6 +49,12 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * Receives username and password from login component.
+   * If some simple validation passes, query is made to back end.
+   * @param {*} username 
+   * @param {*} password 
+   */
   handleLogin(username, password) {
     if (this.helper.validateLogin(username, password)) {
       axios.get('login', {
@@ -65,8 +71,12 @@ class App extends React.Component {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            alert('Invalid login credentials');
-          } 
+            alert('Invalid password');
+          } else if (err.response.status === 404) {
+            alert('Invalid username');
+          } else {
+            alert('Trouble validating');
+          }
           console.log(err)
         });
     } else {
@@ -95,6 +105,7 @@ class App extends React.Component {
         </nav>
         {this.state.isLoggedIn ? (
           <Main
+            helper={this.helper}
             isLoggedIn={this.state.isLoggedIn}
             user={this.state.user}
           />
