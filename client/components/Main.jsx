@@ -188,7 +188,7 @@ aren't adding a board id association at time of upload
     let boardsWithPublic = [{ name: 'Public Board', id: -1 }].concat(
       this.state.boards
     );
-    let posts = this.state.posts.sort((a, b) => a.id - b.id);
+    let posts = this.state.posts.sort((a, b) => b.id - a.id);
     return (
       <div className="main">
         <Profile
