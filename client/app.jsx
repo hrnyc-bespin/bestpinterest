@@ -89,6 +89,9 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * For eventual integration with sessions on the server-side to properly manage logouts
+   */
   handleLogout() {
     this.setState({
       isLoggedIn: false,

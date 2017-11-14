@@ -5,8 +5,8 @@ import Posts from '../testData/postsJs.js';
 import AddBoard from './AddBoard.jsx';
 
 /**
- * Responsible for the actual rendering of user data and the selected wall
- * of desired posts
+ * One level down from Main.jsx, used for the actual rendering of user data 
+ * and the desired wall of posts
  */
 class Profile extends React.Component {
   constructor(props) {

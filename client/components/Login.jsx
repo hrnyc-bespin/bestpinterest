@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * Responsible for managing the login and signup requests from the user
- * Validation is handled by parent component, since this is a default screen
- * i.e. it will only show if the user is not logged in, which the parent
- * component is responsible for managing. 
+ * Responsible for managing login and signup requests from the user. User
+ * validation is handled by parent component, since this is a default screen
  */
 class Login extends React.Component {
   constructor(props) {
@@ -30,7 +28,7 @@ class Login extends React.Component {
    */
   onChange(e) {
     this.setState({
-      [e.target.name]: e.target.value // Able to pull name straight from element
+      [e.target.name]: e.target.value
     });
   }
 
@@ -64,7 +62,7 @@ class Login extends React.Component {
     this.props.handleLogin(this.state.username, this.state.password);
   }
 
-  // If user wishes to signup, rely on main.js 
+  // Inform Main.jsx that the user wishes to sign up
   // Add info
   handleSignup(e) {
     e.preventDefault();

@@ -7,19 +7,19 @@ module.exports = {
 		// serves 200 OK and 400
 		post: function(req, res) {
 			db.Post
-				.create({
-					photourl: req.body.photourl,
-					info: req.body.info
-				})
-				.then(function() {
-          console.log('Post created successfully!');
-					res.sendStatus(200);          
-				})
-				.catch(function(err) {
-          console.log(err);
-          console.log('Post NOT created!');
-          res.sendStatus(400);          
-				});
+      .create({
+        photourl: req.body.photourl,
+        info: req.body.info
+      })
+      .then(function() {
+        console.log('Post created successfully!');
+        res.sendStatus(200);          
+      })
+      .catch(function(err) {
+        console.log(err);
+        console.log('Post NOT created!');
+        res.sendStatus(400);          
+      });
 		}
 	}
 };

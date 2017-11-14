@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Simple SVG file for creating the heart icon over the pictures
 let Heart = (props) => (
   <div className="bespin_heart_div">
     <svg className="bespin_heart" xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 50 50' onClick={props.onClick} >

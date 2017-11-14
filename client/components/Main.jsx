@@ -34,7 +34,7 @@ class Main extends React.Component {
     this.onAddPhoto = this.onAddPhoto.bind(this);
   }
 
-  // Fetch all public posts upon initial load and user's board ids
+  // Fetch all public posts and the user's boards
   componentDidMount() {
     axios
       .get('/board', {
@@ -52,9 +52,6 @@ class Main extends React.Component {
         console.log(err);
       });
   }
-
-  // Axios.get /userboards, params is id (userId);
-  // status codes 200 or 400, 200 is ok, but 400 means error with query
 
   // User pressed on heart over a photo
   onBespin(postId) {
@@ -126,6 +123,8 @@ class Main extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  // Axios.get /userboards, params is id (userId);
+  // status codes 200 or 400, 200 is ok, but 400 means error with query
   handleFetchUserBoards(userId = this.props.user.id) {
     axios
       .get('/userboards', {
@@ -147,7 +146,8 @@ class Main extends React.Component {
   // If cancel is true, user pressed cancel button
   // Photo validated by AddPhoto for UI purposes
   // Axios by default handles non-ok status codes as errors
-  /*
+
+/*
 This needs to refetch the currently selected boards, but we
 aren't adding a board id association at time of upload
 */
@@ -183,6 +183,7 @@ aren't adding a board id association at time of upload
   }
 
   render() {
+    
     // No matter what boards we fetch, should always have at least the public board
     // ID of -1 indicates to server that we want all posts
     let boardsWithPublic = [{ name: 'Public Board', id: -1 }].concat(
