@@ -1,22 +1,27 @@
-//require sequelize and connect to the aws server, using postgres
+// Require sequelize and connect to the aws server, using postgres
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('bespin', 'bespin', 'bespinpassword', {
   host: 'bespin.cpeh9sojapsn.us-east-2.rds.amazonaws.com',
   dialect: 'postgres',
-  logging: false, //stops sequelize from outputting sql to the terminal 
+  // Stops sequelize from outputting sql to the terminal
+  logging: false, 
 });
 
-var isConnected = false; //var can be sent to the front end if the db is not working 
+// Helper variable to check if the db is connected to alert the front end that
+// the server is running but a connection could not be established to the DB.
+// This is not yet implemented. 
+var isConnected = false;  
 
 sequelize
-.authenticate() //checks the connection to the database 
+.authenticate() // Confirms connection to the database
 .then(() => {
   console.log('connected');
   isConnected = true;
 })
 .catch(err => console.error('not connected'));
 
-var User = sequelize.define('users', { //set up for user table, Post, Board and BoardPost are similar 
+// User table schema
+var User = sequelize.define('users', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -26,8 +31,9 @@ var User = sequelize.define('users', { //set up for user table, Post, Board and 
   password: Sequelize.STRING,
   profilepic: Sequelize.STRING,
   info: Sequelize.STRING
- });
- 
+});
+
+// Post table schema
 var Post = sequelize.define('posts', {
   id: {
     type: Sequelize.INTEGER,
@@ -38,6 +44,7 @@ var Post = sequelize.define('posts', {
   info: Sequelize.STRING
 });
 
+// Board table schema
 var Board = sequelize.define('boards', { 
 id: {
     type: Sequelize.INTEGER,
@@ -47,7 +54,8 @@ id: {
 name: Sequelize.STRING
 });
 
-var BoardPost = sequelize.define('boardpost', { //this table is for linking boards and posts by id 
+// Join table for boards and posts
+var BoardPost = sequelize.define('boardpost', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -55,40 +63,50 @@ var BoardPost = sequelize.define('boardpost', { //this table is for linking boar
   }
 });
 
-User.hasMany(Board, {as: 'board'}); //one to many relationship - one user, many boards 
+// One to many relationship - One user has many boards
+User.hasMany(Board, {as: 'board'});
 
-Post.belongsToMany(Board, {through: 'boardpost'}); //these two lines create the many to many for boards and posts 
-Board.belongsToMany(Post, {through: 'boardpost'}); //they are linked through the boardpost table by id
+// These two lines create the many to many for boards and posts
+Post.belongsToMany(Board, {through: 'boardpost'});
+
+// They are linked through the boardpost table by id
+Board.belongsToMany(Post, {through: 'boardpost'});
 
 /*
-When making relational connections between tables, sequelize needs to handle async, 
-the sequelize sync function returns a promise, which is why they are all chained
+When making relational connections between tables, Sequelize needs to handle async, 
+the Sequelize ync function returns a promise, which is why they are all chained
 
-to reform the table(s), change force:true and it will delete the current and recreate it as a blank table,
-then change back to false after the file has been run 
+To reform the table(s), change force:true and it will delete the current tables,
+recreating them as as fresh, blank tables,
+
+Remember to change back to false after the file has been run 
 */
 
-User.sync({force:false}) //sync creates the above table in the db
+// Sync creates the above table in the db
+User.sync({force:false}) 
   .then(() => {
     return Post.sync({force:false}).then((data) => {
-      console.log('PostThen');
-    })
+      console.log('Post Then');
+    });
+  })
+  .catch((e) => {
+    console.log('Catching Post')
   })
   .then(() => {
     return Board.sync({force: false}).then((data) => { 
-      console.log('BoardThen')
-    })
+      console.log('Board Then')
+    });
   })
   .catch((e) => {
-    console.log('catchingPost', e);
+    console.log('Catching Board', e);
   }) 
   .then(() => {
     return BoardPost.sync({force:false}).then((data) => {
-      console.log('BoardPostThen')
-    })
+      console.log('BoardPost Then')
+    });
   })
   .catch((e) => {
-    console.log('BoardPostCatch', e)
+    console.log('Catching BoardPost', e)
   });
 
 exports.User = User;

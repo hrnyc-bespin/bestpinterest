@@ -28,9 +28,9 @@ class AddPhoto extends React.Component {
   }
 
   /**
-   * 
-   * @param {*} e event object emitted by the form
-   * @param {*} cancel optional parameter to allow for cancelling the form
+   * Wrapper function for handling photo submissions. 
+   * @param {*} e Event object emitted by the form
+   * @param {*} cancel Optional parameter to allow for cancelling the form instead of submitting
    */
   onSubmit(e, cancel = false) {
     e.preventDefault();

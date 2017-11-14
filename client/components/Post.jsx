@@ -18,12 +18,13 @@ class Post extends React.Component{
     this.handleClick = this.handleClick.bind(this);
   }
 
+  // Wrapper to allow passing in the current Post/s photoId
   handleClick() {
     this.props.handleHeart(this.props.photoId);
   }
 
   /**
-   * Hover handlers
+   * Hover handlers, simple addition of a CSS style
    * @param {*} e 
    */
   mouseEnter(e) {
@@ -45,7 +46,6 @@ class Post extends React.Component{
   }
 
   render() {
-
     return (
       <div className="post_main" style={this.state.style} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
         <img src={this.props.photoUrl} alt={this.props.photoInfo} />

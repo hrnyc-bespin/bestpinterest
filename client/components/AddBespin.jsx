@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/**
- * This caches the given prop, so that it can pass it back when the user
- * selects the desired board name
- * @param {*} props 
+/*
+ * Functional stateless component for fetching the clicked board. 
+ * Post ID is given to the component in its props to simplify informing app.jsx
  */
 var AddBespin = (props) => {
+
+  // Function declared outside to make it more apparent what is happening
   var handleBespin = (e) => {
     props.handleBespin(props.postId, e.target.value);
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Simple SVG for creating the ugly B logo
 let Logo = () => (
   <div className="navbar_logo">
     <svg version='1' xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 512.000000 512.000000' style={{'borderRadius': 24}}>

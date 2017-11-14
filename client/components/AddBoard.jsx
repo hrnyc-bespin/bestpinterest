@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/**
- * Handles the controlled component for adding a board
+/*
+  Handles the controlled component for adding a board
+  Note that this.props.boardAdded has two valid parameters, one required boardName and an optional cancel parameter
  */
 class AddBoard extends React.Component {
   constructor(props) {
@@ -13,10 +14,11 @@ class AddBoard extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  // State management
   onChange(e) {
     this.setState({
       boardName: e.target.value
-    })
+    });
   }
 
   render() {
